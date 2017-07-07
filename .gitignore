@@ -1,5 +1,6 @@
 /app/config/parameters.yml
 /build/
+.DS_store
 /phpunit.xml
 /var/
 !/var/cache
