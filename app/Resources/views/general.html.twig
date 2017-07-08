@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        {% stylesheets '@bootstrap_css' %}
+            <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
+        {% endstylesheets %}     
+    </head>
+    <body>
+        {% block body %}
+        <div class="">
+            {% block header %}
+                <nav class="center-block">
+                    <ul class="nav nav-justified">
+                        <li class="">Logo</li>
+                        <li class="">Dashboard</li>
+                        <li class="">Reports&filters</li>
+                        <li class="">About/Authors</li>
+                    </ul>
+                </nav>
+            {% endblock %}
+            {% block dynamic_content %}{% endblock %}
+            {% block footer %}
+                <nav class="nav nav-justified center-block">
+                    <div class="text-bold text-center"><h6>Backup report tool <a>about</a></h6></div>          
+                </nav>
+            {% endblock %}
+        </div>
+        {% endblock %}
+        {% block javascripts %}{% endblock %}
+        {% javascripts '@jquery' '@bootstrap_js' %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    </body>
+</html>
