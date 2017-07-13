@@ -2,6 +2,7 @@
 // Database config
 require_once './sync_config.php';
 // Count Devices
+/*  */
 $sqlCountTotalDevices = "SELECT 
         COUNT(8) 
         FROM 
@@ -9,7 +10,7 @@ $sqlCountTotalDevices = "SELECT
         WHERE
             deleted=:deleted AND backuped_c =:backuped_c
             AND status_active_c =:status_active_c;";
-// Execute query
+/* Execute query */
 $db = new PDO('mysql:host='.$database_sugar_host.';dbname='
         .$database_sugar_name_db.';charset=utf8mb4'
         , $database_sugar_user
@@ -20,8 +21,10 @@ $stmt->execute(array(':deleted' => '0'
     , ':status_active_c' => 'Active'));
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-//zabbix production groups.
+/* Zabbix production groups */
 
+
+/* Get zerver names inj barches from sugarcrm DB */
 $sqlSpecificbatch = "SELECT 
             id,
             name,
