@@ -11,7 +11,8 @@ $sqlCountTotalDevices = "SELECT
             deleted=:deleted AND backuped_c =:backuped_c
             AND status_active_c =:status_active_c;";
 /* Execute query */
-$db = new PDO('mysql:host='.$database_sugar_host.';dbname='
+$db = new PDO('mysql:host='.$database_sugar_host
+        .';port:'.$database_sugar_port.';dbname='
         .$database_sugar_name_db.';charset=utf8mb4'
         , $database_sugar_user
         , $database_sugar_password);
@@ -22,7 +23,15 @@ $stmt->execute(array(':deleted' => '0'
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 /* Zabbix production groups */
+/*
 
+SELECT host, status
+FROM hosts h
+JOIN hosts_groups hg ON h.hostid = hg.hostid
+WHERE (hg.groupid = 23 OR hg.groupid = 46)
+AND h.status = 0;
+
+*/
 
 /* Get zerver names inj barches from sugarcrm DB */
 $sqlSpecificbatch = "SELECT 
