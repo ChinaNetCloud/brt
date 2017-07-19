@@ -29,7 +29,7 @@ $stmt_sugar->execute(array(':deleted' => '0'
     , ':backuped_c' => 1
     , ':status_active_c' => 'Active'));
 $rowsSugar = $stmt_sugar->fetchAll(PDO::FETCH_COLUMN, 0);
-//var_dump($rows_sugar);
+//var_dump($rowsSugar);
 
 /* Zabbix production groups */
 $sqlGetTotalZabbixProd = "SELECT host
@@ -52,7 +52,7 @@ $rowsZabbix = $stmt_zabbix->fetchAll(PDO::FETCH_COLUMN, 0);
 //print_r($rowsZabbix);
 
 $resultInsertsectZabbixSugar = array_intersect($rowsZabbix, $rowsSugar);
-//print_r($resultInsertsect);
+//print_r($resultInsertsectZabbixSugar);
 
 /* Select all active servers */
 $sqlGetCurrentBrtSrv = 'SELECT name as host FROM srvrs_servers '

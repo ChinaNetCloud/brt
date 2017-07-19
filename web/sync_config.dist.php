@@ -12,3 +12,10 @@ $database_zabbix_port = "";
 $database_zabbix_name_db = "zabbix_db";
 $database_zabbix_user = "user_zabbix";
 $database_zabbix_password = "password";
+
+/* Database configs BRT*/
+$database_brt_host = "127.0.0.1";
+$database_brt_port = "3306";
+$database_brt_name_db = "brt001";
+$database_brt_user = "user_drt_db"; // Can use the same as synfony
+$database_brt_password = "password";
