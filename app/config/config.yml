@@ -53,14 +53,14 @@ doctrine:
                 password: '%database_password%'
                 charset: UTF8
 
-            sugar:
-                driver: pdo_mysql
-                host: '%database_sugar_host%'
-                port: '%database_sugar_port%'
-                dbname: '%database_sugar_name%'
-                user: '%database_sugar_user%'
-                password: '%database_sugar_password%'
-                charset: UTF8
+#            sugar:
+#                driver: pdo_mysql
+#                host: '%database_sugar_host%'
+#                port: '%database_sugar_port%'
+#                dbname: '%database_sugar_name%'
+#                user: '%database_sugar_user%'
+#                password: '%database_sugar_password%'
+#                charset: UTF8
 
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
@@ -72,10 +72,10 @@ doctrine:
                 connection: default
                 mappings:
                    NCbrtBundle:  ~ 
-            sugar:
-                connection: sugar
-                mappings:
-                    NCbrtBundle:  ~
+#            sugar:
+#                connection: sugar
+#                mappings:
+#                    NCbrtBundle:  ~
       
 
 # Swiftmailer Configuration
