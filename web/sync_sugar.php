@@ -2,9 +2,9 @@
 // Database config
 require_once './sync_config.php';
 // Count Devices
-$sqlGetTotalDevices = "SELECT 
+$sqlGetTotalDevices = "SELECT
         name as host
-    FROM 
+    FROM
         srvrs_servers JOIN srvrs_servers_cstm ON srvrs_servers_cstm.id_c = srvrs_servers.id
     WHERE
         deleted=:deleted AND backuped_c =:backuped_c
@@ -48,11 +48,11 @@ $stmt_zabbix->execute(array(':status' => '0'
     , ':groupid24x7' => 23
     , ':groupid9x5' => 46));
 $rowsZabbix = $stmt_zabbix->fetchAll(PDO::FETCH_COLUMN, 0);
-//print_r($rowsSugar);
+// print_r($rowsSugar);
 //print_r($rowsZabbix);
 
 $resultInsertsectZabbixSugar = array_intersect($rowsZabbix, $rowsSugar);
-//print_r($resultInsertsectZabbixSugar);
+// print_r($resultInsertsectZabbixSugar);
 
 /* Select all active servers */
 $sqlGetCurrentBrtSrv = 'SELECT name as host FROM srvrs_servers '
@@ -71,7 +71,9 @@ $rowsBrt = $stmtBrt->fetchAll(PDO::FETCH_COLUMN, 0);
 
 /* new active servers */
 $resultNewServers = array_diff($resultInsertsectZabbixSugar, $rowsBrt);
-print_r($resultNewServers);
+
+$resultStatusChangeServers = array_diff($rowsBrt, $resultInsertsectZabbixSugar);
+// print_r($resultStatusChangeServers);
 
 /* Inser all new servers */
 $sqlInsertServer = "INSERT INTO srvrs_servers
@@ -91,20 +93,36 @@ $rowsBrtNotActive = $stmtBrt->fetchAll(PDO::FETCH_COLUMN, 0);
 
 $resultUpdateServers = array_intersect($rowsBrtNotActive, $resultInsertsectZabbixSugar);
 
-print_r($resultUpdateServers);
+// print_r($resultUpdateServers);
 
 foreach ($resultUpdateServers as $value){
     $sqlUpdateServer = "SET SQL_SAFE_UPDATES=:updates_disable;";
     $stmtBrt = $dbBrt->prepare($sqlUpdateServer);
     $stmtBrt->execute(array(':updates_disable' => 0));
-    
+
     $sqlUpdateServer = "UPDATE srvrs_servers
         SET status_active = :status_active
         WHERE name =:name;";
     $stmtBrt = $dbBrt->prepare($sqlUpdateServer);
-    $stmtBrt->execute(array(':status_active' => 1, ':name' => $value));  
-    
+    $stmtBrt->execute(array(':status_active' => 1, ':name' => $value));
+
     $sqlUpdateServer = "SET SQL_SAFE_UPDATES=:updates_enable;";
     $stmtBrt = $dbBrt->prepare($sqlUpdateServer);
-    $stmtBrt->execute(array(':updates_enable' => 1)); 
+    $stmtBrt->execute(array(':updates_enable' => 1));
+}
+
+foreach ($resultStatusChangeServers as $value){
+  $sqlUpdateServer = "SET SQL_SAFE_UPDATES=:updates_disable;";
+  $stmtBrt = $dbBrt->prepare($sqlUpdateServer);
+  $stmtBrt->execute(array(':updates_disable' => 0));
+
+  $sqlUpdateServer = "UPDATE srvrs_servers
+      SET status_active = :status_active
+      WHERE name =:name;";
+  $stmtBrt = $dbBrt->prepare($sqlUpdateServer);
+  $stmtBrt->execute(array(':status_active' => 0, ':name' => $value));
+
+  $sqlUpdateServer = "SET SQL_SAFE_UPDATES=:updates_enable;";
+  $stmtBrt = $dbBrt->prepare($sqlUpdateServer);
+  $stmtBrt->execute(array(':updates_enable' => 1));
 }
