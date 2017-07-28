@@ -1,0 +1,14 @@
+# This file is auto-generated during the composer install
+parameters:
+    #    dbal: 
+    database_host: 127.0.0.1
+    database_port: 3306
+    database_name: brt001
+    database_user: root
+    database_password: wCjukcpux8;9
+
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    secret: ca3681f5224316d1643d1e9494655fd861893a09

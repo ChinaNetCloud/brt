@@ -5,14 +5,14 @@ namespace NCbrtBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use \Symfony\Component\HttpFoundation\Request;
 use \Symfony\Component\HttpFoundation\Response;
 
 use NCbrtBundle\Entity\SrvrsServers;
 use NCbrtBundle\Entity\NcBackupEvents;
 
-use NCbrtBundle\Tools\Toools;
+use NCbrtBundle\Tools\Tools;
 
 
 class DefaultController extends Controller
@@ -49,7 +49,8 @@ class DefaultController extends Controller
                 ->setParameter('server_name', $content['srvname'])
                 ->getQuery()
                 ->getResult();
-
+//        var_dump($selectAll);
+//        exit(0);
         /* Add Server if not in DB */
         $serverEntity = new SrvrsServers();
         if (empty($selectAll)) {
@@ -58,8 +59,7 @@ class DefaultController extends Controller
             $em->persist($serverEntity);
             $em->flush();
         } else {
-//            $serverEntity= Toools::array_to_object($selectAll);
-//            $serverEntity->fro
+            $serverEntity= Tools::array_to_object($selectAll[0]);
         }
         /* At this point the server is already on DB I should have the ID */
         
@@ -72,7 +72,7 @@ class DefaultController extends Controller
             $backupEvent->setLog($content['log']);
             $backupEvent->setSuccess($content['result']);
             $backupEvent->setBackupType($content['destination']);
-            $em->persist($serverEntity);
+            $em->persist($backupEvent);
             $em->flush();
             
         } else {
