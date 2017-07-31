@@ -3,6 +3,7 @@
 namespace NCbrtBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * SrvrsServers
@@ -43,6 +44,16 @@ class SrvrsServers
      */
     private $statusActive;   
 
+    /**
+     * One SrvrsServers has Many NcBackupEvents.
+     * @ORM\OneToMany(targetEntity="NcBackupEvents", mappedBy="SrvrsServers")
+     */
+    private $ncBackupEvents;
+
+    public function __construct() {
+        $this->ncBackupEvents = new ArrayCollection();
+    }    
+    
     /**
      * Get id
      *

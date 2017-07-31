@@ -4,8 +4,6 @@ namespace NCbrtBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use \Symfony\Component\HttpFoundation\Request;
 use \Symfony\Component\HttpFoundation\Response;
 
@@ -22,13 +20,15 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-        $selectAll = $em->getRepository('NCbrtBundle:SrvrsServers')
-                ->createQueryBuilder('s')
-                ->innerJoin('s.NcBackupEvents', 'n')
-                ->where('s.statusActive = :statusActive')
-                ->setParameter('statusActive', 0)
-                ->setMaxResults(3);
+//        $resultsServersEvents = $this->getDoctrine()
+//        ->getRepository(NcBackupEvents::class)
+//                ->find(1);
+////                ->findByName('xxxx');
+//        print_r($resultsServersEvents->getSrvrsServers()->getId());
+        $a = $this->getDoctrine()
+                ->getRepository(NcBackupEvents::class)
+                ->findOneBysrvrsServers(46);
+        print_r($a->getId());
         return $this->render('NCbrtBundle:Default:index.html.twig');
     }
     
@@ -49,8 +49,7 @@ class DefaultController extends Controller
                 ->setParameter('server_name', $content['srvname'])
                 ->getQuery()
                 ->getResult();
-//        var_dump($selectAll);
-//        exit(0);
+
         /* Add Server if not in DB */
         $serverEntity = new SrvrsServers();
         if (empty($selectAll)) {
@@ -79,8 +78,9 @@ class DefaultController extends Controller
             return new Response('NO Server selected after post');
         }
 
-        
         /* Response with result 200 plus message*/
-        return new Response('New Backup result added for server: ' . $serverEntity->getName());
+        return new Response('New Backup result added for server: ' 
+                . $serverEntity->getName(). '. This backup ID is: '
+                . $backupEvent->getId() . '.');
     }
 }
