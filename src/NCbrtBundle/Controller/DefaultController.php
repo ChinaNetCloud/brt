@@ -20,18 +20,20 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-//        $resultsServersEvents = $this->getDoctrine()
-//        ->getRepository(NcBackupEvents::class)
-//                ->find(1);
-////                ->findByName('xxxx');
-//        print_r($resultsServersEvents->getSrvrsServers()->getId());
-        $a = $this->getDoctrine()
-                ->getRepository(NcBackupEvents::class)
-                ->findOneBysrvrsServers(46);
-        print_r($a->getId());
+        $paramaters = array('id' => 1, 'backupmethod' => 'ncscript-py');
+        $em = $this->getDoctrine()
+                ->getRepository('NCbrtBundle:NcBackupEvents')
+                ->findByServerBackup($paramaters);
+//                ->findBy($paramater);
+//                ->getResult();
+//                ->findBy($paramater);
+        foreach($em as $value){
+            print_r(gettype($value));
+            print_r($value->getSrvrsServers()->getName());
+        }
         return $this->render('NCbrtBundle:Default:index.html.twig');
     }
-    
+
     /**
      * @Route("/backup/")
      */

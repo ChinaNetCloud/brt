@@ -9,7 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="nc_backup_events", indexes={@ORM\Index(name="backupmethod_idx", columns={"backupmethod"}), @ORM\Index(name="idx_date_created", columns={"date_created"}), @ORM\Index(name="id_success", columns={"id", "success"}), @ORM\Index(name="fk_nc_backup_events_srvrs_servers_idx", columns={"srvrs_servers_id"}), @ORM\Index(name="date_create_d_server_name", columns={"date_created"})})
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="NCbrtBundle\Entity\NcBackupEventsRepository")
  */
+
+
 class NcBackupEvents
 {
     /**

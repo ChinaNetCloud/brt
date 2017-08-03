@@ -135,4 +135,38 @@ class SrvrsServers
     {
         return $this->statusActive;
     }
+
+    /**
+     * Add ncBackupEvent
+     *
+     * @param \NCbrtBundle\Entity\NcBackupEvents $ncBackupEvent
+     *
+     * @return SrvrsServers
+     */
+    public function addNcBackupEvent(\NCbrtBundle\Entity\NcBackupEvents $ncBackupEvent)
+    {
+        $this->ncBackupEvents[] = $ncBackupEvent;
+
+        return $this;
+    }
+
+    /**
+     * Remove ncBackupEvent
+     *
+     * @param \NCbrtBundle\Entity\NcBackupEvents $ncBackupEvent
+     */
+    public function removeNcBackupEvent(\NCbrtBundle\Entity\NcBackupEvents $ncBackupEvent)
+    {
+        $this->ncBackupEvents->removeElement($ncBackupEvent);
+    }
+
+    /**
+     * Get ncBackupEvents
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getNcBackupEvents()
+    {
+        return $this->ncBackupEvents;
+    }
 }
