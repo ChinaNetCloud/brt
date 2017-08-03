@@ -63,25 +63,32 @@ class DefaultController extends Controller
             $serverEntity= Tools::array_to_object($selectAll[0]);
         }
         /* At this point the server is already on DB I should have the ID */
-        
+
+
+        print_r($content);
+
         /* Create NEW backup event */
         if (!empty((array($serverEntity)))){
             $backupEvent = new NcBackupEvents();
             $backupEvent->setSrvrsServers($serverEntity);
+            $backupEvent->setSuccess($content['result']);
             $backupEvent->setBackupmethod($content['bckmethod']);
             $backupEvent->setBackupsize($content['size']);
             $backupEvent->setLog($content['log']);
+            $backupEvent->setError($content['error']);
+            $date = date_create(date('Y-m-d H:i:s'));
+            $backupEvent->setDateCreated($date);
             $backupEvent->setSuccess($content['result']);
             $backupEvent->setBackupType($content['destination']);
             $em->persist($backupEvent);
             $em->flush();
-            
+
         } else {
             return new Response('NO Server selected after post');
         }
 
         /* Response with result 200 plus message*/
-        return new Response('New Backup result added for server: ' 
+        return new Response('New Backup result added for server: '
                 . $serverEntity->getName(). '. This backup ID is: '
                 . $backupEvent->getId() . '.');
     }
