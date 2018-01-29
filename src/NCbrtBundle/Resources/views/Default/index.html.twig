@@ -2,6 +2,62 @@
 
 {% block dynamic_content %}
     <div class="header">
-        <h1>Your lucky number is HELLO</h1>
+        <h1>Current report </h1>
+    </div>
+    <div class="">
+                {{ form_start(form) }}
+                    {{ form_errors(form) }}
+                    <div class="inline-list">
+                        {{ form_label(form.name)}}
+                        {{ form_widget(form.name) }}
+                        {{ form_errors(form.name)}}
+                        {{ form_label(form.method)}}
+                        {{ form_widget(form.method) }}
+                        {{ form_errors(form.method)}}
+                        {{ form_label(form.status)}}
+                        {{ form_widget(form.status) }}
+                        {{ form_errors(form.status)}}
+                        {{ form_label(form.comparer)}}
+                        {{ form_widget(form.comparer) }}
+                        {{ form_errors(form.comparer)}}
+                        {{ form_label(form.size)}}
+                        {{ form_widget(form.size) }}
+                        {{ form_errors(form.size)}}
+                        {{ form_widget(form.search) }}
+                    </div>
+                    <p>
+                    <div>
+                        
+                    </div>
+                {{ form_end(form) }}
+    </div>
+    <p>
+    <div class="">
+        {% if table is defined %}
+        <table class="table-hover table-responsive table-bordered table-striped">
+            <tr>
+                <td>Actions</td>
+                <td>Server Name</td>
+                <td>Date created</td>
+                <td>Execution Status</td>
+                <td>Size (MB)</td>
+                <td>Backup Method</td>
+            </tr>
+            {% for row in table %}
+                <tr>
+                    <td></td>
+                    <td>{{ row.name }}</td>
+{#  
+    Date time the time shown depends on the php.ini 
+    timezone this might require to be changed as per customer or account config 
+#}
+                    <td>{{ row.date_created is empty ? "" : row.date_created | date("m/d/Y H:i:s")}}</td>
+                    <td>{{ row.status == '0' ? "Success" : row.status == '1' ? "Failed" : "Warning"}}</td>
+                    <td>{{ row.size }}</td>
+                    <td>{{ row.method }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
     </div>
 {% endblock %}

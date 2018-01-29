@@ -12,11 +12,22 @@ class NcBackupEventsRepository extends \Doctrine\ORM\EntityRepository
 {
     public function findByServerBackup($parameters)
     {
-        $dql = 'SELECT n FROM NCbrtBundle:NcBackupEvents n 
-            WHERE n.backupmethod LIKE :backupmethod';
+        $dql = 'SELECT n FROM NCbrtBundle:NcBackupEvents n
+            JOIN n.srvrsServers s
+            WHERE n.backupmethod LIKE :backupmethod 
+            AND s.name LIKE :server_name 
+            AND n.success LIKE :status
+            ORDER BY n.dateCreated DESC';
         $query = $this->getEntityManager()
                 ->createQuery($dql)
-                ->setParameter('backupmethod', $parameters['backupmethod']);
+                ->setMaxResults(100)  // Change this to use dynamic limits instead
+                ->setParameter('backupmethod',
+                        '%' . $parameters['backupmethod'] . '%')
+                ->setParameter('server_name',
+                        '%' . $parameters['server_name'] . '%')
+                ->setParameter('status',
+                        '%' . $parameters['status'] . '%');
+
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {

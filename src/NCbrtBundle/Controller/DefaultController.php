@@ -1,5 +1,4 @@
 <?php
-
 namespace NCbrtBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -12,26 +11,79 @@ use NCbrtBundle\Entity\NcBackupEvents;
 
 use NCbrtBundle\Tools\Tools;
 
+use NCbrtBundle\Form\Type\SrvrsServersType;
+use NCbrtBundle\Tools\SizeConvert;
 
 class DefaultController extends Controller
 {
     /**
      * @Route("/")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $paramaters = array('id' => 1, 'backupmethod' => 'ncscript-py');
+        $form = $this->createForm(SrvrsServersType::class);
+        $form->handleRequest($request);
+                $paramaters = array('backupmethod' => '');
+        if ($form->isSubmitted() && $form->isValid()){
+            $data = $form->getData();
+            $paramaters['server_name'] = $data['name'];
+            $paramaters['backupmethod'] = $data['method'];
+            $paramaters['status'] = $data['status'];
+            $paramaters['size'] = $data['size'];
+            
+            if ($paramaters['backupmethod'] == '0'){
+                $paramaters['backupmethod'] = '';
+            }
+            if ($paramaters['status'] == '-1'){
+                $paramaters['status'] = '';
+            }
+                    
+        }
+        if (!isset($paramaters['server_name'])){
+            $paramaters['server_name'] = '';
+        }
+        if (!isset($paramaters['status'])){
+            $paramaters['status'] = '';
+        }
+        if (!isset($paramaters['size'])){
+            $paramaters['size'] = '';
+        }
         $em = $this->getDoctrine()
                 ->getRepository('NCbrtBundle:NcBackupEvents')
                 ->findByServerBackup($paramaters);
 //                ->findBy($paramater);
 //                ->getResult();
 //                ->findBy($paramater);
+        $table_results = array();
         foreach($em as $value){
-            print_r(gettype($value));
-            print_r($value->getSrvrsServers()->getName());
+            $aux = array();
+            $aux['name'] =  $value->getSrvrsServers()->getName();
+            $aux['date_created'] =  $value->getDateCreated(); //Convert to string like Old HR system.
+            $aux['status'] =  $value->getSuccess();
+            $aux['size'] =  $value->getBackupsize();
+            
+            /* Filter Size */
+            $aSize = new SizeConvert();
+            $aux['size'] = $aSize->SizeCovertionFromKB($aux['size']);
+            $aux['method'] =  $value->getBackupmethod();
+            /*
+             *  These fields are also available, they will be usefull in show
+             *  details, but not here. Need to think about that. 
+             */
+            $aux['id_event'] =  $value->getId();
+            $aux['id_server'] =  $value->getSrvrsServers()->getId();
+            $aux['description'] =  $value->getSrvrsServers()->getDescription();
+            $aux['status_active'] =  $value->getSrvrsServers()->getStatusActive();
+            $aux['log'] =  $value->getLog();
+            $aux['error'] =  $value->getError();
+            $aux['type'] =  $value->getBackupType();
+            $table_results [] = $aux;
         }
-        return $this->render('NCbrtBundle:Default:index.html.twig');
+
+
+        return $this->render('NCbrtBundle:Default:index.html.twig', 
+                array('form' => $form->createView(),
+                    'table' => $table_results));
     }
 
     /**
@@ -64,7 +116,6 @@ class DefaultController extends Controller
         }
         /* At this point the server is already on DB I should have the ID */
 
-
         print_r($content);
 
         /* Create NEW backup event */
@@ -73,6 +124,11 @@ class DefaultController extends Controller
             $backupEvent->setSrvrsServers($serverEntity);
             $backupEvent->setSuccess($content['result']);
             $backupEvent->setBackupmethod($content['bckmethod']);
+            
+            /* Filter size and sanitize it */
+            $aSizeConvertion = new SizeConvert();
+            $content['size'] = $aSizeConvertion->SizeConversionToKB($content['size']);
+
             $backupEvent->setBackupsize($content['size']);
             $backupEvent->setLog($content['log']);
             $backupEvent->setError($content['error']);
