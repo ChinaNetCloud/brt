@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}BRT | Backup Report Tool{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         {% stylesheets '@bootstrap_css' %}
@@ -15,17 +15,19 @@
             {% block header %}
                 <nav class="center-block">
                     <ul class="nav nav-justified">
-                        <li class="">Logo/Home</li>
-                        <li class="">Dashboard</li>
-                        <li class="">Reports&filters</li>
-                        <li class="">About/Authors</li>
+                        <li class=""><a href="{{ path('search_home') }}">Home</a></li>
+{#                        <li class=""><a href="{{ path('search_home') }}">Dashboard/Report</a></li>
+                        <li class=""><a href="{{ path('search_home') }}">Configure</a></li>#}
+                        <li class=""><a href="{{ path('about_main') }}">About</a></li>
                     </ul>
                 </nav>
             {% endblock %}
             {% block dynamic_content %}{% endblock %}
             {% block footer %}
                 <nav class="nav nav-justified center-block">
-                    <div class="text-bold text-center"><h6>Backup report tool <a>about</a></h6></div>          
+                    <div class="text-bold text-center">
+                        <h6>Backup report tool <a href="{{ path('about_main') }}">about</a></h6>
+                    </div>          
                 </nav>
             {% endblock %}
         </div>

@@ -2,7 +2,7 @@
 
 {% block dynamic_content %}
     <div class="header">
-        <h1>Current report </h1>
+        <h3>Search</h3>
     </div>
     <div class="">
                 {{ form_start(form) }}
@@ -23,6 +23,9 @@
                         {{ form_label(form.size)}}
                         {{ form_widget(form.size) }}
                         {{ form_errors(form.size)}}
+                        {{ form_label(form.count)}}
+                        {{ form_widget(form.count) }}
+                        {{ form_errors(form.count)}}
                         {{ form_widget(form.search) }}
                     </div>
                     <p>
@@ -36,6 +39,7 @@
         {% if table is defined %}
         <table class="table-hover table-responsive table-bordered table-striped">
             <tr>
+                <td>#</td>
                 <td>Actions</td>
                 <td>Server Name</td>
                 <td>Date created</td>
@@ -43,9 +47,10 @@
                 <td>Size (MB)</td>
                 <td>Backup Method</td>
             </tr>
-            {% for row in table %}
+            {% for key, row in table %}
                 <tr>
-                    <td></td>
+                    <td>{{ key + 1 }}</td>
+                    <td><a href="{{ path('event_by_id', {'event_id': row.id_event}) }}">View</a></td>
                     <td>{{ row.name }}</td>
 {#  
     Date time the time shown depends on the php.ini 

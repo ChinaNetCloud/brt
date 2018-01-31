@@ -16,18 +16,38 @@ class NcBackupEventsRepository extends \Doctrine\ORM\EntityRepository
             JOIN n.srvrsServers s
             WHERE n.backupmethod LIKE :backupmethod 
             AND s.name LIKE :server_name 
-            AND n.success LIKE :status
-            ORDER BY n.dateCreated DESC';
-        $query = $this->getEntityManager()
-                ->createQuery($dql)
-                ->setMaxResults(100)  // Change this to use dynamic limits instead
-                ->setParameter('backupmethod',
+            AND n.success LIKE :status';
+
+        if (isset($parameters['size']) && $parameters['size'] != null && 
+                $parameters['size'] != '' && $parameters['size'] <> 0){
+            if ($parameters['size'] >= 0){
+                $dql .= ' AND n.backupsize ' . $parameters['comparer'] . ' :size';
+            $dql .= ' ORDER BY n.dateCreated DESC';
+            }
+        } else {
+            $dql .= ' ORDER BY n.dateCreated DESC';
+        } 
+        $query = $this->getEntityManager()->createQuery($dql);
+        if (isset($parameters['size']) && $parameters['size'] != null && 
+                $parameters['size'] != '' && $parameters['size'] <> 0){
+            if ($parameters['size'] >= 0){
+            
+            $query ->setMaxResults($parameters['count'])->setParameter('backupmethod',
+                        '%' . $parameters['backupmethod'] . '%')
+                ->setParameter('server_name',
+                        '%' . $parameters['server_name'] . '%')
+                ->setParameter('status',
+                        '%' . $parameters['status'] . '%')
+                ->setParameter('size', $parameters['size']);
+            }
+        } else {
+            $query ->setMaxResults($parameters['count'])->setParameter('backupmethod',
                         '%' . $parameters['backupmethod'] . '%')
                 ->setParameter('server_name',
                         '%' . $parameters['server_name'] . '%')
                 ->setParameter('status',
                         '%' . $parameters['status'] . '%');
-
+        }
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {

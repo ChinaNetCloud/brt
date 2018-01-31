@@ -42,6 +42,17 @@ class SrvrsServersType  extends AbstractType {
                         'Smaller or equal' => '<=')))
                 ->add('size', TextType::class, array('required' => false,
                     'label' => ' than (MB): '))
+                ->add('count', ChoiceType::class, 
+                        array('choices' => 
+                            array('25' => '25',
+                                '10' => '10', 
+                                '50' => '50',
+                                '100' => '100',
+                                '250' => '250',
+                                '500' => '500',
+                                '1000' => '1000',
+                                '2500' => '2500'),
+                            'label' => 'Results count: '))
                 ->add('search', SubmitType::class, array('label' => 'Search'));
     }
     public function getName() {

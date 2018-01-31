@@ -17,7 +17,7 @@ use NCbrtBundle\Tools\SizeConvert;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/", name="search_home")
      */
     public function indexAction(Request $request)
     {
@@ -30,14 +30,17 @@ class DefaultController extends Controller
             $paramaters['backupmethod'] = $data['method'];
             $paramaters['status'] = $data['status'];
             $paramaters['size'] = $data['size'];
-            
+            $aSizeConvertion = new SizeConvert();
+            $paramaters['size'] = $aSizeConvertion->SizeConversionToKB($paramaters['size'].' MB');
+            $paramaters['comparer'] = $data['comparer'];
+            $paramaters['count'] = $data['count'];
+
             if ($paramaters['backupmethod'] == '0'){
                 $paramaters['backupmethod'] = '';
             }
             if ($paramaters['status'] == '-1'){
                 $paramaters['status'] = '';
             }
-                    
         }
         if (!isset($paramaters['server_name'])){
             $paramaters['server_name'] = '';
@@ -45,9 +48,17 @@ class DefaultController extends Controller
         if (!isset($paramaters['status'])){
             $paramaters['status'] = '';
         }
+//        var_dump($paramaters['size']);
         if (!isset($paramaters['size'])){
             $paramaters['size'] = '';
         }
+        if (!isset($paramaters['comparer'])){
+            $paramaters['comparer'] = '';
+        }
+        if (!isset($paramaters['count'])){
+            $paramaters['count'] = 25;
+        } 
+        $paramaters['count'] = intval($paramaters['count']);
         $em = $this->getDoctrine()
                 ->getRepository('NCbrtBundle:NcBackupEvents')
                 ->findByServerBackup($paramaters);
@@ -55,6 +66,7 @@ class DefaultController extends Controller
 //                ->getResult();
 //                ->findBy($paramater);
         $table_results = array();
+        
         foreach($em as $value){
             $aux = array();
             $aux['name'] =  $value->getSrvrsServers()->getName();
@@ -70,17 +82,16 @@ class DefaultController extends Controller
              *  These fields are also available, they will be usefull in show
              *  details, but not here. Need to think about that. 
              */
-            $aux['id_event'] =  $value->getId();
-            $aux['id_server'] =  $value->getSrvrsServers()->getId();
-            $aux['description'] =  $value->getSrvrsServers()->getDescription();
-            $aux['status_active'] =  $value->getSrvrsServers()->getStatusActive();
-            $aux['log'] =  $value->getLog();
-            $aux['error'] =  $value->getError();
-            $aux['type'] =  $value->getBackupType();
+            $aux['id_event'] = $value->getId();
+            $aux['id_server'] = $value->getSrvrsServers()->getId();
+            $aux['description'] = $value->getSrvrsServers()->getDescription();
+            $aux['status_active'] = $value->getSrvrsServers()->getStatusActive();
+            $aux['log'] = $value->getLog();
+            $aux['error'] = $value->getError();
+            $aux['type'] = $value->getBackupType();
             $table_results [] = $aux;
         }
-
-
+        
         return $this->render('NCbrtBundle:Default:index.html.twig', 
                 array('form' => $form->createView(),
                     'table' => $table_results));
@@ -147,5 +158,21 @@ class DefaultController extends Controller
         return new Response('New Backup result added for server: '
                 . $serverEntity->getName(). '. This backup ID is: '
                 . $backupEvent->getId() . '.');
+    }
+    /**
+     * @Route("/event/{event_id}/", name="event_by_id")
+     */
+    public function viewAction($event_id){
+        $em = $this->getDoctrine()
+                ->getRepository('NCbrtBundle:NcBackupEvents')
+                ->find($event_id);
+        return $this->render('NCbrtBundle:Default:details.html.twig', 
+                array('event' => $em));
+    }
+    /**
+     * @Route("/about", name="about_main")     
+     */
+    public function aboutAction(){
+        return $this->render('NCbrtBundle:About:about.html.twig');
     }
 }

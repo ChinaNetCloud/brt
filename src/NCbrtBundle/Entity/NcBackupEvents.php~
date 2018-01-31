@@ -41,7 +41,7 @@ class NcBackupEvents
     /**
      * @var string
      *
-     * @ORM\Column(name="backupsize", type="string", length=45, nullable=true)
+     * @ORM\Column(name="backupsize", type="integer", length=45, nullable=true)
      */
     private $backupsize;
 
