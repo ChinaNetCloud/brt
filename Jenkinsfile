@@ -12,11 +12,11 @@ pipeline {
 		    ./composer.phar update
 		'''
             }
-
+/*
 	stage('Test') {
 	    steps {
 		sh ''
-	    }
+	    } */
         }
     }
 }
