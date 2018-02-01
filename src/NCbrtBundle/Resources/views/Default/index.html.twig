@@ -26,6 +26,9 @@
                         {{ form_label(form.count)}}
                         {{ form_widget(form.count) }}
                         {{ form_errors(form.count)}}
+                        {{ form_label(form.active)}}
+                        {{ form_widget(form.active) }}
+                        {{ form_errors(form.active)}}
                         {{ form_widget(form.search) }}
                     </div>
                     <p>
@@ -46,6 +49,7 @@
                 <td>Execution Status</td>
                 <td>Size (MB)</td>
                 <td>Backup Method</td>
+                <td>Production</td>
             </tr>
             {% for key, row in table %}
                 <tr>
@@ -60,6 +64,7 @@
                     <td>{{ row.status == '0' ? "Success" : row.status == '1' ? "Failed" : "Warning"}}</td>
                     <td>{{ row.size }}</td>
                     <td>{{ row.method }}</td>
+                    <td>{{ row.status_active == '1' ? "Active" : "Not Active" }}</td>
                 </tr>
             {% endfor %}
         </table>

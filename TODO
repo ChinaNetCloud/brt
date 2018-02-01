@@ -1,6 +1,8 @@
 BRT development road map.
 TODO:
     - Machines not reporting.
+    - Statistics.
+    - Enable Active in the search.
 
 DONE:
     - limit (Results count).

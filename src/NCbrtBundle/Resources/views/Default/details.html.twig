@@ -8,6 +8,7 @@
         <li>Details: {{event.backupmethod}}</li>
         <li>Status: 
             {{event.success == '0' ? "Success" : event.success == '1' ? "Failed" : "Warning"}}</li>
+        <li></li>
         <li>Date created: {{ event.dateCreated is empty ? "" : event.dateCreated | date("m/d/Y H:i:s")}}</li>
         <li>Backup size: {{event.backupsize}}</li>
         <li>LEGACY?? Error: {{event.error}}</li>

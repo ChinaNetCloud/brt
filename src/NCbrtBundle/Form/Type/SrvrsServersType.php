@@ -17,6 +17,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class SrvrsServersType  extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
@@ -53,6 +54,9 @@ class SrvrsServersType  extends AbstractType {
                                 '1000' => '1000',
                                 '2500' => '2500'),
                             'label' => 'Results count: '))
+                ->add('active', CheckboxType::class, 
+                        array('label' => 'Production Only',
+                            'data' =>  TRUE))
                 ->add('search', SubmitType::class, array('label' => 'Search'));
     }
     public function getName() {
