@@ -30,7 +30,7 @@ class SrvrsServersType  extends AbstractType {
                                     'nc-backup-py' => 'ncscript-py', 
                                     'ncbackup' => 'ncbackup',
                                     'other' => '-1'), 
-                                'label' => 'Backup Method: '))
+                                'label' => 'Method: '))
                 ->add('status', ChoiceType::class, 
                         array('choices' => 
                             array('All' => '-1', 
@@ -56,7 +56,7 @@ class SrvrsServersType  extends AbstractType {
                             'label' => 'Results count: '))
                 ->add('active', CheckboxType::class, 
                         array('label' => 'Production Only',
-                            'data' =>  TRUE))
+                            'data' =>  TRUE, 'required' => false))
                 ->add('search', SubmitType::class, array('label' => 'Search'));
     }
     public function getName() {

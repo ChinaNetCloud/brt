@@ -1,9 +1,12 @@
 BRT development road map.
 TODO:
-    - Machines not reporting.
-    - Statistics.
-    - Enable Active in the search.
+    - Machines not reporting (P0).
+    - Statistics (P1).
+    - Show page name on the title (P5).
+    - Add paging feature. (P5)
+    - Add Order rows by other criteria. (P5)
 
 DONE:
     - limit (Results count).
     - Add links to the top in general template and document pending here.
+    - Enable Active in the search.

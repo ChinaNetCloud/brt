@@ -34,7 +34,11 @@ class DefaultController extends Controller
             $paramaters['size'] = $aSizeConvertion->SizeConversionToKB($paramaters['size'].' MB');
             $paramaters['comparer'] = $data['comparer'];
             $paramaters['count'] = $data['count'];
-
+            if ($data['active'] === true){
+                $paramaters['active'] = '1';
+            } else {
+                $paramaters['active'] = '0';
+            }
             if ($paramaters['backupmethod'] == '0'){
                 $paramaters['backupmethod'] = '';
             }
@@ -57,23 +61,33 @@ class DefaultController extends Controller
         }
         if (!isset($paramaters['count'])){
             $paramaters['count'] = 25;
-        } 
+        }
+        if (!isset($paramaters['active'])){
+            $paramaters['active'] = '1';
+        }
         $paramaters['count'] = intval($paramaters['count']);
+        // This selects a collection of complete objects, 
+        // this is not good for very big queries as we do not need stuff like 
+        // the log at this point. The SOLUTION implicates to modify the 
+        // NcBackupEventsRepository.php for it to select only the wanted fields 
+        // on the DQL query. The change will also entail the change from Objects 
+        // to array in the following code.
         $em = $this->getDoctrine()
                 ->getRepository('NCbrtBundle:NcBackupEvents')
                 ->findByServerBackup($paramaters);
 //                ->findBy($paramater);
 //                ->getResult();
 //                ->findBy($paramater);
+
         $table_results = array();
-        
         foreach($em as $value){
             $aux = array();
             $aux['name'] =  $value->getSrvrsServers()->getName();
             $aux['date_created'] =  $value->getDateCreated(); //Convert to string like Old HR system.
             $aux['status'] =  $value->getSuccess();
             $aux['size'] =  $value->getBackupsize();
-            
+            $aux['status_active'] = $value->getSrvrsServers()->getStatusActive();
+
             /* Filter Size */
             $aSize = new SizeConvert();
             $aux['size'] = $aSize->SizeCovertionFromKB($aux['size']);
@@ -85,7 +99,6 @@ class DefaultController extends Controller
             $aux['id_event'] = $value->getId();
             $aux['id_server'] = $value->getSrvrsServers()->getId();
             $aux['description'] = $value->getSrvrsServers()->getDescription();
-            $aux['status_active'] = $value->getSrvrsServers()->getStatusActive();
             $aux['log'] = $value->getLog();
             $aux['error'] = $value->getError();
             $aux['type'] = $value->getBackupType();
