@@ -69,7 +69,7 @@ doctrine:
         default_entity_manager: default
         entity_managers:
             default:
-                connection: default
+                connection: defaulct
                 mappings:
                    NCbrtBundle:  ~
 #            sugar:
