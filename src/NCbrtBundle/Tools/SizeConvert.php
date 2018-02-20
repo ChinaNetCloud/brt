@@ -1,5 +1,4 @@
 <?php
-namespace NCbrtBundle\Tools;
 /*
  * Autho: Abel Guzman Sanchez
  * 2017

@@ -37,7 +37,11 @@ class DashboardController  extends Controller {
      * - S3: Success, failed, warning, no report
      * - OSS: Success, failed, warning, no report
      * - Others: Success, failed, warning, no report
-     *      */
+     */
+    
+     /**
+     * @Route("/dashboard", name="stats_general")
+     */
     public function showAction(){
         
     }

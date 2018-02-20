@@ -1,0 +1,30 @@
+{% extends 'general.html.twig' %}
+
+{% block dynamic_content %}
+    <div class="panel panel-info">  
+        <div class="panel-heading">
+                  <h3 class="panel-title">Edit backup frecuency</h3>
+        </div>
+        <div class="panel-body">
+            <div class="inline-list">
+                <h5>Server Name: {{ server.name }} </h5>
+                <h5>{{ server.description is not empty ?
+                        "Description: " + server.description  
+                        : "Description: Empty"}} </h5>
+                <h5>Status: {{ server.statusActive == '1' ? "Active" : "Not Active" }} </h5>
+            </div>    
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+            <div class="inline-list">
+                {{ form_label(form.frecuency)}}
+                {{ form_widget(form.frecuency) }}
+                {{ form_errors(form.frecuency)}}
+                {{ form_label(form.measure_unit)}}
+                {{ form_widget(form.measure_unit) }}
+                {{ form_errors(form.measure_unit)}}
+                {{ form_widget(form.save_submit, {'attr': {'class': 'btn btn-lg btn-info'}}) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

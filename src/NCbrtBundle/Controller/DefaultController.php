@@ -23,7 +23,7 @@ class DefaultController extends Controller
     {
         $form = $this->createForm(SrvrsServersType::class);
         $form->handleRequest($request);
-                $paramaters = array('backupmethod' => '');
+        $paramaters = array('backupmethod' => '');
         if ($form->isSubmitted() && $form->isValid()){
             $data = $form->getData();
             $paramaters['server_name'] = $data['name'];
@@ -77,7 +77,6 @@ class DefaultController extends Controller
                 ->findByServerBackup($paramaters);
 //                ->findBy($paramater);
 //                ->getResult();
-//                ->findBy($paramater);
 
         $table_results = array();
         foreach($em as $value){

@@ -19,7 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
-class SrvrsServersType  extends AbstractType {
+class SrvrsServersType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->add('name', TextType::class, array('required' => false,
             'label' => 'Server: '))
@@ -39,7 +39,7 @@ class SrvrsServersType  extends AbstractType {
                                     'Warning' => '3'), 
                                 'label' => 'Status: '))
                 ->add('comparer', ChoiceType::class, array('choices' => 
-                    array('Greater or equal' => '>=',
+                    array('Equal or greater' => '>=',
                         'Smaller or equal' => '<=')))
                 ->add('size', TextType::class, array('required' => false,
                     'label' => ' than (MB): '))
@@ -55,7 +55,7 @@ class SrvrsServersType  extends AbstractType {
                                 '2500' => '2500'),
                             'label' => 'Results count: '))
                 ->add('active', CheckboxType::class, 
-                        array('label' => 'Production Only',
+                        array('label' => 'Production:',
                             'data' =>  TRUE, 'required' => false))
                 ->add('search', SubmitType::class, array('label' => 'Search'));
     }

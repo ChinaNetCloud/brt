@@ -42,7 +42,14 @@ class SrvrsServers
      *
      * @ORM\Column(name="status_active", type="string", length=45, nullable=true)
      */
-    private $statusActive;   
+    private $statusActive;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="frequency", type="integer", nullable=true)
+     */    
+    private $frequency;
 
     /**
      * One SrvrsServers has Many NcBackupEvents.
@@ -53,6 +60,29 @@ class SrvrsServers
     public function __construct() {
         $this->ncBackupEvents = new ArrayCollection();
     }    
+    
+    /**
+     * Get frequency
+     * 
+     * @return integer
+     */
+    public function getFrequency()
+    {
+        return $this->frequency;
+    }
+     /**
+     * Set frequency
+     *
+     * @param string $frequency
+     *
+     * @return SrvrsServers
+     */
+    public function setFrequency($frequency)
+    {
+        $this->frequency = $frequency;
+        
+        return $this;
+    }
     
     /**
      * Get id

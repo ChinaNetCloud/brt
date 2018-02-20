@@ -11,6 +11,7 @@
                         <div class="inline-list">
                             {{ form_label(form.name)}}
                             {{ form_widget(form.name) }}
+{#                            , {'attr': {'class': 'form-control'}}#}
                             {{ form_errors(form.name)}}
                             {{ form_label(form.method)}}
                             {{ form_widget(form.method) }}
@@ -33,9 +34,6 @@
                             {{ form_widget(form.search, {'attr': {'class': 'btn btn-lg btn-info'}}) }}
                         </div>
                         <p>
-                        <div>
-
-                        </div>
                     {{ form_end(form) }}
         </div>
     </div>
@@ -49,14 +47,17 @@
                 <td>Server Name</td>
                 <td>Date created</td>
                 <td>Execution Status</td>
-                <td>Size (MB)</td>
+                <td>Size</td>
                 <td>Backup Method</td>
                 <td>Production</td>
             </tr>
             {% for key, row in table %}
                 <tr>
                     <td>{{ key + 1 }}</td>
-                    <td><a href="{{ path('event_by_id', {'event_id': row.id_event}) }}">View</a></td>
+                    <td>
+                        <a href="{{ path('event_by_id', {'event_id': row.id_event}) }}">View</a>
+                        | <a href="{{ path('edit_server', {'id': row.id_server}) }}">Edit</a>
+                    </td>
                     <td>{{ row.name }}</td>
 {#  
     Date time the time shown depends on the php.ini 
@@ -69,13 +70,14 @@
                             "<span class='btn-danger'>Failed</span>" 
                             : "<span class='btn-warning'>Warning</span>"}}</td>
                     <td>{{ row.size }}</td>
-                    <td>{{ row.method }}</td>
+                    <td>{{ row.method == "ncscript-py" ?
+                             "nc-backup-py" : row.method }}</td>
                     <td>{{ row.status_active == '1' ? "Active" : "Not Active" }}</td>
                 </tr>
             {% endfor %}
         </table>
             {% else %}
-                <h4 class="alert alert-warning"> No search results available for this search criteria!</h4>
+                <h4 class="alert alert-warning"> No search results available for this criteria!</h4>
         {% endif %}
     </div>
 {% endblock %}

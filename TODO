@@ -4,9 +4,22 @@ TODO:
     - Statistics (P1).
     - Show page name on the title (P5).
     - Add paging feature. (P5)
-    - Add Order rows by other criteria. (P5)
-
+    - Add Order rows by other criteria than date. (P5)
+    - Add date range to the search.
+    - Security implementation with roles: (P6-P7)
+        - Super Admin (P6)
+        - Super Engineer (P6)
+        - Super Viewer (P6)
+        - Customer Admin (P7)
+        - Customer Engineer (P7)
+        - Customer Viewer (P7)
+        - Security Integration with something else ?
+    - Add edit server Active/Not Active and comments for servers and events, probably only admin users (P7)
+    - Change Configs. (P10)
 DONE:
-    - limit (Results count).
+    - Limit (Results count).
     - Add links to the top in general template and document pending here.
     - Enable Active in the search.
+
+Nc-backup-py:
+    - The report does not have ends of line therefore reading the log is hard.
