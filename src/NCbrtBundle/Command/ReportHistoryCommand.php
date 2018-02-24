@@ -51,6 +51,5 @@ class ReportHistoryCommand extends Command {
         }
     }
     private function getAllServerInProduction(){
-//        $em = $this->getD
     }
 }

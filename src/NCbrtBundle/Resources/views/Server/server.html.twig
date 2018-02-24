@@ -16,12 +16,12 @@
             {{ form_start(form) }}
             {{ form_errors(form) }}
             <div class="inline-list">
-                {{ form_label(form.frecuency)}}
-                {{ form_widget(form.frecuency) }}
-                {{ form_errors(form.frecuency)}}
-                {{ form_label(form.measure_unit)}}
+                {{ form_label(form.frequency)}}
+                {{ form_widget(form.frequency) }}
+                {{ form_errors(form.frequency)}}
+{#                {{ form_label(form.measure_unit)}}
                 {{ form_widget(form.measure_unit) }}
-                {{ form_errors(form.measure_unit)}}
+                {{ form_errors(form.measure_unit)}}#}
                 {{ form_widget(form.save_submit, {'attr': {'class': 'btn btn-lg btn-info'}}) }}
             </div>
             {{ form_end(form) }}

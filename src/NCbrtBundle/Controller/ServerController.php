@@ -26,18 +26,27 @@ class ServerController extends Controller
     /**
      * @Route("/server/{id}", name="edit_server")
      */
-    public function editAction ($id){
+    public function editAction (Request $request, $id){
         
-        $server = $this->getDoctrine()->getRepository('NCbrtBundle:SrvrsServers')
+        $em = $this->getDoctrine()->getManager();
+        $server = $em->getRepository('NCbrtBundle:SrvrsServers')
                 ->find($id);
         if (!$server) {
-            throw $this->createNotFoundException('No product found for id '. $id);
+            throw $this->createNotFoundException('Server not found for ID:  '. $id);
         }
-        $form = $this->createForm(ServerType::class);
+        $form = $this->createForm(ServerType::class, $server);
         
+        if ($request->getMethod() == 'POST'){
+            $form->handleRequest($request);
+            $em->flush();
+            return $this->render('NCbrtBundle:Server:server.html.twig', array(
+                'form' => $form->createView(),
+                'server' => $server,
+            ));
+        }
         return $this->render('NCbrtBundle:Server:server.html.twig', array(
             'form' => $form->createView(),
             'server' => $server,
-        ));      
+        ));
     }
 }

@@ -48,7 +48,8 @@ class SizeConvert {
         }
         $int_value = ctype_digit($size_unit[0]) ? intval($size_unit[0]) : null;
         
-        if ($int_value !== null && !isset($size_unit[1]) && is_numeric($size_unit[0])){
+        if ($int_value !== null 
+                && !isset($size_unit[1]) && is_numeric($size_unit[0])){
             if ($int_value < 1024){
                 $size_unit[0] = $int_value . ' KB';
             }
