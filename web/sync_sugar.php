@@ -77,8 +77,8 @@ $resultStatusChangeServers = array_diff($rowsBrt, $resultInsertsectZabbixSugar);
 
 /* Inser all new servers */
 $sqlInsertServer = "INSERT INTO srvrs_servers
-    (id, name, description, status_active)
-    VALUES(null,:server_new, '', 1);";
+    (id, name, description, status_active, frequency)
+    VALUES(null,:server_new, '', 1, 86400);";
 foreach ($resultNewServers as $key => $value){
     $stmtBrt = $dbBrt->prepare($sqlInsertServer);
     $stmtBrt->execute(array(':server_new' => $value));

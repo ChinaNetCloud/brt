@@ -49,4 +49,6 @@ class ServerController extends Controller
             'server' => $server,
         ));
     }
+    
+    
 }

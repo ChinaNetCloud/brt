@@ -32,6 +32,11 @@ class TimeConverter {
                     || $time_unit[1] == 'Hour' || $time_unit[1] == 'Hours') {
                 $seconds = $time_unit[0] * 3600;
             }
+            elseif ($time_unit[1] == 'minute' || $time_unit[1] == 'minutes' 
+                    || $time_unit[1] == 'm' || $time_unit[1] == 'M'
+                    || $time_unit[1] == 'Minute' || $time_unit[1] == 'Minutes') {
+                $seconds = $time_unit[0] * 60;
+            }          
         } elseif (isset($time_unit[0]) && is_numeric($time_unit[0])) {
             $seconds = $time_unit[0];
         }

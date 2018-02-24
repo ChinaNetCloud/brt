@@ -50,6 +50,7 @@ class ReportHistoryCommand extends Command {
             $output->writeln('This is NOT a correct server name format');
         }
     }
+    
     private function getAllServerInProduction(){
     }
 }
