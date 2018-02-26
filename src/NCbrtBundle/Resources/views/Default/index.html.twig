@@ -57,8 +57,8 @@
                     <td>
                         <a href="{{ path('event_by_id', {'event_id': row.id_event}) }}">View</a>
                     </td>
-                    <td>{{ row.name }} | 
-                        <a href="{{ path('edit_server', {'id': row.id_server}) }}">Edit</a></td>
+                    <td><a href="{{ path('edit_server', {'id': row.id_server}) }}">Edit</a>
+                     | {{ row.name }}</td>
 {#  
     Date time the time shown depends on the php.ini 
     timezone this might require to be changed as per customer or account config 

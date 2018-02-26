@@ -1,29 +1,31 @@
 {% extends 'general.html.twig' %}
 
 {% block dynamic_content %}
-    <div class="panel panel-info">  
-        <div class="panel-heading">
-                  <h3 class="panel-title">About</h3>
-        </div>
-        <div class="panel-body">
-             general introduction, vision, 
-        </div>
-    </div>
     <div class="panel panel-info"> 
         <div class="panel-heading">
             <h4>BRT</h4>
         </div>
         <div class="panel-body">
-            end saying something about nc-backup-py
-        </div>
-    </div>
-    <div class="panel panel-info"> 
-        <div class="panel-heading">
-            <h4>nc-backup-py</h4>
-        </div>
-        <div class="panel-body">            
-            What is it and some links to repositories
-            finish mentioning anythin about the development process.
+            <h5>BRT</h5> Is the system to show reports about backups created by other software. 
+            We created this project to store, show, and sytetize information 
+            about the backups made with other external software. 
+            Esentially you need to send a post request with a few key fields to be able to see the reports online.
+            <h5>nc-backup-py</h5> (git repo 
+            <a href="https://github.com/ChinaNetCloud/nc-backup-py">here</a>) 
+            intends to be a comprehensive one stop solution for backups. 
+            It can backup files, mySQL databases, Postgres databases, LVM,
+            MongoDB and many more to another drive, to the cloud or to another 
+            server via the network.
+            To quickly set up a backup and never lose your files again go to 
+            <a href="https://github.com/ChinaNetCloud/nc-backup-py#quick-start">
+                Quick Start</a>. 
+            See <a href="https://github.com/ChinaNetCloud/nc-backup-py#features">
+                Features</a> for a complete list of current and planned Features. 
+            See <a href="https://github.com/ChinaNetCloud/nc-backup-py#how-to-contribute">
+                How to contribute</a> if you would like to join us.
+            If you are interested on leaning about the structure of the project. 
+            See <a href="https://github.com/ChinaNetCloud/nc-backup-py/blob/master/docs/OVERVIEW.md">OVERVIEW</a>
+            If you think the project is useful or has potential, please add a star.
         </div>
     </div>
     <div class="panel panel-info"> 
