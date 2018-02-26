@@ -93,7 +93,20 @@ class SrvrsServers
     {
         return $this->id;
     }
-
+    /**
+     * Set name
+     *
+     * @param string $id
+     *
+     * @return SrvrsServers
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        
+        return $this;
+    }
+    
     /**
      * Set name
      *

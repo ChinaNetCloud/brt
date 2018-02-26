@@ -62,13 +62,12 @@ class NcBackupEventsRepository extends \Doctrine\ORM\EntityRepository
     public function countByServerStats($date_start, $date_end){
         
     }
-    public function findServerEventsScheduleByName($aServerName){
-        $dql = 'SELECT n.dateCreated FROM NCbrtBundle:NcBackupEvents n
+    public function findServerByBackupReport(){
+        $dql = 'SELECT s.name, s.id, MAX(n.dateCreated) latest, s.frequency 
+            FROM NCbrtBundle:NcBackupEvents n
             JOIN n.srvrsServers s
-            WHERE s.name = :server_name AND s.statusActive = 1';
+            WHERE s.statusActive = 1 GROUP BY s.name';
         $query = $this->getEntityManager()->createQuery($dql);
-        $query ->setMaxResults(30)
-                ->setParameter('server_name', $aServerName);
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {

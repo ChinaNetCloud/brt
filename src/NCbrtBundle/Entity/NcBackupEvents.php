@@ -90,7 +90,7 @@ class NcBackupEvents
     /**
      * @var \SrvrsServers
      *
-     * @ORM\ManyToOne(targetEntity="SrvrsServers")
+     * @ORM\ManyToOne(targetEntity="SrvrsServers",cascade={"persist", "remove"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="srvrs_servers_id", referencedColumnName="id")
      * })
