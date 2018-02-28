@@ -1,2 +1,48 @@
 {% extends 'general.html.twig' %}
 
+{% block dynamic_content %}
+    <div class="panel panel-info">  
+        <div class="panel-heading">
+            <h3 class="panel-title">Filter by time</h3>
+        </div>
+        <div class="panel-body">
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+            <div class="inline-list">
+                {{ form_label(form.date_start)}}
+                {{ form_widget(form.date_start)}}
+                {{ form_errors(form.date_start)}}
+                {{ form_label(form.date_end)}}
+                {{ form_widget(form.date_end)}}
+                {{ form_errors(form.date_end)}}
+                {{ form_widget(form.report, {'attr': {'class': 'btn btn-lg btn-info'}}) }}
+            </div>
+        </div>
+            <p>
+            {{ form_end(form) }}            
+    </div>
+    {#{% if total_backups is defined and total_backups is not empty%}#}
+    <div>
+        <table class="table-hover table-responsive table-bordered table-striped table-condensed">
+            <tr>
+                <td>Total backups: </td>
+                <td>{{ total_backups is empty ? 'N/A' : total_backups[0][1] }}</td>
+            </tr>
+            <tr>
+                <td>Total successful backups: </td>
+                <td>{{ total_successful_backups is empty ? 'N/A' : total_successful_backups[0][1] }}</td>
+            </tr>  
+            <tr>
+                <td>Total failed backups: </td>
+                <td>{{ total_fail_backups is empty ? 'N/A' : total_fail_backups[0][1] }}</td>
+            </tr>   
+            <tr>
+                <td>Total no reported backups: </td>
+                <td>{{ total_no_report_backups is empty ? 'N/A' : total_no_report_backups[0][1] }}</td>
+            </tr>            
+        </table>  
+    </div>
+{#    {% else %}
+        <h4 class="alert alert-warning"> No results available for this period!</h4>
+    {% endif %}#}
+{% endblock %}

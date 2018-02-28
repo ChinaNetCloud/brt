@@ -110,13 +110,13 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/backup/")
+     * @Route("/backup")
      */
     public function insertAction(Request $request){
 
         /* Get data from post request */
         $content = $request->request->all();
-
+        var_dump($content);
         /* Check if server is already in DB */
         $em = $this->getDoctrine()->getManager();
 
@@ -129,6 +129,8 @@ class DefaultController extends Controller
 
         /* Add Server if not in DB */
         $serverEntity = new SrvrsServers();
+//        var_dump($serverEntity);
+//        die;
         if (empty($selectAll)) {
             $serverEntity->setName($content['srvname']);
             $serverEntity->setStatusActive(0);
