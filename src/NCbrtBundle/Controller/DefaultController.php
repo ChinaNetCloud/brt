@@ -116,7 +116,6 @@ class DefaultController extends Controller
 
         /* Get data from post request */
         $content = $request->request->all();
-        var_dump($content);
         /* Check if server is already in DB */
         $em = $this->getDoctrine()->getManager();
 
