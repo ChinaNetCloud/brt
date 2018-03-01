@@ -16,7 +16,7 @@ namespace NCbrtBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use \Symfony\Component\HttpFoundation\Request;
-use \Symfony\Component\HttpFoundation\Response;
+//use \Symfony\Component\HttpFoundation\Response;
 
 
 use NCbrtBundle\Form\Type\DateSearchType;
@@ -50,6 +50,12 @@ class DashboardController  extends Controller {
         $totalSuccessfulBackups = '';
         $totalFailedBackups = '';
         $totalNoReportedBackups = '';
+        $totalOtherStatus = '';
+        
+        $totalBackupsNcBackupPy = '';
+        $totalBackupsNcScript = '';
+        $totalBackupsMethodOther = '';
+        
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
             $data = $form->getData();
@@ -69,13 +75,31 @@ class DashboardController  extends Controller {
             $totalNoReportedBackups = $this->getDoctrine()
                     ->getRepository('NCbrtBundle:NcBackupEvents')
                     ->findByServerTotalStatus($data['date_start'], $data['date_end'], '3');
+            $totalOtherStatus = $this->getDoctrine()
+                    ->getRepository('NCbrtBundle:NcBackupEvents')
+                    ->findByOtherStatus($data['date_start'], $data['date_end']);
             
+            $totalBackupsNcBackupPy = $this->getDoctrine()
+                    ->getRepository('NCbrtBundle:NcBackupEvents')
+                    ->findbyBackupMethod($data['date_start'], $data['date_end'], 'ncscript-py');
+
+            $totalBackupsNcScript = $this->getDoctrine()
+                    ->getRepository('NCbrtBundle:NcBackupEvents')
+                    ->findbyBackupMethod($data['date_start'], $data['date_end'], 'ncscript');
+            $totalBackupsMethodOther = $this->getDoctrine()
+                    ->getRepository('NCbrtBundle:NcBackupEvents')
+                    ->findbyBackupMethodNotStandard($data['date_start'], $data['date_end']);
             return $this->render('NCbrtBundle:Dashboard:dashboard.html.twig', 
                     array('form' => $form->createView(),
                         'total_backups' => $totalBackups,
                         'total_successful_backups' => $totalSuccessfulBackups,
                         'total_fail_backups' => $totalFailedBackups,
-                        'total_no_report_backups' => $totalNoReportedBackups));
+                        'total_no_report_backups' => $totalNoReportedBackups,
+                        'total_other_status' => $totalOtherStatus,
+                        'total_backups_nc_backup_py' => $totalBackupsNcBackupPy,
+                        'total_backups_nc_script' => $totalBackupsNcScript,
+                        'total_backups_method_other' => $totalBackupsMethodOther
+                    ));
         }
         
         return $this->render('NCbrtBundle:Dashboard:dashboard.html.twig',
@@ -83,6 +107,11 @@ class DashboardController  extends Controller {
                         'total_backups' => $totalBackups,
                         'total_successful_backups' => $totalSuccessfulBackups,
                         'total_fail_backups' => $totalFailedBackups,
-                        'total_no_report_backups' => $totalNoReportedBackups));
+                        'total_no_report_backups' => $totalNoReportedBackups,
+                        'total_other_status' => $totalOtherStatus,
+                        'total_backups_nc_backup_py' => $totalBackupsNcBackupPy,
+                        'total_backups_nc_script' => $totalBackupsNcScript,
+                        'total_backups_method_other' => $totalBackupsMethodOther
+                ));
     }
 }

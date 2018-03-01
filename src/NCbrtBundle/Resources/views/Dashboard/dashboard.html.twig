@@ -22,6 +22,7 @@
             {{ form_end(form) }}            
     </div>
     {#{% if total_backups is defined and total_backups is not empty%}#}
+    <h4>Production backup events report by status</h4>
     <div>
         <table class="table-hover table-responsive table-bordered table-striped table-condensed">
             <tr>
@@ -39,10 +40,34 @@
             <tr>
                 <td>Total no reported backups: </td>
                 <td>{{ total_no_report_backups is empty ? 'N/A' : total_no_report_backups[0][1] }}</td>
+            </tr>
+            <tr>
+                <td>Total with other warnings: </td>
+                <td>{{ total_other_status is empty ? 'N/A' : total_other_status[0][1] }}</td>
             </tr>            
         </table>  
     </div>
-{#    {% else %}
-        <h4 class="alert alert-warning"> No results available for this period!</h4>
-    {% endif %}#}
+    <p>
+    <h4>Production backups by method events</h4> 
+    <div>
+        <table class="table-hover table-responsive table-bordered table-striped table-condensed">
+            <tr>
+                <td>Total backups: </td>
+                <td>{{ total_backups is empty ? 'N/A' : total_backups[0][1] }}</td>
+            </tr>
+            <tr>
+                <td>Total nc-backup-py: </td>
+                <td>{{ total_backups_nc_backup_py is empty ? 'N/A' : total_backups_nc_backup_py[0][1] }}</td>
+            </tr>  
+            <tr>
+                <td>Total ncbackup (bash): </td>
+                <td>{{ total_backups_nc_script is empty ? 'N/A' : total_backups_nc_script[0][1] }}</td>
+            </tr> 
+            <tr>
+                <td>Other backup method: </td>
+                <td>{{ total_backups_method_other is empty ? 'N/A' : total_backups_method_other[0][1] }}</td>
+            </tr>            
+        </table>
+    </div>
+
 {% endblock %}
