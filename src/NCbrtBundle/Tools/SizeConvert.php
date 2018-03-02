@@ -37,6 +37,22 @@ class SizeConvert {
                 $size_unit[0] = round($size_unit[0] * 1024 * 1024 * 1024);
                 $size_unit[1] = '';                
             }
+            if ($size_unit[1] == 'KiB' || $size_unit[1] == 'kib' || $size_unit[1] == 'Kib'){
+                $size_unit[0] = round($size_unit[0]);
+                $size_unit[1] = '';                
+            }
+            if ($size_unit[1] == 'MiB' || $size_unit[1] == 'mib' || $size_unit[1] == 'Mib'){
+                $size_unit[0] = round($size_unit[0] * 1000);
+                $size_unit[1] = '';
+            }
+            if ($size_unit[1] == 'GiB' || $size_unit[1] == 'gib' || $size_unit[1] == 'Gib'){
+                $size_unit[0] = round($size_unit[0] * 1000 * 1000);
+                $size_unit[1] = '';                
+            } 
+            if ($size_unit[1] == 'TiB' || $size_unit[1] == 'tib' || $size_unit[1] == 'Tib'){
+                $size_unit[0] = round($size_unit[0] * 1000 * 1000 * 1000);
+                $size_unit[1] = '';                
+            }            
         }
         return $size_unit[0];
     }
