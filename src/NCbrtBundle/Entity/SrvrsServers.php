@@ -5,6 +5,10 @@ namespace NCbrtBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
+
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\JoinColumn;
+
 /**
  * SrvrsServers
  *
@@ -56,6 +60,12 @@ class SrvrsServers
      * @ORM\OneToMany(targetEntity="NcBackupEvents", mappedBy="SrvrsServers")
      */
     private $ncBackupEvents;
+    
+    /**
+     * @ManyToOne(targetEntity="Organization", inversedBy="SrvrsServers")
+     * @JoinColumn(name="organization_id", referencedColumnName="id")
+     */
+    private $organization;
 
     public function __construct() {
         $this->ncBackupEvents = new ArrayCollection();
@@ -211,5 +221,29 @@ class SrvrsServers
     public function getNcBackupEvents()
     {
         return $this->ncBackupEvents;
+    }
+
+    /**
+     * Set organization
+     *
+     * @param \NCbrtBundle\Entity\Organization $organization
+     *
+     * @return SrvrsServers
+     */
+    public function setOrganization(\NCbrtBundle\Entity\Organization $organization = null)
+    {
+        $this->organization = $organization;
+
+        return $this;
+    }
+
+    /**
+     * Get organization
+     *
+     * @return \NCbrtBundle\Entity\Organization
+     */
+    public function getOrganization()
+    {
+        return $this->organization;
     }
 }

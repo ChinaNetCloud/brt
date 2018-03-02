@@ -128,8 +128,7 @@ class DefaultController extends Controller
 
         /* Add Server if not in DB */
         $serverEntity = new SrvrsServers();
-//        var_dump($serverEntity);
-//        die;
+
         if (empty($selectAll)) {
             $serverEntity->setName($content['srvname']);
             $serverEntity->setStatusActive(0);
