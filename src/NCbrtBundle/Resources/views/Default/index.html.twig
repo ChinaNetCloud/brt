@@ -64,16 +64,26 @@
     timezone this might require to be changed as per customer or account config 
 #}
                     <td>{{ row.date_created is empty ? "" : row.date_created | date("m/d/Y H:i:s")}}</td>
-                    <td>{{ row.status == '0' ? 
-                            "<span class='btn-success'>Success</span>" 
-                            : row.status == '1' ? 
-                            "<span class='btn-danger'>Failed</span>" 
-                            : "<span class='btn-warning'>Warning</span>"}}</td>
+                    {% if row.size != 0 %}
+                        <td>{{ row.status == '0' or row.status == 'OK' ? 
+                                "<span class='btn-success'>Success</span>" 
+                                : row.status == '1'? 
+                                "<span class='btn-danger'>Failed</span>" 
+                                : "<span class='btn-warning'>Warning</span>"}}</td>
+                    {% else%}
+                        <td>{{ row.status == '0' or row.status == 'OK' ? 
+                                "<span class='btn-warning'>Warning</span>" 
+                                : row.status == '1'? 
+                                "<span class='btn-danger'>Failed</span>" 
+                                : "<span class='btn-warning'>Warning</span>"}}</td>                    
+                    
+                    {% endif %}
                     <td>{{ row.size }}</td>
                     <td>{{ row.method == "ncscript-py" ?
                              "nc-backup-py" : row.method }}</td>
                     <td>{{ row.status_active == '1' ? "Active" : "Not Active" }}</td>
                 </tr>
+
             {% endfor %}
         </table>
             {% else %}

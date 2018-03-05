@@ -16,9 +16,12 @@ class NcBackupEventsRepository extends \Doctrine\ORM\EntityRepository
             JOIN n.srvrsServers s
             WHERE n.backupmethod LIKE :backupmethod 
             AND s.name LIKE :server_name 
-            AND n.success LIKE :status 
             AND s.statusActive = :active';
-
+        if ($parameters['status'] == 3 ){
+            $dql .= " AND (n.success LIKE '0' AND n.backupsize = 0 ) OR n.success LIKE :status";
+        } else {
+            $dql .= ' AND n.success LIKE :status';
+        }
         if (isset($parameters['size']) && $parameters['size'] != null && 
                 $parameters['size'] != '' && $parameters['size'] <> 0){
             if ($parameters['size'] >= 0){
@@ -27,7 +30,8 @@ class NcBackupEventsRepository extends \Doctrine\ORM\EntityRepository
             }
         } else {
             $dql .= ' ORDER BY n.dateCreated DESC';
-        } 
+        }
+
         $query = $this->getEntityManager()->createQuery($dql);
         if (isset($parameters['size']) && $parameters['size'] != null && 
                 $parameters['size'] != '' && $parameters['size'] <> 0){
