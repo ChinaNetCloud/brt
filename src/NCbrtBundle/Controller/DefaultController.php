@@ -145,6 +145,9 @@ class DefaultController extends Controller
         if (!empty((array($serverEntity)))){
             $backupEvent = new NcBackupEvents();
             $backupEvent->setSrvrsServers($serverEntity);
+            if ($content['result'] == 'OK'){
+                $content['result'] = '0';
+            }
             $backupEvent->setSuccess($content['result']);
             $backupEvent->setBackupmethod($content['bckmethod']);
             

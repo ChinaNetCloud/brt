@@ -1,11 +1,12 @@
 BRT development road map.
 TODO:
-    - Machines not reporting (P0).
+    - Repeated fails list.
+    - Say of the backup size changed DRASTICALLY.
     - Statistics (P1).
     - Show page name on the title (P5).
     - Add paging feature. (P5)
     - Add Order rows by other criteria than date. (P5)
-    - Add date range to the search.
+    - Add date range to the search (P4).
     - Security implementation with roles: (P6-P7)
         - Super Admin (P6)
         - Super Engineer (P6)
@@ -20,6 +21,8 @@ DONE:
     - Limit (Results count).
     - Add links to the top in general template and document pending here.
     - Enable Active in the search.
+    - Machines not reporting (P0).
+
 
 Nc-backup-py:
     - The report does not have ends of line therefore reading the log is hard.

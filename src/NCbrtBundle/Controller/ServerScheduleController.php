@@ -29,17 +29,17 @@ class ServerScheduleController extends Controller {
         $em = $this->getDoctrine()
                 ->getRepository('NCbrtBundle:NcBackupEvents')
                 ->findServerByBackupReport();
-//        var_dump($em);
         $length = count($em);
-        $i = 0;
         $TimeDifferenceAux = array();
         echo 'size: ' . $length . '<br>';
-        for($i; $i < $length; $i++){
+        for($i=0; $i <= $length-1; $i++){
+            echo $i . '<br>';
             $format = 'Y-m-d H:i:s';
-            $latest = date_create_from_format($format, $em[$i]['latest']);
+            $latest_date_str = $em[$i];
+            $latest = date_create_from_format($format, $latest_date_str['latest']);
             $date = date_create_from_format($format, date($format));
             $TimeDifferenceAux = abs($date->getTimestamp() - $latest->getTimestamp());
-            echo $TimeDifferenceAux . ' <-> ' . $em[$i]['frequency'];
+            echo $TimeDifferenceAux . ' <-> ' . $em[$i]['frequency'] . '<br>';
             if ($TimeDifferenceAux > $em[$i]['frequency'] && 
                     $em[$i]['frequency'] > 0 &&
                     $em[$i]['frequency'] != ''){
@@ -63,58 +63,53 @@ class ServerScheduleController extends Controller {
                         ->getRepository('NCbrtBundle:SrvrsServers')
                         ->find($em[$i]['id']);
                 
-//                $server->setName($em[$i]['name']);
-//                $server->setId($em[$i]['id']);
-                
                 $event->setSrvrsServers($server);
-                
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($event);
-//                $em->persist($server);                
 
                 $em->flush();
-                return new Response('Saved new event with id '.$event->getId());
+//                echo 'Saved new event with id ' . $event->getId() . '<br>';
             } else {
                 echo 'No need to report<br>';                
             }
         }
-        exit();
+        return new Response('Done.');
     }
-    private function httpPost($url, $data)
-    {
-        $curl = curl_init($url);
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($curl);
-        curl_close($curl);
-        return $response;
-    }
-     /**
-     * @Route("/serverschedule", name="server_schedule")
-     */
-    public function eventsServer($aServerName = 'srv-nc-test1'){
-        $em = $this->getDoctrine()
-                ->getRepository('NCbrtBundle:NcBackupEvents')
-                ->findServerEventsScheduleByName($aServerName);
-        $length = count($em);
-        $i = 0;
-        $TimeDifferenceAux = array();
-        echo 'size: ' . $length . '<br>';
-        for($i; $i < $length; $i++){
-            if ($i < $length - 1){
-                // 1- Convert DateInterval Object to seconds and use as float/double value (function class in Tools?)
-                $TimeDifferenceAux[] = abs($em[$i]['dateCreated']->getTimestamp() - $em[$i+1]['dateCreated']->getTimestamp());
-                
-            }
-        }
-        
-//        $TimeDifferenceAux);
-//        exit(0); 
-        // 2- Calculate average (median) and standard deviation.
-        // 3- Calculate timeToWait = (median + standard deviation + error time proportional to the backup size).
-        // 4- Execute every 30 minutes to know about if timeToWaithas passed and send a warning report about it(Once or twice a day or skip it f already sent,etc?).
-       
-    }
+//    private function httpPost($url, $data)
+//    {
+//        $curl = curl_init($url);
+//        curl_setopt($curl, CURLOPT_POST, true);
+//        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+//        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+//        $response = curl_exec($curl);
+//        curl_close($curl);
+//        return $response;
+//    }
+//     /**
+//     * @Route("/serverschedule", name="server_schedule")
+//     */
+//    public function eventsServer($aServerName = 'srv-nc-test1'){
+//        $em = $this->getDoctrine()
+//                ->getRepository('NCbrtBundle:NcBackupEvents')
+//                ->findServerEventsScheduleByName($aServerName);
+//        $length = count($em);
+//        $i = 0;
+//        $TimeDifferenceAux = array();
+//        echo 'size: ' . $length . '<br>';
+//        for($i; $i < $length; $i++){
+//            if ($i < $length - 1){
+//                // 1- Convert DateInterval Object to seconds and use as float/double value (function class in Tools?)
+//                $TimeDifferenceAux[] = abs($em[$i]['dateCreated']->getTimestamp() - $em[$i+1]['dateCreated']->getTimestamp());
+//
+//            }
+//        }
+//
+////        $TimeDifferenceAux);
+////        exit(0);
+//        // 2- Calculate average (median) and standard deviation.
+//        // 3- Calculate timeToWait = (median + standard deviation + error time proportional to the backup size).
+//        // 4- Execute every 30 minutes to know about if timeToWaithas passed and send a warning report about it(Once or twice a day or skip it f already sent,etc?).
+//
+//    }
     
 }

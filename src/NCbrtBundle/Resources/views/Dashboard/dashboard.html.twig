@@ -27,7 +27,9 @@
         <table class="table-hover table-responsive table-bordered table-striped table-condensed">
             <tr>
                 <td>Total backups: </td>
-                <td>{{ total_backups is empty ? 'N/A' : total_backups[0][1] }}</td>
+                <td><a href="{{ path('search_home') }}">
+                        {{ total_backups is empty ? 'N/A' : total_backups[0][1] }}</a>
+                </td>
             </tr>
             <tr>
                 <td>Total successful backups: </td>
