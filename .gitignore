@@ -17,4 +17,5 @@
 /vendor/
 /web/bundles/
 /web/sync_config.php
+/.idea/
 *~
