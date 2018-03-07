@@ -68,48 +68,11 @@ class ServerScheduleController extends Controller {
                 $em->persist($event);
 
                 $em->flush();
-//                echo 'Saved new event with id ' . $event->getId() . '<br>';
+                echo 'Saved new event with id ' . $event->getId() . '<br>';
             } else {
                 echo 'No need to report<br>';                
             }
         }
         return new Response('Done.');
     }
-//    private function httpPost($url, $data)
-//    {
-//        $curl = curl_init($url);
-//        curl_setopt($curl, CURLOPT_POST, true);
-//        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
-//        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-//        $response = curl_exec($curl);
-//        curl_close($curl);
-//        return $response;
-//    }
-//     /**
-//     * @Route("/serverschedule", name="server_schedule")
-//     */
-//    public function eventsServer($aServerName = 'srv-nc-test1'){
-//        $em = $this->getDoctrine()
-//                ->getRepository('NCbrtBundle:NcBackupEvents')
-//                ->findServerEventsScheduleByName($aServerName);
-//        $length = count($em);
-//        $i = 0;
-//        $TimeDifferenceAux = array();
-//        echo 'size: ' . $length . '<br>';
-//        for($i; $i < $length; $i++){
-//            if ($i < $length - 1){
-//                // 1- Convert DateInterval Object to seconds and use as float/double value (function class in Tools?)
-//                $TimeDifferenceAux[] = abs($em[$i]['dateCreated']->getTimestamp() - $em[$i+1]['dateCreated']->getTimestamp());
-//
-//            }
-//        }
-//
-////        $TimeDifferenceAux);
-////        exit(0);
-//        // 2- Calculate average (median) and standard deviation.
-//        // 3- Calculate timeToWait = (median + standard deviation + error time proportional to the backup size).
-//        // 4- Execute every 30 minutes to know about if timeToWaithas passed and send a warning report about it(Once or twice a day or skip it f already sent,etc?).
-//
-//    }
-    
 }
