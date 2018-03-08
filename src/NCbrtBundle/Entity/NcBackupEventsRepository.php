@@ -161,7 +161,6 @@ class NcBackupEventsRepository extends \Doctrine\ORM\EntityRepository
             JOIN n.srvrsServers s
             WHERE s.statusActive = 1 GROUP BY s.name';
         $query = $this->getEntityManager()->createQuery($dql);
-//        $query->getSingleResult();
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {

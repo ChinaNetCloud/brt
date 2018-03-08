@@ -24,6 +24,7 @@ use Doctrine\ORM\Mapping\OneToMany;
  * @ORM\Table(name="organization")
  * @ORM\Entity
  */
+
 class Organization {
     /**
      * @var integer
@@ -31,21 +32,24 @@ class Organization {
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
      * @ManyToOne(targetEntity="Organization", inversedBy="children")
      * @JoinColumn(name="parent_id", referencedColumnName="id")
      */
-    private $id;
-    
+    private $parent;
+    /**
+     * @OneToMany(targetEntity="Organization", mappedBy="parent")
+     */
+    private $children;
+
     /**
      * @var string
      * @ORM\Column(name="name", type="string", nullable=false)
      */
     private $name;
-    
-    /**
-     * @OneToMany(targetEntity="Organization", mappedBy="parent")
-     */
-    private $children;
     
     /**
      * @OneToMany(targetEntity="SrvrsServers", mappedBy="Organization")
@@ -96,27 +100,27 @@ class Organization {
     }
 
     /**
-     * Add child
+     * Add children
      *
-     * @param \NCbrtBundle\Entity\Category $child
+     * @param \NCbrtBundle\Entity\Organization $children
      *
      * @return Organization
      */
-    public function addChild(\NCbrtBundle\Entity\Category $child)
+    public function addChild(\NCbrtBundle\Entity\Organization $children)
     {
-        $this->children[] = $child;
+        $this->children[] = $children;
 
         return $this;
     }
 
     /**
-     * Remove child
+     * Remove children
      *
-     * @param \NCbrtBundle\Entity\Category $child
+     * @param \NCbrtBundle\Entity\Organization $children
      */
-    public function removeChild(\NCbrtBundle\Entity\Category $child)
+    public function removeChild(\NCbrtBundle\Entity\Organization $children)
     {
-        $this->children->removeElement($child);
+        $this->children->removeElement($children);
     }
 
     /**

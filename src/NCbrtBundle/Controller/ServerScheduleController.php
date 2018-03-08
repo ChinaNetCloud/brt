@@ -10,6 +10,7 @@ namespace NCbrtBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Response;
 
 
@@ -29,10 +30,11 @@ class ServerScheduleController extends Controller {
         $em = $this->getDoctrine()
                 ->getRepository('NCbrtBundle:NcBackupEvents')
                 ->findServerByBackupReport();
+        var_dump($em);
         $length = count($em);
         $TimeDifferenceAux = array();
         echo 'size: ' . $length . '<br>';
-        for($i=0; $i <= $length-1; $i++){
+        for($i=0; $i < $length-1; $i++){
             echo $i . '<br>';
             $format = 'Y-m-d H:i:s';
             $latest_date_str = $em[$i];
@@ -64,10 +66,10 @@ class ServerScheduleController extends Controller {
                         ->find($em[$i]['id']);
                 
                 $event->setSrvrsServers($server);
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($event);
+                $persis_evet = $this->getDoctrine()->getManager();
+                $persis_evet->persist($event);
 
-                $em->flush();
+                $persis_evet->flush();
                 echo 'Saved new event with id ' . $event->getId() . '<br>';
             } else {
                 echo 'No need to report<br>';                

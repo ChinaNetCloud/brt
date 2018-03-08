@@ -113,66 +113,69 @@ class DefaultController extends Controller
      * @Route("/backup")
      */
     public function insertAction(Request $request){
+        if ($request->isMethod('POST')){
+            /* Get data from post request */
+            $content = $request->request->all();
+            /* Check if server is already in DB */
+            $em = $this->getDoctrine()->getManager();
 
-        /* Get data from post request */
-        $content = $request->request->all();
-        /* Check if server is already in DB */
-        $em = $this->getDoctrine()->getManager();
+            $selectAll = $em->getRepository('NCbrtBundle:SrvrsServers')
+                    ->createQueryBuilder('s')
+                    ->where('s.name = :server_name')
+                    ->setParameter('server_name', $content['srvname'])
+                    ->getQuery()
+                    ->getResult();
 
-        $selectAll = $em->getRepository('NCbrtBundle:SrvrsServers')
-                ->createQueryBuilder('s')
-                ->where('s.name = :server_name')
-                ->setParameter('server_name', $content['srvname'])
-                ->getQuery()
-                ->getResult();
+            /* Add Server if not in DB */
+            $serverEntity = new SrvrsServers();
 
-        /* Add Server if not in DB */
-        $serverEntity = new SrvrsServers();
-
-        if (empty($selectAll)) {
-            $serverEntity->setName($content['srvname']);
-            $serverEntity->setStatusActive(0);
-            $em->persist($serverEntity);
-            $em->flush();
-        } else {
-            $serverEntity= Tools::array_to_object($selectAll[0]);
-        }
-        /* At this point the server is already on DB I should have the ID */
-
-        print_r($content);
-
-        /* Create NEW backup event */
-        if (!empty((array($serverEntity)))){
-            $backupEvent = new NcBackupEvents();
-            $backupEvent->setSrvrsServers($serverEntity);
-            if ($content['result'] == 'OK'){
-                $content['result'] = '0';
+            if (empty($selectAll)) {
+                $serverEntity->setName($content['srvname']);
+                $serverEntity->setStatusActive(0);
+                $em->persist($serverEntity);
+                $em->flush();
+            } else {
+                $serverEntity= Tools::array_to_object($selectAll[0]);
             }
-            $backupEvent->setSuccess($content['result']);
-            $backupEvent->setBackupmethod($content['bckmethod']);
-            
-            /* Filter size and sanitize it */
-            $aSizeConvertion = new SizeConvert();
-            $content['size'] = $aSizeConvertion->SizeConversionToKB($content['size']);
+            /* At this point the server is already on DB I should have the ID */
 
-            $backupEvent->setBackupsize($content['size']);
-            $backupEvent->setLog($content['log']);
-            $backupEvent->setError($content['error']);
-            $date = date_create(date('Y-m-d H:i:s'));
-            $backupEvent->setDateCreated($date);
-            $backupEvent->setSuccess($content['result']);
-            $backupEvent->setBackupType($content['destination']);
-            $em->persist($backupEvent);
-            $em->flush();
+            print_r($content);
 
+            /* Create NEW backup event */
+            if (!empty((array($serverEntity)))){
+                $backupEvent = new NcBackupEvents();
+                $backupEvent->setSrvrsServers($serverEntity);
+                if ($content['result'] == 'OK'){
+                    $content['result'] = '0';
+                }
+                $backupEvent->setSuccess($content['result']);
+                $backupEvent->setBackupmethod($content['bckmethod']);
+
+                /* Filter size and sanitize it */
+                $aSizeConvertion = new SizeConvert();
+                $content['size'] = $aSizeConvertion->SizeConversionToKB($content['size']);
+
+                $backupEvent->setBackupsize($content['size']);
+                $backupEvent->setLog($content['log']);
+                $backupEvent->setError($content['error']);
+                $date = date_create(date('Y-m-d H:i:s'));
+                $backupEvent->setDateCreated($date);
+                $backupEvent->setSuccess($content['result']);
+                $backupEvent->setBackupType($content['destination']);
+                $em->persist($backupEvent);
+                $em->flush();
+
+            } else {
+                return new Response('NO Server selected after post');
+            }
+
+            /* Response with result 200 plus message*/
+            return new Response('New Backup result added for server: '
+                    . $serverEntity->getName(). '. This backup ID is: '
+                    . $backupEvent->getId() . '.');
         } else {
-            return new Response('NO Server selected after post');
+            return new Response('Bad Request', 400);
         }
-
-        /* Response with result 200 plus message*/
-        return new Response('New Backup result added for server: '
-                . $serverEntity->getName(). '. This backup ID is: '
-                . $backupEvent->getId() . '.');
     }
     /**
      * @Route("/event/{event_id}/", name="event_by_id")
