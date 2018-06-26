@@ -31,7 +31,13 @@ php bin/console doctrine:database:create
 
 3.3. Create tables:
 php bin/console doctrine:schema:update --force
-this should create 2 tables.
+this should create 4 tables.
+
+3.4. Create users:
+php bin/console fos:user:create user
+
+3.4.1. Assign role to the user, the role can be: ROLE_USER or ROLE_ADMIN
+php bin/console fos:user:promote user ROLE
 
 4. Execute composer update unless you already have the vendor components downloaded.
 
