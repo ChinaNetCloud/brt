@@ -24,20 +24,20 @@ parameters:
 3. Create DB:
 to do that first go to code directory using cd.
 3.1. drop DB is exists/wanted:
-php bin/console doctrine:database:drop --force
+````php bin/console doctrine:database:drop --force````
 3.2. create DB:
-php bin/console doctrine:database:create
+````php bin/console doctrine:database:create````
 
 
 3.3. Create tables:
-php bin/console doctrine:schema:update --force
+````php bin/console doctrine:schema:update --force````
 this should create 4 tables.
 
 3.4. Create users:
-php bin/console fos:user:create user
+````php bin/console fos:user:create user````
 
 3.4.1. Assign role to the user, the role can be: ROLE_USER or ROLE_ADMIN
-php bin/console fos:user:promote user ROLE
+````php bin/console fos:user:promote user ROLE````
 
 
 4. Execute composer update unless you already have the vendor components downloaded.
