@@ -1,83 +1,86 @@
 {% extends 'general.html.twig' %}
 
 {% block dynamic_content %}
-    <div class="panel panel-info">  
+    <div class="panel panel-info">
         <div class="panel-heading">
-                  <h3 class="panel-title">Search</h3>
+            <h3 class="panel-title">Search</h3>
         </div>
         <div class="panel-body">
-                    {{ form_start(form) }}
-                        {{ form_errors(form) }}
-                        <div class="inline-list">
-                            {{ form_label(form.name)}}
-                            {{ form_widget(form.name) }}
-{#                            , {'attr': {'class': 'form-control'}}#}
-                            {{ form_errors(form.name)}}
-                            {{ form_label(form.method)}}
-                            {{ form_widget(form.method) }}
-                            {{ form_errors(form.method)}}
-                            {{ form_label(form.status)}}
-                            {{ form_widget(form.status) }}
-                            {{ form_errors(form.status)}}
-                            {{ form_label(form.comparer)}}
-                            {{ form_widget(form.comparer) }}
-                            {{ form_errors(form.comparer)}}
-                            {{ form_label(form.size)}}
-                            {{ form_widget(form.size) }}
-                            {{ form_errors(form.size)}}
-                            {{ form_label(form.count)}}
-                            {{ form_widget(form.count) }}
-                            {{ form_errors(form.count)}}
-                            {{ form_label(form.active)}}
-                            {{ form_widget(form.active) }}
-                            {{ form_errors(form.active)}}
-                            {{ form_widget(form.search, {'attr': {'class': 'btn btn-lg btn-info'}}) }}
-                        </div>
-                        <p>
-                    {{ form_end(form) }}
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+            <div class="inline-list">
+                {{ form_label(form.name)}}
+                {{ form_widget(form.name) }}
+                {#                            , {'attr': {'class': 'form-control'}}#}
+                {{ form_errors(form.name)}}
+                {{ form_label(form.method)}}
+                {{ form_widget(form.method) }}
+                {{ form_errors(form.method)}}
+                {{ form_label(form.status)}}
+                {{ form_widget(form.status) }}
+                {{ form_errors(form.status)}}
+                {{ form_label(form.comparer)}}
+                {{ form_widget(form.comparer) }}
+                {{ form_errors(form.comparer)}}
+                {{ form_label(form.size)}}
+                {{ form_widget(form.size) }}
+                {{ form_errors(form.size)}}
+                {{ form_label(form.count)}}
+                {{ form_widget(form.count) }}
+                {{ form_errors(form.count)}}
+                {{ form_label(form.active)}}
+                {{ form_widget(form.active) }}
+                {{ form_errors(form.active)}}
+                {{ form_widget(form.search, {'attr': {'class': 'btn btn-lg btn-info'}}) }}
+            </div>
+            <p>
+                {{ form_end(form) }}
+            </div>
         </div>
-    </div>
-    <p>
-    <div class="">
-        {% if table is defined and table is not empty %}
-        <table class="table-hover table-responsive table-bordered table-striped table-condensed">
-            <tr>
-                <td>#</td>
-                <td>Actions</td>
-                <td>Server Name</td>
-                <td>Date created</td>
-                <td>Execution Status</td>
-                <td>Size</td>
-                <td>Backup Method</td>
-                <td>Production</td>
-            </tr>
-            {% for key, row in table %}
-                <tr>
-                    <td>{{ key + 1 }}</td>
-                    <td>
-                        <a href="{{ path('event_by_id', {'event_id': row.id_event}) }}">View</a>
-                    </td>
-                    <td><a href="{{ path('edit_server', {'id': row.id_server}) }}">Edit</a>
-                     | {{ row.name }}</td>
-{#  
-    Date time the time shown depends on the php.ini 
-    timezone this might require to be changed as per customer or account config 
-#}
-                    <td>{{ row.date_created is empty ? "" : row.date_created | date("m/d/Y H:i:s")}}</td>
-                    <td>{{ row.status == '0' ? 
+        <p>
+            <div class="">
+                {% if table is defined and table is not empty %}
+                    <table class="table-hover table-responsive table-bordered table-striped table-condensed">
+                        <tr>
+                            <td>#</td>
+                            <td>Actions</td>
+                            <td>Server Name</td>
+                            <td>Date created</td>
+                            <td>Execution Status</td>
+                            <td>Size</td>
+                            <td>Backup Method</td>
+                            <td>Production</td>
+                        </tr>
+                        {% for key, row in table %}
+                            <tr>
+                                <td>{{ key + 1 }}</td>
+                                <td>
+                                    <a href="{{ path('event_by_id', {'event_id': row.id_event}) }}">View</a>
+                                </td>
+                                <td>
+                                    <a href="{{ path('edit_server', {'id': row.id_server}) }}">Edit</a>
+                                    |
+                                    {{ row.name }}</td>
+                                {#  
+                                    Date time the time shown depends on the php.ini 
+                                    timezone this might require to be changed as per customer or account config 
+                                #}
+                                <td>{{ row.date_created is empty ? "" : row.date_created | date("m/d/Y H:i:s")}}</td>
+                                <td>{{ row.status == '0' ? 
                             "<span class='btn-success'>Success</span>" 
                             : row.status == '1' ? 
                             "<span class='btn-danger'>Failed</span>" 
                             : "<span class='btn-warning'>Warning</span>"}}</td>
-                    <td>{{ row.size }}</td>
-                    <td>{{ row.method == "ncscript-py" ?
+                                <td>{{ row.size }}</td>
+                                <td>{{ row.method == "ncscript-py" ?
                              "nc-backup-py" : row.method }}</td>
-                    <td>{{ row.status_active == '1' ? "Active" : "Not Active" }}</td>
-                </tr>
-            {% endfor %}
-        </table>
-            {% else %}
-                <h4 class="alert alert-warning"> No search results available for this criteria!</h4>
-        {% endif %}
-    </div>
-{% endblock %}
+                                <td>{{ row.status_active == '1' ? "Active" : "Not Active" }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% else %}
+                    <h4 class="alert alert-warning">
+                        No search results available for this criteria!</h4>
+                {% endif %}
+            </div>
+        {% endblock %}
