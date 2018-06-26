@@ -12,7 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="NCbrtBundle\Entity\NcBackupEventsRepository")
  */
 
-
 class NcBackupEvents
 {
     /**
@@ -90,7 +89,7 @@ class NcBackupEvents
     /**
      * @var \SrvrsServers
      *
-     * @ORM\ManyToOne(targetEntity="SrvrsServers",cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="SrvrsServers",cascade={"persist", "remove"}, inversedBy="ncBackupEvents")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="srvrs_servers_id", referencedColumnName="id")
      * })

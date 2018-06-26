@@ -33,3 +33,6 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+    Symfony\Bundle\AsseticBundle\AsseticBundle:
+        public: true
+        
