@@ -5,7 +5,7 @@
 1.1. nginx
 1.2. php-fpm and PHP 7.x
 1.3. MySQL, should work with any version. I have 5.7
-1.4. Symfony dependencies this project was developed with version 3.2.
+1.4. Symfony dependencies this project was developed with version 3.2 an later upgraded to 3.4.
 
 Before you proceed, please make sure these steps those dependencies are 
 installed and working correctly.
@@ -38,6 +38,7 @@ php bin/console fos:user:create user
 
 3.4.1. Assign role to the user, the role can be: ROLE_USER or ROLE_ADMIN
 php bin/console fos:user:promote user ROLE
+
 
 4. Execute composer update unless you already have the vendor components downloaded.
 
