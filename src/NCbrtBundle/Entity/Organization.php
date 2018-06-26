@@ -9,10 +9,6 @@
 namespace NCbrtBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
-use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\OneToMany;
-
 /**
  * Description of Organization
  *
@@ -31,8 +27,8 @@ class Organization {
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ManyToOne(targetEntity="Organization", inversedBy="children")
-     * @JoinColumn(name="parent_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="children")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
     private $id;
     
@@ -43,14 +39,14 @@ class Organization {
     private $name;
     
     /**
-     * @OneToMany(targetEntity="Organization", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="Organization", mappedBy="parent")
      */
     private $children;
     
     /**
-     * @OneToMany(targetEntity="SrvrsServers", mappedBy="Organization")
+     * @ORM\OneToMany(targetEntity="SrvrsServers", mappedBy="organization")
      */
-    private $SrvrsServers;
+    private $srvrsServers;
     
     /**
      * Constructor
