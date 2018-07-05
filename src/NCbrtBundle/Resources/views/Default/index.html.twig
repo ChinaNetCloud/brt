@@ -66,11 +66,9 @@
                                     timezone this might require to be changed as per customer or account config 
                                 #}
                                 <td>{{ row.date_created is empty ? "" : row.date_created | date("m/d/Y H:i:s")}}</td>
-                                <td>{{ row.status == '0' ? 
-                            "<span class='btn-success'>Success</span>" 
-                            : row.status == '1' ? 
-                            "<span class='btn-danger'>Failed</span>" 
-                            : "<span class='btn-warning'>Warning</span>"}}</td>
+                                <td>{{ row.status == '0' ? '<span class="badge btn-success">Success</span>'
+                                : row.status == '1' ? '<span class="badge btn-danger">Failed</span>'
+                                : '<span class="badge btn-warning">Warning</span>'}}</td>
                                 <td>{{ row.size }}</td>
                                 <td>{{ row.method == "ncscript-py" ?
                              "nc-backup-py" : row.method }}</td>

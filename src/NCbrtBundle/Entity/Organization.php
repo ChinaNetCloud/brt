@@ -8,6 +8,7 @@
 
 namespace NCbrtBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Description of Organization
@@ -39,9 +40,9 @@ class Organization {
     private $name;
     
     /**
-     * @ORM\OneToMany(targetEntity="Organization", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="Organization", mappedBy="id")
      */
-    private $children;
+    private $children;    
     
     /**
      * @ORM\OneToMany(targetEntity="SrvrsServers", mappedBy="organization")
@@ -53,8 +54,8 @@ class Organization {
      */
     public function __construct()
     {
-        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->SrvrsServers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->children = new ArrayCollection();
+        $this->srvrsServers = new ArrayCollection();
     }
 
     /**
@@ -89,30 +90,6 @@ class Organization {
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Add child
-     *
-     * @param \NCbrtBundle\Entity\Category $child
-     *
-     * @return Organization
-     */
-    public function addChild(\NCbrtBundle\Entity\Category $child)
-    {
-        $this->children[] = $child;
-
-        return $this;
-    }
-
-    /**
-     * Remove child
-     *
-     * @param \NCbrtBundle\Entity\Category $child
-     */
-    public function removeChild(\NCbrtBundle\Entity\Category $child)
-    {
-        $this->children->removeElement($child);
     }
 
     /**

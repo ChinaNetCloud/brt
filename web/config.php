@@ -22,7 +22,7 @@ if (!in_array(@$_SERVER['REMOTE_ADDR'], array(
     exit('This script is only accessible from localhost.');
 }
 
-require_once dirname(__FILE__) . '/../var/SymfonyRequirements.php';
+require_once dirname(__FILE__).'/../var/SymfonyRequirements.php';
 
 $symfonyRequirements = new SymfonyRequirements();
 
@@ -375,14 +375,14 @@ $hasMinorProblems = (bool) count($minorProblems);
                                     <li><?php echo $problem->getTestMessage() ?>
                                         <p class="help"><em><?php echo $problem->getHelpHtml() ?></em></p>
                                     </li>
-                                <?php endforeach;?>
+                                <?php endforeach; ?>
                             </ol>
-                        <?php endif;?>
+                        <?php endif; ?>
 
                         <?php if ($hasMinorProblems): ?>
                             <h2>Recommendations</h2>
                             <p>
-                                <?php if ($hasMajorProblems): ?>Additionally, to<?php else: ?>To<?php endif;?> enhance your Symfony experience,
+                                <?php if ($hasMajorProblems): ?>Additionally, to<?php else: ?>To<?php endif; ?> enhance your Symfony experience,
                                 it’s recommended that you fix the following:
                             </p>
                             <ol>
@@ -390,9 +390,9 @@ $hasMinorProblems = (bool) count($minorProblems);
                                     <li><?php echo $problem->getTestMessage() ?>
                                         <p class="help"><em><?php echo $problem->getHelpHtml() ?></em></p>
                                     </li>
-                                <?php endforeach;?>
+                                <?php endforeach; ?>
                             </ol>
-                        <?php endif;?>
+                        <?php endif; ?>
 
                         <?php if ($symfonyRequirements->hasPhpIniConfigIssue()): ?>
                             <p id="phpini">*
@@ -400,18 +400,18 @@ $hasMinorProblems = (bool) count($minorProblems);
                                     Changes to the <strong>php.ini</strong> file must be done in "<strong><?php echo $symfonyRequirements->getPhpIniConfigPath() ?></strong>".
                                 <?php else: ?>
                                     To change settings, create a "<strong>php.ini</strong>".
-                                <?php endif;?>
+                                <?php endif; ?>
                             </p>
-                        <?php endif;?>
+                        <?php endif; ?>
 
                         <?php if (!$hasMajorProblems && !$hasMinorProblems): ?>
                             <p class="ok">All checks passed successfully. Your system is ready to run Symfony applications.</p>
-                        <?php endif;?>
+                        <?php endif; ?>
 
                         <ul class="symfony-install-continue">
                             <?php if ($hasMajorProblems || $hasMinorProblems): ?>
                                 <li><a href="config.php">Re-check configuration</a></li>
-                            <?php endif;?>
+                            <?php endif; ?>
                         </ul>
                     </div>
                 </div>
