@@ -35,8 +35,3 @@ services:
     #         $someArgument: 'some_value'
     Symfony\Bundle\AsseticBundle\AsseticBundle:
         public: true
-    
-    app.form.registration:
-        class: NCbrtBundle\Form\Type\RegistrationType
-        tags:
-            - { name: form.type, alias: app_user_registration }
