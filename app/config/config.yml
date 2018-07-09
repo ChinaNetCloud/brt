@@ -11,7 +11,7 @@ parameters:
 
 framework:
     #esi: ~
-    translator: { fallbacks: ['%locale%'] }
+    #translator: { fallbacks: ['%locale%'] }
     secret: '%secret%'
     router:
         resource: '%kernel.project_dir%/app/config/routing.yml'
@@ -86,61 +86,39 @@ swiftmailer:
     password: '%mailer_password%'
     spool: { type: memory }
 
-fos_user:
-    db_driver: orm # other valid values are 'mongodb' and 'couchdb'
-    firewall_name: main
-    user_class: NCbrtBundle\Entity\User
-    from_email:
-        address: "admin@chinanetcloud.com"
-        sender_name: "Backup"
-
-knp_paginator:
-    page_range: 5                       # number of links showed in the pagination menu (e.g: you have 10 pages, a page_range of 3, on the 5th page you'll see links to page 4, 5, 6)
-    default_options:                                 
-        page_name: page                 # page query parameter name
-        sort_field_name: sort           # sort field query parameter name
-        sort_direction_name: direction  # sort direction query parameter name
-        distinct: true                  # ensure distinct results, useful when ORM queries are using GROUP BY statements
-        filter_field_name: filterField  # filter field query parameter name
-        filter_value_name: filterValue  # filter value query parameter name
-    template:                                        
-        pagination: '@KnpPaginator/Pagination/twitter_bootstrap_v4_pagination.html.twig'     # sliding pagination controls template                                    
-        sortable: '@KnpPaginator/Pagination/sortable_link.html.twig' # sort link template                                
-        filtration: '@KnpPaginator/Pagination/filtration.html.twig'  # filters template
-
 # app/config/config.yml
 assetic:
     debug:          '%kernel.debug%'
     use_controller: '%kernel.debug%'
     filters:
-        cssrewrite: [public]
+        cssrewrite: ~
     assets:
         bootstrap_js:
             inputs:
-                - kernel.root_dir/../vendor/twbs/bootstrap/dist/js/bootstrap.js
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/dist/js/bootstrap.js
         bootstrap_css:
             inputs:
-                - kernel.root_dir/../vendor/twbs/bootstrap/dist/css/bootstrap.css
-                - kernel.root_dir/../vendor/twbs/bootstrap/dist/css/bootstrap-theme.css
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/dist/css/bootstrap.css
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/dist/css/bootstrap-theme.css
             filters: [cssrewrite]
 
         bootstrap_glyphicons_ttf:
             inputs:
-                - kernel.root_dir/../vendor/twbs/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf
             output: "fonts/glyphicons-halflings-regular.ttf"
         bootstrap_glyphicons_eot:
             inputs:
-                - kernel.root_dir/../vendor/twbs/bootstrap/dist/fonts/glyphicons-halflings-regular.eot
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/dist/fonts/glyphicons-halflings-regular.eot
             output: "fonts/glyphicons-halflings-regular.eot"
         bootstrap_glyphicons_svg:
             inputs:
-                - kernel.root_dir/../vendor/twbs/bootstrap/dist/fonts/glyphicons-halflings-regular.svg
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/dist/fonts/glyphicons-halflings-regular.svg
             output: "fonts/glyphicons-halflings-regular.svg"
         bootstrap_glyphicons_woff:
             inputs:
-                - kernel.root_dir/../vendor/twbs/bootstrap/dist/fonts/glyphicons-halflings-regular.woff
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/dist/fonts/glyphicons-halflings-regular.woff
             output: "fonts/glyphicons-halflings-regular.woff"
 
         jquery:
             inputs:
-                - kernel.root_dir/../vendor/components/jquery/jquery.js
+                - %kernel.root_dir%/../vendor/components/jquery/jquery.js

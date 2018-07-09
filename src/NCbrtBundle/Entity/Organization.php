@@ -8,7 +8,10 @@
 
 namespace NCbrtBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
+
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\OneToMany;
 
 /**
  * Description of Organization
@@ -28,8 +31,8 @@ class Organization {
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="children")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
+     * @ManyToOne(targetEntity="Organization", inversedBy="children")
+     * @JoinColumn(name="parent_id", referencedColumnName="id")
      */
     private $id;
     
@@ -40,22 +43,22 @@ class Organization {
     private $name;
     
     /**
-     * @ORM\OneToMany(targetEntity="Organization", mappedBy="id")
+     * @OneToMany(targetEntity="Organization", mappedBy="parent")
      */
     private $children;
     
     /**
-     * @ORM\OneToMany(targetEntity="SrvrsServers", mappedBy="organization")
+     * @OneToMany(targetEntity="SrvrsServers", mappedBy="Organization")
      */
-    private $srvrsServers;
+    private $SrvrsServers;
     
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->children = new ArrayCollection();
-        $this->srvrsServers = new ArrayCollection();
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->SrvrsServers = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -90,6 +93,30 @@ class Organization {
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Add child
+     *
+     * @param \NCbrtBundle\Entity\Category $child
+     *
+     * @return Organization
+     */
+    public function addChild(\NCbrtBundle\Entity\Category $child)
+    {
+        $this->children[] = $child;
+
+        return $this;
+    }
+
+    /**
+     * Remove child
+     *
+     * @param \NCbrtBundle\Entity\Category $child
+     */
+    public function removeChild(\NCbrtBundle\Entity\Category $child)
+    {
+        $this->children->removeElement($child);
     }
 
     /**

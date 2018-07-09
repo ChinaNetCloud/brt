@@ -42,7 +42,7 @@ class DashboardController  extends Controller {
      */
     
      /**
-     * @Route("/report", name="stats_general")
+     * @Route("/dashboard", name="stats_general")
      */
     public function showAction(Request $request){
         $form = $this->createForm(DateSearchType::class);

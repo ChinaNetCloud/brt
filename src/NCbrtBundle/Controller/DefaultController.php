@@ -1,15 +1,18 @@
 <?php
 namespace NCbrtBundle\Controller;
 
-use NCbrtBundle\Entity\NcBackupEvents;
-use NCbrtBundle\Entity\SrvrsServers;
-use NCbrtBundle\Form\Type\SrvrsServersType;
-use NCbrtBundle\Tools\SizeConvert;
-use NCbrtBundle\Tools\Tools;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use \Symfony\Component\HttpFoundation\Request;
 use \Symfony\Component\HttpFoundation\Response;
+
+use NCbrtBundle\Entity\SrvrsServers;
+use NCbrtBundle\Entity\NcBackupEvents;
+
+use NCbrtBundle\Tools\Tools;
+
+use NCbrtBundle\Form\Type\SrvrsServersType;
+use NCbrtBundle\Tools\SizeConvert;
 
 class DefaultController extends Controller
 {
@@ -20,73 +23,77 @@ class DefaultController extends Controller
     {
         $form = $this->createForm(SrvrsServersType::class);
         $form->handleRequest($request);
-        $paramaters = array('backupmethod' => '1');
-        if ($form->isSubmitted() && $form->isValid()) {
+        $paramaters = array('backupmethod' => '');
+        if ($form->isSubmitted() && $form->isValid()){
             $data = $form->getData();
             $paramaters['server_name'] = $data['name'];
             $paramaters['backupmethod'] = $data['method'];
             $paramaters['status'] = $data['status'];
             $paramaters['size'] = $data['size'];
             $aSizeConvertion = new SizeConvert();
-            $paramaters['size'] = $aSizeConvertion->SizeConversionToKB($paramaters['size'] . ' MB');
+            $paramaters['size'] = $aSizeConvertion->SizeConversionToKB($paramaters['size'].' MB');
             $paramaters['comparer'] = $data['comparer'];
             $paramaters['count'] = $data['count'];
-            if ($data['active'] === true) {
+            if ($data['active'] === true){
                 $paramaters['active'] = '1';
             } else {
                 $paramaters['active'] = '0';
             }
-            if ($paramaters['backupmethod'] == '0') {
+            if ($paramaters['backupmethod'] == '0'){
                 $paramaters['backupmethod'] = '';
             }
-            if ($paramaters['status'] == '-1') {
+            if ($paramaters['status'] == '-1'){
                 $paramaters['status'] = '';
             }
         }
-        if (!isset($paramaters['server_name'])) {
+        if (!isset($paramaters['server_name'])){
             $paramaters['server_name'] = '';
         }
-        if (!isset($paramaters['status'])) {
+        if (!isset($paramaters['status'])){
             $paramaters['status'] = '';
         }
-        if (!isset($paramaters['size'])) {
+//        var_dump($paramaters['size']);
+        if (!isset($paramaters['size'])){
             $paramaters['size'] = '';
         }
-        if (!isset($paramaters['comparer'])) {
+        if (!isset($paramaters['comparer'])){
             $paramaters['comparer'] = '';
         }
-        if (!isset($paramaters['count'])) {
+        if (!isset($paramaters['count'])){
             $paramaters['count'] = 25;
         }
-        if (!isset($paramaters['active'])) {
+        if (!isset($paramaters['active'])){
             $paramaters['active'] = '1';
         }
         $paramaters['count'] = intval($paramaters['count']);
-
-        // This selects a collection of complete objects,
-        // this is not good for very big queries as we do not need stuff like
-        // the log at this point. The SOLUTION implicates to modify the
-        // NcBackupEventsRepository.php for it to select only the wanted fields
-        // on the DQL query. The change will also entail the change from Objects
+        // This selects a collection of complete objects, 
+        // this is not good for very big queries as we do not need stuff like 
+        // the log at this point. The SOLUTION implicates to modify the 
+        // NcBackupEventsRepository.php for it to select only the wanted fields 
+        // on the DQL query. The change will also entail the change from Objects 
         // to array in the following code.
         $em = $this->getDoctrine()
-            ->getRepository('NCbrtBundle:NcBackupEvents')
-            ->findByServerBackup($paramaters);
+                ->getRepository('NCbrtBundle:NcBackupEvents')
+                ->findByServerBackup($paramaters);
+//                ->findBy($paramater);
+//                ->getResult();
 
-        $results = array();
-        foreach ($em as $value) {
-            $aux['name'] = $value->getSrvrsServers()->getName();
-            $aux['date_created'] = $value->getDateCreated(); //Convert to string like Old HR system.
-            $aux['status'] = $value->getSuccess();
-            $aux['size'] = $value->getBackupsize();
+        $table_results = array();
+        foreach($em as $value){
+            $aux = array();
+            $aux['name'] =  $value->getSrvrsServers()->getName();
+            $aux['date_created'] =  $value->getDateCreated(); //Convert to string like Old HR system.
+            $aux['status'] =  $value->getSuccess();
+            $aux['size'] =  $value->getBackupsize();
             $aux['status_active'] = $value->getSrvrsServers()->getStatusActive();
+
             /* Filter Size */
             $aSize = new SizeConvert();
             $aux['size'] = $aSize->SizeCovertionFromKB($aux['size']);
-            $aux['method'] = $value->getBackupmethod();
+            $aux['method'] =  $value->getBackupmethod();
             /*
              *  These fields are also available, they will be usefull in show
-             *  details, but not here. Need to think about that.
+             *  details, but not here. Need to think about that. 
              */
             $aux['id_event'] = $value->getId();
             $aux['id_server'] = $value->getSrvrsServers()->getId();
@@ -94,34 +101,30 @@ class DefaultController extends Controller
             $aux['log'] = $value->getLog();
             $aux['error'] = $value->getError();
             $aux['type'] = $value->getBackupType();
-            $results[] = $aux;
+            $table_results [] = $aux;
         }
-
-        $paginator = $this->get('knp_paginator');
-        $target = $results;
-        $table_results = $paginator->paginate($target, 1, $paramaters['count']);
-
-        return $this->render('NCbrtBundle:Default:index.html.twig',
-            array('form' => $form->createView(),
-                'table' => $table_results));
+        
+        return $this->render('NCbrtBundle:Default:index.html.twig', 
+                array('form' => $form->createView(),
+                    'table' => $table_results));
     }
 
     /**
      * @Route("/backup")
      */
-    public function insertAction(Request $request)
-    {
+    public function insertAction(Request $request){
+
         /* Get data from post request */
         $content = $request->request->all();
         /* Check if server is already in DB */
         $em = $this->getDoctrine()->getManager();
 
         $selectAll = $em->getRepository('NCbrtBundle:SrvrsServers')
-            ->createQueryBuilder('s')
-            ->where('s.name = :server_name')
-            ->setParameter('server_name', $content['srvname'])
-            ->getQuery()
-            ->getResult();
+                ->createQueryBuilder('s')
+                ->where('s.name = :server_name')
+                ->setParameter('server_name', $content['srvname'])
+                ->getQuery()
+                ->getResult();
 
         /* Add Server if not in DB */
         $serverEntity = new SrvrsServers();
@@ -132,19 +135,19 @@ class DefaultController extends Controller
             $em->persist($serverEntity);
             $em->flush();
         } else {
-            $serverEntity = Tools::array_to_object($selectAll[0]);
+            $serverEntity= Tools::array_to_object($selectAll[0]);
         }
         /* At this point the server is already on DB I should have the ID */
 
         print_r($content);
 
         /* Create NEW backup event */
-        if (!empty((array($serverEntity)))) {
+        if (!empty((array($serverEntity)))){
             $backupEvent = new NcBackupEvents();
             $backupEvent->setSrvrsServers($serverEntity);
             $backupEvent->setSuccess($content['result']);
             $backupEvent->setBackupmethod($content['bckmethod']);
-
+            
             /* Filter size and sanitize it */
             $aSizeConvertion = new SizeConvert();
             $content['size'] = $aSizeConvertion->SizeConversionToKB($content['size']);
@@ -165,27 +168,23 @@ class DefaultController extends Controller
 
         /* Response with result 200 plus message*/
         return new Response('New Backup result added for server: '
-            . $serverEntity->getName() . '. This backup ID is: '
-            . $backupEvent->getId() . '.');
+                . $serverEntity->getName(). '. This backup ID is: '
+                . $backupEvent->getId() . '.');
     }
-
     /**
      * @Route("/event/{event_id}/", name="event_by_id")
      */
-    public function viewAction($event_id)
-    {
+    public function viewAction($event_id){
         $em = $this->getDoctrine()
-            ->getRepository('NCbrtBundle:NcBackupEvents')
-            ->find($event_id);
-        return $this->render('NCbrtBundle:Default:details.html.twig',
-            array('event' => $em));
+                ->getRepository('NCbrtBundle:NcBackupEvents')
+                ->find($event_id);
+        return $this->render('NCbrtBundle:Default:details.html.twig', 
+                array('event' => $em));
     }
-
     /**
-     * @Route("/about", name="about_main")
+     * @Route("/about", name="about_main")     
      */
-    public function aboutAction()
-    {
+    public function aboutAction(){
         return $this->render('NCbrtBundle:About:about.html.twig');
     }
 }

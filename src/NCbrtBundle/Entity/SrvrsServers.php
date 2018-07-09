@@ -5,6 +5,10 @@ namespace NCbrtBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
+
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\JoinColumn;
+
 /**
  * SrvrsServers
  *
@@ -53,13 +57,13 @@ class SrvrsServers
 
     /**
      * One SrvrsServers has Many NcBackupEvents.
-     * @ORM\OneToMany(targetEntity="NcBackupEvents", mappedBy="srvrsServers")
+     * @ORM\OneToMany(targetEntity="NcBackupEvents", mappedBy="SrvrsServers")
      */
     private $ncBackupEvents;
-
+    
     /**
-     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="srvrsServers")
-     * @ORM\JoinColumn(name="organization_id", referencedColumnName="id")
+     * @ManyToOne(targetEntity="Organization", inversedBy="SrvrsServers")
+     * @JoinColumn(name="organization_id", referencedColumnName="id")
      */
     private $organization;
 

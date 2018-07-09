@@ -5,7 +5,7 @@
 1.1. nginx
 1.2. php-fpm and PHP 7.x
 1.3. MySQL, should work with any version. I have 5.7
-1.4. Symfony dependencies this project was developed with version 3.2 an later upgraded to 3.4.
+1.4. Symfony dependencies this project was developed with version 3.2.
 
 Before you proceed, please make sure these steps those dependencies are 
 installed and working correctly.
@@ -23,33 +23,15 @@ parameters:
 
 3. Create DB:
 to do that first go to code directory using cd.
-
 3.1. drop DB is exists/wanted:
-````
 php bin/console doctrine:database:drop --force
-````
-
 3.2. create DB:
-````
 php bin/console doctrine:database:create
-````
+
 
 3.3. Create tables:
-````
 php bin/console doctrine:schema:update --force
-````
-this should create 4 tables.
-
-3.4. Create users:
-````
-php bin/console fos:user:create user
-````
-
-3.4.1. Assign role to the user, the role can be: ROLE_USER or ROLE_ADMIN
-````
-php bin/console fos:user:promote user ROLE
-````
-
+this should create 2 tables.
 
 4. Execute composer update unless you already have the vendor components downloaded.
 
