@@ -42,7 +42,7 @@ class Organization {
     /**
      * @ORM\OneToMany(targetEntity="Organization", mappedBy="id")
      */
-    private $children;    
+    private $children;
     
     /**
      * @ORM\OneToMany(targetEntity="SrvrsServers", mappedBy="organization")

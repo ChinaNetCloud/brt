@@ -68,7 +68,8 @@ class SrvrsServersType extends AbstractType
             ))
             ->add('search', SubmitType::class, array(
                 'label' => 'Search',
-            ));
+            ))
+            ->setMethod('GET');
     }
 
     public function getName()

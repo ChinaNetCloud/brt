@@ -97,9 +97,9 @@ class DefaultController extends Controller
             $results[] = $aux;
         }
 
-        $paginator = $this->get('knp_paginator'); 
+        $paginator = $this->get('knp_paginator');
         $target = $results;
-        $table_results = $paginator->paginate($target, 2, 10);
+        $table_results = $paginator->paginate($target, 1, $paramaters['count']);
 
         return $this->render('NCbrtBundle:Default:index.html.twig',
             array('form' => $form->createView(),
