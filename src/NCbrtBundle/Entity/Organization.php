@@ -43,14 +43,14 @@ class Organization {
     private $name;
     
     /**
-     * @OneToMany(targetEntity="Organization", mappedBy="parent")
+     * @OneToMany(targetEntity="Organization", mappedBy="id")
      */
     private $children;
     
     /**
-     * @OneToMany(targetEntity="SrvrsServers", mappedBy="Organization")
+     * @OneToMany(targetEntity="SrvrsServers", mappedBy="organization")
      */
-    private $SrvrsServers;
+    private $srvrsServers;
     
     /**
      * Constructor

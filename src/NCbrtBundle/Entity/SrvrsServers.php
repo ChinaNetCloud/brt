@@ -57,12 +57,12 @@ class SrvrsServers
 
     /**
      * One SrvrsServers has Many NcBackupEvents.
-     * @ORM\OneToMany(targetEntity="NcBackupEvents", mappedBy="SrvrsServers")
+     * @ORM\OneToMany(targetEntity="NcBackupEvents", mappedBy="srvrsServers")
      */
     private $ncBackupEvents;
     
     /**
-     * @ManyToOne(targetEntity="Organization", inversedBy="SrvrsServers")
+     * @ManyToOne(targetEntity="Organization", inversedBy="srvrsServers")
      * @JoinColumn(name="organization_id", referencedColumnName="id")
      */
     private $organization;
