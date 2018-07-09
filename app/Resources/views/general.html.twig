@@ -13,17 +13,17 @@
     </head>
     <body>
         {% block body %}
-            <div class="">
+            <div>
                 {% block header %}
                     <div class="container">
                         <div class="navbar-header">
-                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                                 <span class="sr-only">Toggle navigation</span>
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
-                            <a class="navbar-brand">BRT ></a>
+                            <a class="navbar navbar-brand">BRT ></a>
                         </div>
                         <div class="navbar-collapse collapse">
                             <ul class="nav navbar-nav">
@@ -33,9 +33,16 @@
                                 <li class="">
                                     <a href="{{ path('stats_general') }}">Report</a>
                                 </li>
-                                {# <li class=""><a href="{{ path('search_home') }}">Configure</a></li>#}
                                 <li>
                                     <a href="{{ path('about_main') }}">About</a>
+                                </li>
+                            </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                    <a href="#">Profile</a>
+                                </li>
+                                <li>
+                                    <a href="{{url('fos_user_security_logout')}}">Logout</a>
                                 </li>
                             </ul>
                         </div>

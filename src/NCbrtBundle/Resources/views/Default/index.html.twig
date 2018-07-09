@@ -8,39 +8,38 @@
         <div class="panel-body">
             {{ form_start(form) }}
             {{ form_errors(form) }}
-            <div class="inline-list">
-                {{ form_label(form.name)}}
-                {{ form_widget(form.name) }}
-                {#                            , {'attr': {'class': 'form-control'}}#}
-                {{ form_errors(form.name)}}
-                {{ form_label(form.method)}}
-                {{ form_widget(form.method) }}
-                {{ form_errors(form.method)}}
-                {{ form_label(form.status)}}
-                {{ form_widget(form.status) }}
-                {{ form_errors(form.status)}}
-                {{ form_label(form.comparer)}}
-                {{ form_widget(form.comparer) }}
-                {{ form_errors(form.comparer)}}
-                {{ form_label(form.size)}}
-                {{ form_widget(form.size) }}
-                {{ form_errors(form.size)}}
-                {{ form_label(form.count)}}
-                {{ form_widget(form.count) }}
-                {{ form_errors(form.count)}}
-                {{ form_label(form.active)}}
-                {{ form_widget(form.active) }}
-                {{ form_errors(form.active)}}
-                {{ form_widget(form.search, {'attr': {'class': 'btn btn-lg btn-info'}}) }}
-            </div>
-            <p>
-                {{ form_end(form) }}
-            </div>
+            {{ form_label(form.name)}}
+            {{ form_widget(form.name) }}
+            {{ form_errors(form.name)}}
+            {{ form_label(form.method)}}
+            {{ form_widget(form.method) }}
+            {{ form_errors(form.method)}}
+            {{ form_label(form.status)}}
+            {{ form_widget(form.status) }}
+            {{ form_errors(form.status)}}
+            {{ form_label(form.comparer)}}
+            {{ form_widget(form.comparer) }}
+            {{ form_errors(form.comparer)}}
+            {{ form_label(form.size)}}
+            {{ form_widget(form.size) }}
+            {{ form_errors(form.size)}}
+            {{ form_label(form.count)}}
+            {{ form_widget(form.count) }}
+            {{ form_errors(form.count)}}
+            {{ form_label(form.active)}}
+            {{ form_widget(form.active) }}
+            {{ form_errors(form.active)}}
+            {{ form_widget(form.search, {'attr': {'class': 'btn btn-lg btn-info'}}) }}
+            {{ form_end(form) }}
         </div>
-        <p>
-            <div>
+    </div>
+    <p>
+        <div>
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">List of Servers</div>
                 {% if table is defined and table is not empty %}
-                    <table class="table-hover table-responsive table-bordered table-striped table-condensed">
+                    <table class="table">
                         <tr>
                             <td>#</td>
                             <td>Actions</td>
@@ -75,10 +74,11 @@
                             </tr>
                         {% endfor %}
                     </table>
-                {% else %}
-                    <div class="alert alert-warning" role="alert">
-                        <h4>No search results available for this criteria!</h4>
-                    </div>
-                {% endif %}
-            </div>
-        {% endblock %}
+                </div>
+            {% else %}
+                <div class="alert alert-warning" role="alert">
+                    <h4>No search results available for this criteria!</h4>
+                </div>
+            {% endif %}
+        </div>
+    {% endblock %}

@@ -10,7 +10,7 @@ parameters:
     locale: en
 
 framework:
-    #esi: ~
+    esi: ~
     translator: { fallbacks: ['%locale%'] }
     secret: '%secret%'
     router:
@@ -85,6 +85,14 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
+
+fos_user:
+    db_driver: orm # other valid values are 'mongodb' and 'couchdb'
+    firewall_name: main
+    user_class: NCbrtBundle\Entity\User
+    from_email:
+        address: "admin@chinanetcloud.com"
+        sender_name: "ChinaNetCloud"
 
 # app/config/config.yml
 assetic:
