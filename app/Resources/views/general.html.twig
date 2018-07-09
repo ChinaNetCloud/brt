@@ -1,51 +1,63 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}BRT | Backup Report Tool{% endblock %}</title>
+        <meta charset="UTF-8"/>
+        <title>
+            {% block title %}BRT | Backup Report Tool{% endblock %}
+        </title>
         {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
         {% stylesheets '@bootstrap_css' %}
-            <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
-        {% endstylesheets %}     
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
+        {% endstylesheets %}
     </head>
     <body>
         {% block body %}
-        <div class="">
-            {% block header %}
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand">BRT ></a>
+            <div class="">
+                {% block header %}
+                    <div class="container">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand">BRT ></a>
+                        </div>
+                        <div class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav">
+                                <li class="active">
+                                    <a href="{{ path('search_home') }}">Home</a>
+                                </li>
+                                <li class="">
+                                    <a href="{{ path('stats_general') }}">Report</a>
+                                </li>
+                                {# <li class=""><a href="{{ path('search_home') }}">Configure</a></li>#}
+                                <li>
+                                    <a href="{{ path('about_main') }}">About</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="{{ path('search_home') }}">Home</a></li>
-                       <li class=""><a href="{{ path('stats_general') }}">Report</a></li>
-                        {# <li class=""><a href="{{ path('search_home') }}">Configure</a></li>#}
-                        <li><a href="{{ path('about_main') }}">About</a></li>
-                    </ul>
-                    </div>
-                </div>
-            {% endblock %}
-            {% block dynamic_content %}{% endblock %}
-            {% block footer %}
-                <nav class="nav nav-justified center-block">
-                    <div class="text-bold text-center">
-                        <h6>Backup report tool <a href="{{ path('about_main') }}">about</a></h6>
-                    </div>          
-                </nav>
-            {% endblock %}
-        </div>
+                {% endblock %}
+                {% block dynamic_content %}{% endblock %}
+                {% block footer %}
+                    <footer>
+                        <nav class="nav nav-justified center-block">
+                            <div class="text-bold text-center">
+                                <h6>Backup report tool
+                                    <a href="{{ path('about_main') }}">about</a>
+                                </h6>
+                            </div>
+                        </nav>
+                    </footer>
+                {% endblock %}
+            </div>
         {% endblock %}
         {% block javascripts %}{% endblock %}
         {% javascripts '@jquery' '@bootstrap_js' %}
-            <script type="text/javascript" src="{{ asset_url }}"></script>
+        <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
     </body>
 </html>
