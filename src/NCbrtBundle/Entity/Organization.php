@@ -96,30 +96,6 @@ class Organization {
     }
 
     /**
-     * Add child
-     *
-     * @param \NCbrtBundle\Entity\Category $child
-     *
-     * @return Organization
-     */
-    public function addChild(\NCbrtBundle\Entity\Category $child)
-    {
-        $this->children[] = $child;
-
-        return $this;
-    }
-
-    /**
-     * Remove child
-     *
-     * @param \NCbrtBundle\Entity\Category $child
-     */
-    public function removeChild(\NCbrtBundle\Entity\Category $child)
-    {
-        $this->children->removeElement($child);
-    }
-
-    /**
      * Get children
      *
      * @return \Doctrine\Common\Collections\Collection
