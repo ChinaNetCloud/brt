@@ -13,8 +13,8 @@
             <li>Status: {{event.srvrsServers.statusActive == '1' ? "Active" : "Not Active" }}</li>
             <li>Date created: {{ event.dateCreated is empty ? "" : event.dateCreated | date("m/d/Y H:i:s")}}</li>
             <li>Backup size: {{event.backupsize}}</li>
-            <li>*(LEGACY to be removed) Error: {{event.error}}</li>
-            <li>Log: {{event.log}}</li>
+            <li>*(LEGACY to be removed) Error: {{event.error |nl2br}}</li>
+            <li>Log: {{event.log |nl2br}}</li>
         </ul>
         </div>
     </div> 
