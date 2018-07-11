@@ -30,7 +30,7 @@
             {{ form_widget(form.active) }}
             {{ form_errors(form.active)}}
             {{ form_widget(form.search, {'attr': {'class': 'btn btn-lg btn-info'}}) }}
-            {{ form_end(form) }}
+
         </div>
     </div>
     <p>
@@ -80,5 +80,9 @@
                     <h4>No search results available for this criteria!</h4>
                 </div>
             {% endif %}
+            <div class="navigation">
+                {{ knp_pagination_render(table) }}
+            </div>
+            {{ form_end(form) }}
         </div>
     {% endblock %}

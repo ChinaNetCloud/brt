@@ -23,9 +23,10 @@ class SrvrsServersType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', TextType::class, array(
-            'required' => false,
-            'label' => 'Server: '))
+        $builder
+            ->add('name', TextType::class, array(
+                'required' => false,
+                'label' => 'Server: '))
             /* The method choices need to come from config probably, so it is extensible*/
             ->add('method', ChoiceType::class, array('choices' => array(
                 'All' => '0',
@@ -58,7 +59,8 @@ class SrvrsServersType extends AbstractType
             ->add('active', CheckboxType::class, array(
                 'label' => 'Production:',
                 'data' => true, 'required' => false))
-            ->add('search', SubmitType::class, array('label' => 'Search'));
+            ->add('search', SubmitType::class, array('label' => 'Search'))
+            ->setMethod('GET');
     }
     public function getName()
     {
