@@ -50,7 +50,7 @@ class DefaultController extends Controller
             $paramaters['status'] = '';
         }
         if (!isset($paramaters['size'])) {
-            $paramaters['size'] = '';
+            $paramaters['size'] = '0';
         }
         if (!isset($paramaters['comparer'])) {
             $paramaters['comparer'] = '';
