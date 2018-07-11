@@ -33,8 +33,9 @@ class NcBackupEventsRepository extends \Doctrine\ORM\EntityRepository
             $parameters['size'] != '' && $parameters['size'] != 0) {
             if ($parameters['size'] >= 0) {
 
-                $query->setParameter('backupmethod',
-                    '%' . $parameters['backupmethod'] . '%')
+                $query->setMaxResults($parameters['count'])
+                    ->setParameter('backupmethod',
+                        '%' . $parameters['backupmethod'] . '%')
                     ->setParameter('server_name',
                         '%' . $parameters['server_name'] . '%')
                     ->setParameter('status',
@@ -43,8 +44,9 @@ class NcBackupEventsRepository extends \Doctrine\ORM\EntityRepository
                     ->setParameter('active', $parameters['active']);
             }
         } else {
-            $query->setParameter('backupmethod',
-                '%' . $parameters['backupmethod'] . '%')
+            $query->setMaxResults($parameters['count'])
+                ->setParameter('backupmethod',
+                    '%' . $parameters['backupmethod'] . '%')
                 ->setParameter('server_name',
                     '%' . $parameters['server_name'] . '%')
                 ->setParameter('status',
