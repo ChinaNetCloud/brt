@@ -1,21 +1,29 @@
 {% extends 'general.html.twig' %}
 {% block dynamic_content %}
-        <div class="panel panel-info">  
+    <div class="panel panel-info">
         <div class="panel-heading">
-                  <h3 class="panel-title">Detailed report of backup event ID: {{event.id}}</h3>
+            <h3 class="panel-title">Detailed report of backup event ID:
+                {{event.id}}</h3>
         </div>
         <div class="panel-body">
-        <ul class="">
-            <li>Server Name: {{event.srvrsServers.name}}</li>
-            <li>Details: {{event.backupmethod}}</li>
-            <li>Status: 
-                {{event.success == '0' ? "Success" : event.success == '1' ? "Failed" : "Warning"}}</li>
-            <li>Status: {{event.srvrsServers.statusActive == '1' ? "Active" : "Not Active" }}</li>
-            <li>Date created: {{ event.dateCreated is empty ? "" : event.dateCreated | date("m/d/Y H:i:s")}}</li>
-            <li>Backup size: {{event.backupsize}}</li>
-            <li>*(LEGACY to be removed) Error: {{event.error |nl2br}}</li>
-            <li>Log: {{event.log |nl2br}}</li>
-        </ul>
+            <ul class="">
+                <li>Server Name:
+                    {{event.srvrsServers.name}}</li>
+                <li>Details:
+                    {{event.backupmethod}}</li>
+                <li>Status:
+                    {{event.success == '0' ? "Success" : event.success == '1' ? "Failed" : "Warning"}}</li>
+                <li>Status:
+                    {{event.srvrsServers.statusActive == '1' ? "Active" : "Not Active" }}</li>
+                <li>Date created:
+                    {{ event.dateCreated is empty ? "" : event.dateCreated | date("m/d/Y H:i:s")}}</li>
+                <li>Backup size:
+                    {{event.backupsize}}</li>
+                <li>*(LEGACY to be removed) Error:
+                    {{event.error |nl2br}}</li>
+                <li>Log:
+                    {{event.log |nl2br}}</li>
+            </ul>
         </div>
-    </div> 
- {% endblock %}
+    </div>
+{% endblock %}
