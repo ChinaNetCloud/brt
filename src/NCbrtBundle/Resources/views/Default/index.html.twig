@@ -30,7 +30,7 @@
             {{ form_widget(form.active) }}
             {{ form_errors(form.active)}}
             {{ form_widget(form.search, {'attr': {'class': 'btn btn-lg btn-info'}}) }}
-
+            {{ form_end(form) }}
         </div>
     </div>
     <p>
@@ -52,25 +52,26 @@
                         </tr>
                         {% for key, row in table %}
                             <tr>
+
                                 <td>{{ key + 1 }}</td>
                                 <td>
-                                    <a href="{{ path('event_by_id', {'event_id': row.id_event}) }}">View</a>
+                                    <a href="{{ url('event_by_id', {'event_id': row.id}) }}">View</a>
                                 </td>
                                 <td>
-                                    <a href="{{ path('edit_server', {'id': row.id_server}) }}">Edit</a>
+                                    <a href="{{ url('edit_server', {'id': row.srvrsservers.id}) }}">Edit</a>
                                     |
-                                    {{ row.name }}</td>
+                                    {{ row.srvrsservers.name }}</td>
                                 {#  
                                     Date time the time shown depends on the php.ini 
                                     timezone this might require to be changed as per customer or account config 
                                 #}
-                                <td>{{ row.date_created is empty ? "" : row.date_created | date("m/d/Y H:i:s")}}</td>
-                                <td>{{ row.status == '0' ? "<span class='badge btn-success btn-group-justified'>Success</span>" 
-                                    : row.status == '1' ? "<span class='badge btn-danger btn-group-justified'>Failed</span>" 
+                                <td>{{ row.datecreated is empty ? "" : row.datecreated | date("m/d/Y H:i:s")}}</td>
+                                <td>{{ row.success == '0' ? "<span class='badge btn-success btn-group-justified'>Success</span>" 
+                                    : row.success == '1' ? "<span class='badge btn-danger btn-group-justified'>Failed</span>" 
                                     : "<span class='badge btn-warning btn-group-justified'>Warning</span>"}}</td>
-                                <td>{{ row.size }}</td>
-                                <td>{{ row.method == "ncscript-py" ? "nc-backup-py" : row.method }}</td>
-                                <td>{{ row.status_active == '1' ? "Active" : "Not Active" }}</td>
+                                <td>{{ row.backupsize }}</td>
+                                <td>{{ row.backupmethod == "ncscript-py" ? "nc-backup-py" : row.backupmethod }}</td>
+                                <td>{{ row.srvrsservers.statusactive == '1' ? "Active" : "Not Active" }}</td>
                             </tr>
                         {% endfor %}
                     </table>
@@ -80,9 +81,8 @@
                     <h4>No search results available for this criteria!</h4>
                 </div>
             {% endif %}
-            <div class="navigation">
+            <div class="pagnation">
                 {{ knp_pagination_render(table) }}
             </div>
-            {{ form_end(form) }}
         </div>
     {% endblock %}
