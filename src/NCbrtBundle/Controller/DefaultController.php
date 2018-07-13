@@ -97,15 +97,18 @@ class DefaultController extends Controller
         }
         
         $paginator = $this->get('knp_paginator');
+        $page_actual = $request->query->getInt('page', 1);
         $pagination = $paginator->paginate(
             $table_results,
-            $request->query->getInt('page', 1),
+            $page_actual,
             $paramaters['count']
         );
         
         return $this->render('NCbrtBundle:Default:index.html.twig', array(
             'form' => $form->createView(),
             'pagination' => $pagination,
+            'page_actual' => $page_actual,
+            'count' => $paramaters['count']
         ));
     }
 

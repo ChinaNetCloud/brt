@@ -52,7 +52,7 @@
                         </tr>
                         {% for key, row in pagination %}
                             <tr>
-                                <td>{{ key + 1 }}</td>
+                                <td>{{ (page_actual - 1) * count + key + 1 }}</td>
                                 <td>
                                     <a href="{{ path('event_by_id', {'event_id': row.id_event}) }}">View</a>
                                 </td>
