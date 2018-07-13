@@ -37,7 +37,8 @@
         <div>
             <div class="panel panel-default">
                 <!-- Default panel contents -->
-                <div class="panel-heading">Total records: {{pagination.getTotalItemCount}}</div>
+                <div class="panel-heading">Total records:
+                    {{pagination.getTotalItemCount}}</div>
                 {% if pagination is defined and pagination is not empty %}
                     <table class="table">
                         <tr>
@@ -52,26 +53,21 @@
                         </tr>
                         {% for key, row in pagination %}
                             <tr>
-
                                 <td>{{ key + 1 }}</td>
                                 <td>
-                                    <a href="{{ url('event_by_id', {'event_id': row.id}) }}">View</a>
+                                    <a href="{{ path('event_by_id', {'event_id': row.id_event}) }}">View</a>
                                 </td>
                                 <td>
-                                    <a href="{{ url('edit_server', {'id': row.srvrsservers.id}) }}">Edit</a>
+                                    <a href="{{ path('edit_server', {'id': row.id_server}) }}">Edit</a>
                                     |
-                                    {{ row.srvrsservers.name }}</td>
-                                {#  
-                                    Date time the time shown depends on the php.ini 
-                                    timezone this might require to be changed as per customer or account config 
-                                #}
-                                <td>{{ row.datecreated is empty ? "" : row.datecreated | date("m/d/Y H:i:s")}}</td>
-                                <td>{{ row.success == '0' ? "<span class='badge btn-success btn-group-justified'>Success</span>" 
-                                    : row.success == '1' ? "<span class='badge btn-danger btn-group-justified'>Failed</span>" 
+                                    {{ row.name }}</td>
+                                <td>{{ row.date_created is empty ? "" : row.date_created | date("m/d/Y H:i:s")}}</td>
+                                <td>{{ row.status == '0' ? "<span class='badge btn-success btn-group-justified'>Success</span>" 
+                                    : row.status == '1' ? "<span class='badge btn-danger btn-group-justified'>Failed</span>" 
                                     : "<span class='badge btn-warning btn-group-justified'>Warning</span>"}}</td>
-                                <td>{{ row.backupsize }}</td>
-                                <td>{{ row.backupmethod == "ncscript-py" ? "nc-backup-py" : row.backupmethod }}</td>
-                                <td>{{ row.srvrsservers.statusactive == '1' ? "Active" : "Not Active" }}</td>
+                                <td>{{ row.size }}</td>
+                                <td>{{ row.method == "ncscript-py" ? "nc-backup-py" : row.method }}</td>
+                                <td>{{ row.status_active == '1' ? "Active" : "Not Active" }}</td>
                             </tr>
                         {% endfor %}
                     </table>

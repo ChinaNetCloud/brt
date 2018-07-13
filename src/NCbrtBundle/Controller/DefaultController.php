@@ -95,16 +95,14 @@ class DefaultController extends Controller
             $aux['type'] = $value->getBackupType();
             $table_results[] = $aux;
         }
-
+        
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-            $em, $request->query->getInt('page', 1),
+            $table_results,
+            $request->query->getInt('page', 1),
             $paramaters['count']
         );
         
-        /*$paginator = $this->get('knp_paginator');
-        $results = $paginator->paginate($table_results, 1, $paramaters['count']);
-        */
         return $this->render('NCbrtBundle:Default:index.html.twig', array(
             'form' => $form->createView(),
             'pagination' => $pagination,
