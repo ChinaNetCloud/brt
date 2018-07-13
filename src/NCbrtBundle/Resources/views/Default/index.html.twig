@@ -37,8 +37,8 @@
         <div>
             <div class="panel panel-default">
                 <!-- Default panel contents -->
-                <div class="panel-heading">List of Servers</div>
-                {% if table is defined and table is not empty %}
+                <div class="panel-heading">Total records: {{pagination.getTotalItemCount}}</div>
+                {% if pagination is defined and pagination is not empty %}
                     <table class="table">
                         <tr>
                             <td>#</td>
@@ -50,7 +50,7 @@
                             <td>Backup Method</td>
                             <td>Production</td>
                         </tr>
-                        {% for key, row in table %}
+                        {% for key, row in pagination %}
                             <tr>
 
                                 <td>{{ key + 1 }}</td>
@@ -82,7 +82,7 @@
                 </div>
             {% endif %}
             <div class="pagnation">
-                {{ knp_pagination_render(table) }}
+                {{ knp_pagination_render(pagination) }}
             </div>
         </div>
     {% endblock %}

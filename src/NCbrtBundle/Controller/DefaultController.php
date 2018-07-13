@@ -107,7 +107,7 @@ class DefaultController extends Controller
         */
         return $this->render('NCbrtBundle:Default:index.html.twig', array(
             'form' => $form->createView(),
-            'table' => $pagination,
+            'pagination' => $pagination,
         ));
     }
 
