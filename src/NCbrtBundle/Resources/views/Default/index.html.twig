@@ -36,7 +36,6 @@
     <p>
         <div>
             <div class="panel panel-default">
-                <!-- Default panel contents -->
                 <div class="panel-heading">Total records:
                     {{pagination.getTotalItemCount}}</div>
                 {% if pagination is defined and pagination is not empty %}
@@ -60,7 +59,8 @@
                                 <td>
                                     <a href="{{ path('edit_server', {'id': row.id_server}) }}">Edit</a>
                                     |
-                                    {{ row.name }}</td>
+                                    {{ row.name }}
+                                </td>
                                 <td>{{ row.date_created is empty ? "" : row.date_created | date("m/d/Y H:i:s")}}</td>
                                 <td>{{ row.status == '0' ? "<span class='badge btn-success btn-group-justified'>Success</span>" 
                                     : row.status == '1' ? "<span class='badge btn-danger btn-group-justified'>Failed</span>" 
@@ -77,7 +77,7 @@
                     <h4>No search results available for this criteria!</h4>
                 </div>
             {% endif %}
-            <div class="pagnation">
+            <div class="pagination">
                 {{ knp_pagination_render(pagination) }}
             </div>
         </div>
