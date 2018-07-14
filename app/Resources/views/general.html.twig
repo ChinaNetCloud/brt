@@ -49,19 +49,18 @@
                     </div>
                 {% endblock %}
                 {% block dynamic_content %}{% endblock %}
-                {% block footer %}
-                    <footer>
-                        <nav class="nav nav-justified center-block">
-                            <div class="text-bold text-center">
-                                <h6>Backup report tool
-                                    <a href="{{ path('about_main') }}">about</a>
-                                </h6>
-                            </div>
-                        </nav>
-                    </footer>
-                {% endblock %}
+
             </div>
-        {% endblock %}
+        {% endblock %}}
+        <footer>
+            <nav class="nav nav-justified center-block">
+                <div class="text-bold text-center">
+                    <h6>Backup report tool
+                        <a href="{{ path('about_main') }}">about</a>
+                    </h6>
+                </div>
+            </nav>
+        </footer>
         {% block javascripts %}{% endblock %}
         {% javascripts '@jquery' '@bootstrap_js' %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
