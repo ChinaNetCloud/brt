@@ -26,11 +26,9 @@ class DateSearchType extends AbstractType
         $builder
             ->add('date_start', DateTimeType::class, array(
                 'data' => $date_start,
-                'attr' => array('class' => 'calendar')
             ))
             ->add('date_end', DateTimeType::class, array(
                 'data' => new \DateTime(),
-                'attr' => array('class' => 'calendar')
             ))
             ->add('report', SubmitType::class, array(
                 'label' => 'Generate Report',
