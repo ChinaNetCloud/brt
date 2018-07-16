@@ -1,5 +1,47 @@
 {% extends 'general.html.twig' %}
-
+{% block header %}
+    <div>
+        <nav class="navbar navbar-default navbar-static-top">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand">BRT ></a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="{{ path('search_home') }}">Home</a>
+                    </li>
+                    <li class="active">
+                        <a href="{{ path('stats_general') }}">Report</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('about_main') }}">About</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <p class="navbar-text">Signed in as
+                            {{app.user.username}}</p>
+                    </li>
+                    <li>
+                        <a href="#">Profile</a>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#logout">
+                            Logout
+                            <span class="glyphicon glyphicon-off">&nbsp;</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+{% endblock %}
 {% block dynamic_content %}
     <div class="panel panel-info">
         <div class="panel-heading">
@@ -18,70 +60,69 @@
                 {{ form_widget(form.report, {'attr': {'class': 'btn btn-lg btn-info'}}) }}
             </div>
         </div>
-        <p>
-            {{ form_end(form) }}
-        </div>
-        <div class="row">
-            <div class="col-xs-6">
-                {#{% if total_backups is defined and total_backups is not empty%}#}
-                <h4>Production backup events report by status</h4>
-                <div>
-                    <table class="table table-hover table-responsive table-bordered table-striped table-condensed">
-                        <tr>
-                            <td>Total backups:
-                            </td>
-                            <td>{{ total_backups is empty ? 'N/A' : total_backups[0][1] }}</td>
-                        </tr>
-                        <tr>
-                            <td>Total successful backups:
-                            </td>
-                            <td>{{ total_successful_backups is empty ? 'N/A' : total_successful_backups[0][1] }}</td>
-                        </tr>
-                        <tr>
-                            <td>Total failed backups:
-                            </td>
-                            <td>{{ total_fail_backups is empty ? 'N/A' : total_fail_backups[0][1] }}</td>
-                        </tr>
-                        <tr>
-                            <td>Total no reported backups:
-                            </td>
-                            <td>{{ total_no_report_backups is empty ? 'N/A' : total_no_report_backups[0][1] }}</td>
-                        </tr>
-                        <tr>
-                            <td>Total with other warnings:
-                            </td>
-                            <td>{{ total_other_status is empty ? 'N/A' : total_other_status[0][1] }}</td>
-                        </tr>
-                    </table>
-                </div>
+        {{ form_end(form) }}
+    </div>
+    <div class="row">
+        <div class="col-xs-6">
+            {#{% if total_backups is defined and total_backups is not empty%}#}
+            <h4>Production backup events report by status</h4>
+            <div>
+                <table class="table table-hover table-responsive table-bordered table-striped table-condensed">
+                    <tr>
+                        <td>Total backups:
+                        </td>
+                        <td>{{ total_backups is empty ? 'N/A' : total_backups[0][1] }}</td>
+                    </tr>
+                    <tr>
+                        <td>Total successful backups:
+                        </td>
+                        <td>{{ total_successful_backups is empty ? 'N/A' : total_successful_backups[0][1] }}</td>
+                    </tr>
+                    <tr>
+                        <td>Total failed backups:
+                        </td>
+                        <td>{{ total_fail_backups is empty ? 'N/A' : total_fail_backups[0][1] }}</td>
+                    </tr>
+                    <tr>
+                        <td>Total no reported backups:
+                        </td>
+                        <td>{{ total_no_report_backups is empty ? 'N/A' : total_no_report_backups[0][1] }}</td>
+                    </tr>
+                    <tr>
+                        <td>Total with other warnings:
+                        </td>
+                        <td>{{ total_other_status is empty ? 'N/A' : total_other_status[0][1] }}</td>
+                    </tr>
+                </table>
             </div>
-            <div class="col-xs-6">
-                <h4>Production backup events by method</h4>
-                <div>
-                    <table class="table table-hover table-responsive table-bordered table-striped table-condensed">
-                        <tr>
-                            <td>Total backups:
-                            </td>
-                            <td>{{ total_backups is empty ? 'N/A' : total_backups[0][1] }}</td>
-                        </tr>
-                        <tr>
-                            <td>Total nc-backup-py:
-                            </td>
-                            <td>{{ total_backups_nc_backup_py is empty ? 'N/A' : total_backups_nc_backup_py[0][1] }}</td>
-                        </tr>
-                        <tr>
-                            <td>Total ncbackup (bash):
-                            </td>
-                            <td>{{ total_backups_nc_script is empty ? 'N/A' : total_backups_nc_script[0][1] }}</td>
-                        </tr>
-                        <tr>
-                            <td>Other backup method:
-                            </td>
-                            <td>{{ total_backups_method_other is empty ? 'N/A' : total_backups_method_other[0][1] }}</td>
-                        </tr>
-                    </table>
-                </div>
+        </div>
+        <div class="col-xs-6">
+            <h4>Production backup events by method</h4>
+            <div>
+                <table class="table table-hover table-responsive table-bordered table-striped table-condensed">
+                    <tr>
+                        <td>Total backups:
+                        </td>
+                        <td>{{ total_backups is empty ? 'N/A' : total_backups[0][1] }}</td>
+                    </tr>
+                    <tr>
+                        <td>Total nc-backup-py:
+                        </td>
+                        <td>{{ total_backups_nc_backup_py is empty ? 'N/A' : total_backups_nc_backup_py[0][1] }}</td>
+                    </tr>
+                    <tr>
+                        <td>Total ncbackup (bash):
+                        </td>
+                        <td>{{ total_backups_nc_script is empty ? 'N/A' : total_backups_nc_script[0][1] }}</td>
+                    </tr>
+                    <tr>
+                        <td>Other backup method:
+                        </td>
+                        <td>{{ total_backups_method_other is empty ? 'N/A' : total_backups_method_other[0][1] }}</td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
+</div>
 {% endblock %}
