@@ -33,52 +33,51 @@
             {{ form_end(form) }}
         </div>
     </div>
-    <p>
-        <div>
-            <div class="panel panel-default">
-                <div class="panel-heading">Total records:
-                    {{pagination.getTotalItemCount}}</div>
-                {% if pagination is defined and pagination is not empty %}
-                    <table class="table">
+    <div>
+        <div class="panel panel-default">
+            <div class="panel-heading">Total records:
+                {{pagination.getTotalItemCount}}</div>
+            {% if pagination is defined and pagination is not empty %}
+                <table class="table">
+                    <tr>
+                        <td>#</td>
+                        <td>Actions</td>
+                        <td>Server Name</td>
+                        <td>Date created</td>
+                        <td>Execution Status</td>
+                        <td>Size</td>
+                        <td>Backup Method</td>
+                        <td>Production</td>
+                    </tr>
+                    {% for key, row in pagination %}
                         <tr>
-                            <td>#</td>
-                            <td>Actions</td>
-                            <td>Server Name</td>
-                            <td>Date created</td>
-                            <td>Execution Status</td>
-                            <td>Size</td>
-                            <td>Backup Method</td>
-                            <td>Production</td>
+                            <td>{{ (page_actual - 1) * count + key + 1 }}</td>
+                            <td>
+                                <a href="{{ path('event_by_id', {'event_id': row.id_event}) }}">View</a>
+                            </td>
+                            <td>
+                                <a href="{{ path('edit_server', {'id': row.id_server}) }}">Edit</a>
+                                |
+                                {{ row.name }}
+                            </td>
+                            <td>{{ row.date_created is empty ? "" : row.date_created | date("m/d/Y H:i:s")}}</td>
+                            <td>{{ row.status == '0' ? "<span class='badge badge-success btn-group-justified'>Success</span>" 
+                                    : row.status == '1' ? "<span class='badge badge-danger btn-group-justified'>Failed</span>" 
+                                    : "<span class='badge badge-warning btn-group-justified'>Warning</span>"}}</td>
+                            <td>{{ row.size }}</td>
+                            <td>{{ row.method == "ncscript-py" ? "nc-backup-py" : row.method }}</td>
+                            <td>{{ row.status_active == '1' ? "Active" : "Not Active" }}</td>
                         </tr>
-                        {% for key, row in pagination %}
-                            <tr>
-                                <td>{{ (page_actual - 1) * count + key + 1 }}</td>
-                                <td>
-                                    <a href="{{ path('event_by_id', {'event_id': row.id_event}) }}">View</a>
-                                </td>
-                                <td>
-                                    <a href="{{ path('edit_server', {'id': row.id_server}) }}">Edit</a>
-                                    |
-                                    {{ row.name }}
-                                </td>
-                                <td>{{ row.date_created is empty ? "" : row.date_created | date("m/d/Y H:i:s")}}</td>
-                                <td>{{ row.status == '0' ? "<span class='badge btn-success btn-group-justified'>Success</span>" 
-                                    : row.status == '1' ? "<span class='badge btn-danger btn-group-justified'>Failed</span>" 
-                                    : "<span class='badge btn-warning btn-group-justified'>Warning</span>"}}</td>
-                                <td>{{ row.size }}</td>
-                                <td>{{ row.method == "ncscript-py" ? "nc-backup-py" : row.method }}</td>
-                                <td>{{ row.status_active == '1' ? "Active" : "Not Active" }}</td>
-                            </tr>
-                        {% endfor %}
-                    </table>
-                </div>
-            {% else %}
-                <div class="alert alert-warning" role="alert">
-                    <h4>No search results available for this criteria!</h4>
-                </div>
-            {% endif %}
-            <div class="pagination">
-                {{ knp_pagination_render(pagination) }}
+                    {% endfor %}
+                </table>
             </div>
+        {% else %}
+            <div class="alert alert-warning" role="alert">
+                <h4>No search results available for this criteria!</h4>
+            </div>
+        {% endif %}
+        <div class="pagination">
+            {{ knp_pagination_render(pagination) }}
         </div>
-    {% endblock %}
+    </div>
+{% endblock %}

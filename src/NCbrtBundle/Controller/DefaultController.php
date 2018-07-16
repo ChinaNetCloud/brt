@@ -79,14 +79,9 @@ class DefaultController extends Controller
             $aux['status'] = $value->getSuccess();
             $aux['size'] = $value->getBackupsize();
             $aux['status_active'] = $value->getSrvrsServers()->getStatusActive();
-            /* Filter Size */
             $aSize = new SizeConvert();
             $aux['size'] = $aSize->SizeCovertionFromKB($aux['size']);
             $aux['method'] = $value->getBackupmethod();
-            /*
-             *  These fields are also available, they will be usefull in show
-             *  details, but not here. Need to think about that.
-             */
             $aux['id_event'] = $value->getId();
             $aux['id_server'] = $value->getSrvrsServers()->getId();
             $aux['description'] = $value->getSrvrsServers()->getDescription();
@@ -103,7 +98,7 @@ class DefaultController extends Controller
             $page_actual,
             $paramaters['count']
         );
-        
+ 
         return $this->render('NCbrtBundle:Default:index.html.twig', array(
             'form' => $form->createView(),
             'pagination' => $pagination,
