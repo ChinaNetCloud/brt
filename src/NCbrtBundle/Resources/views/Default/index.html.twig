@@ -62,7 +62,7 @@
                             </td>
                             <td>{{ row.date_created is empty ? "" : row.date_created | date("m/d/Y H:i:s")}}</td>
                             <td>{{ row.status == '0' ? "<span class='badge badge-success btn-group-justified'>Success</span>" 
-                                    : row.status == '1' ? "<span class='badge badge-danger btn-group-justified'>Failed</span>" 
+                                    : row.status == '1' ? "<span class='badge badge-error btn-group-justified'>Failed</span>" 
                                     : "<span class='badge badge-warning btn-group-justified'>Warning</span>"}}</td>
                             <td>{{ row.size }}</td>
                             <td>{{ row.method == "ncscript-py" ? "nc-backup-py" : row.method }}</td>
