@@ -29,9 +29,11 @@
             {{ form_label(form.active)}}
             {{ form_widget(form.active) }}
             {{ form_errors(form.active)}}
-            {{ form_widget(form.search, {'attr': {'class': 'btn btn-lg btn-info'}}) }}
-            {{ form_end(form) }}
         </div>
+        <div class="panel-footer">
+            {{ form_widget(form.search, {'attr': {'class': 'btn btn-info align-right'}}) }}
+        </div>
+        {{ form_end(form) }}
     </div>
     <div>
         <div class="panel panel-default">
@@ -53,31 +55,33 @@
                         <tr>
                             <td>{{ (page_actual - 1) * count + key + 1 }}</td>
                             <td>
-                                <a href="{{ path('event_by_id', {'event_id': row.id_event}) }}">View</a>
-                            </td>
-                            <td>
-                                <a href="{{ path('edit_server', {'id': row.id_server}) }}">Edit</a>
-                                |
-                                {{ row.name }}
-                            </td>
-                            <td>{{ row.date_created is empty ? "" : row.date_created | date("m/d/Y H:i:s")}}</td>
-                            <td>{{ row.status == '0' ? "<span class='badge badge-success btn-group-justified'>Success</span>" 
+                                <a href="{{ path('event_by_id', {'event_id': row.id_event}) }}">View
+                                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></a>
+                                </td>
+                                <td>
+                                    <a href="{{ path('edit_server', {'id': row.id_server}) }}">Edit
+                                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                                    |
+                                    {{ row.name }}
+                                </td>
+                                <td>{{ row.date_created is empty ? "" : row.date_created | date("m/d/Y H:i:s")}}</td>
+                                <td>{{ row.status == '0' ? "<span class='badge badge-success btn-group-justified'>Success</span>" 
                                     : row.status == '1' ? "<span class='badge badge-error btn-group-justified'>Failed</span>" 
                                     : "<span class='badge badge-warning btn-group-justified'>Warning</span>"}}</td>
-                            <td>{{ row.size }}</td>
-                            <td>{{ row.method == "ncscript-py" ? "nc-backup-py" : row.method }}</td>
-                            <td>{{ row.status_active == '1' ? "Active" : "Not Active" }}</td>
-                        </tr>
-                    {% endfor %}
-                </table>
+                                <td>{{ row.size }}</td>
+                                <td>{{ row.method == "ncscript-py" ? "nc-backup-py" : row.method }}</td>
+                                <td>{{ row.status_active == '1' ? "Active" : "Not Active" }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            {% else %}
+                <div class="alert alert-warning" role="alert">
+                    <h4>No search results available for this criteria!</h4>
+                </div>
+            {% endif %}
+            <div class="pagination">
+                {{ knp_pagination_render(pagination) }}
             </div>
-        {% else %}
-            <div class="alert alert-warning" role="alert">
-                <h4>No search results available for this criteria!</h4>
-            </div>
-        {% endif %}
-        <div class="pagination">
-            {{ knp_pagination_render(pagination) }}
         </div>
-    </div>
-{% endblock %}
+    {% endblock %}

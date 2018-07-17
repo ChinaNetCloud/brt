@@ -25,5 +25,12 @@
                     {{event.log |nl2br}}</li>
             </ul>
         </div>
+        <div class="panel-footer">
+            {% if referer != null %}
+                <a class="btn btn-primary" href="{{referer}}">Go back</a>
+            {% else %}
+                <a class="btn btn-primary" href="{{ url('search_home') }}">Go back</a>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}

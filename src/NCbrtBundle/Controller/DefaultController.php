@@ -90,7 +90,7 @@ class DefaultController extends Controller
             $aux['type'] = $value->getBackupType();
             $table_results[] = $aux;
         }
-        
+
         $paginator = $this->get('knp_paginator');
         $page_actual = $request->query->getInt('page', 1);
         $pagination = $paginator->paginate(
@@ -98,12 +98,12 @@ class DefaultController extends Controller
             $page_actual,
             $paramaters['count']
         );
- 
+
         return $this->render('NCbrtBundle:Default:index.html.twig', array(
             'form' => $form->createView(),
             'pagination' => $pagination,
             'page_actual' => $page_actual,
-            'count' => $paramaters['count']
+            'count' => $paramaters['count'],
         ));
     }
 
@@ -173,11 +173,12 @@ class DefaultController extends Controller
     /**
      * @Route("/event/{event_id}/", name="event_by_id")
      */
-    public function viewAction($event_id)
+    public function viewAction($event_id, Request $request)
     {
         $em = $this->getDoctrine()->getRepository('NCbrtBundle:NcBackupEvents')->find($event_id);
+        $referer = $request->headers->get('referer');
         return $this->render('NCbrtBundle:Default:details.html.twig',
-            array('event' => $em));
+            array('event' => $em, 'referer' => $referer));
     }
     /**
      * @Route("/about", name="about_main")
