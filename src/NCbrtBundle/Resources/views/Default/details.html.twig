@@ -24,7 +24,7 @@
                     {{ event.dateCreated is empty ? "" : event.dateCreated | date("m/d/Y H:i:s")}}</li>
                 <li>
                     <strong>Backup size:</strong>
-                    {% if event.backupsize < 1048576 %}
+                    {% if event.backupsize < 1048576 and event.backupsize > 1024 %}
                         {{ (event.backupsize / 1024) |number_format(2, '.', '')}}
                         MB
                     {% elseif event.backupsize < 1024 %}
