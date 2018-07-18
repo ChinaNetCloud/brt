@@ -2,9 +2,13 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Event log by ID {{event.id}}</title>
+        <title>Event log server
+            {{event.srvrsServers.name}}
+            id</title>
     </head>
     <body>
+        <h5>Exported by user:
+            {{app.user.username}}</h5>
         <div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title">Detailed report of backup event ID:
@@ -40,7 +44,6 @@
             </div>
         </div>
         <hr>
-        <h4>Exported by user: <strong>{{app.user.username}}</strong></h4>
         <footer>
             <h3 style="width: 33%;" class="align-center">&copy; ChinaNetCloud
                 {{"now"|date("Y") }}</h3>
