@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class DefaultController extends Controller
 {
@@ -170,6 +171,7 @@ class DefaultController extends Controller
             . $serverEntity->getName() . '. This backup ID is: '
             . $backupEvent->getId() . '.');
     }
+
     /**
      * @Route("/event/{event_id}/", name="event_by_id")
      */
@@ -180,11 +182,164 @@ class DefaultController extends Controller
         return $this->render('NCbrtBundle:Default:details.html.twig',
             array('event' => $em, 'referer' => $referer));
     }
+
     /**
      * @Route("/about", name="about_main")
      */
     public function aboutAction()
     {
         return $this->render('NCbrtBundle:About:about.html.twig');
+    }
+
+    /**
+     * @Route("/exportExcel", name="export_excel")
+     */
+    public function exportarExcelAction(Request $request)
+    {
+        $form = $this->createForm(SrvrsServersType::class);
+        $form->handleRequest($request);
+        $paramaters = array('backupmethod' => '');
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $paramaters['server_name'] = $data['name'];
+            $paramaters['backupmethod'] = $data['method'];
+            $paramaters['status'] = $data['status'];
+            $paramaters['size'] = $data['size'];
+            $aSizeConvertion = new SizeConvert();
+            $paramaters['size'] = $aSizeConvertion->SizeConversionToKB($paramaters['size'] . ' MB');
+            $paramaters['comparer'] = $data['comparer'];
+            $paramaters['count'] = $data['count'];
+            if ($data['active'] === true) {
+                $paramaters['active'] = '1';
+            } else {
+                $paramaters['active'] = '0';
+            }
+            if ($paramaters['backupmethod'] == '0') {
+                $paramaters['backupmethod'] = '';
+            }
+            if ($paramaters['status'] == '-1') {
+                $paramaters['status'] = '';
+            }
+        }
+        if (!isset($paramaters['server_name'])) {
+            $paramaters['server_name'] = '';
+        }
+        if (!isset($paramaters['status'])) {
+            $paramaters['status'] = '';
+        }
+        if (!isset($paramaters['size'])) {
+            $paramaters['size'] = '0';
+        }
+        if (!isset($paramaters['comparer'])) {
+            $paramaters['comparer'] = '';
+        }
+        if (!isset($paramaters['count'])) {
+            $paramaters['count'] = 25;
+        }
+        if (!isset($paramaters['active'])) {
+            $paramaters['active'] = '1';
+        }
+        $paramaters['count'] = intval($paramaters['count']);
+        // This selects a collection of complete objects,
+        // this is not good for very big queries as we do not need stuff like
+        // the log at this point. The SOLUTION implicates to modify the
+        // NcBackupEventsRepository.php for it to select only the wanted fields
+        // on the DQL query. The change will also entail the change from Objects
+        // to array in the following code.
+        $em = $this->getDoctrine()->getRepository('NCbrtBundle:NcBackupEvents')
+            ->findByServerBackup($paramaters);
+
+        // solicitamos el servicio 'phpexcel' y creamos el objeto vacío...
+        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
+
+        // ...y le asignamos una serie de propiedades
+        $phpExcelObject->getProperties()
+            ->setCreator("ChinaNetCloud")
+            ->setLastModifiedBy("ChinaNetCloud")
+            ->setTitle("Servers Records")
+            ->setSubject("List of records")
+            ->setDescription("List of servers status")
+            ->setKeywords("ChinaNetCloud backup");
+
+        // establecemos como hoja activa la primera, y le asignamos un título
+        $phpExcelObject->setActiveSheetIndex(0);
+        $phpExcelObject->getActiveSheet()->setTitle('Servers Records');
+
+        // escribimos en distintas celdas del documento el título de los campos que vamos a exportar
+        $phpExcelObject->setActiveSheetIndex(0)
+            ->setCellValue('B2', 'Server Name')
+            ->setCellValue('C2', 'Date Created')
+            ->setCellValue('D2', 'Execution Status')
+            ->setCellValue('E2', 'Size')
+            ->setCellValue('F2', 'Backup Method')
+            ->setCellValue('G2', 'Production');
+
+        // fijamos un ancho a las distintas columnas
+        $phpExcelObject->setActiveSheetIndex(0)
+            ->getColumnDimension('B')
+            ->setWidth(30);
+        $phpExcelObject->setActiveSheetIndex(0)
+            ->getColumnDimension('C')
+            ->setWidth(25);
+        $phpExcelObject->setActiveSheetIndex(0)
+            ->getColumnDimension('D')
+            ->setWidth(20);
+        $phpExcelObject->setActiveSheetIndex(0)
+            ->getColumnDimension('E')
+            ->setWidth(20);
+        $phpExcelObject->setActiveSheetIndex(0)
+            ->getColumnDimension('F')
+            ->setWidth(20);
+        $phpExcelObject->setActiveSheetIndex(0)
+            ->getColumnDimension('G')
+            ->setWidth(20);
+
+        // recorremos los registros obtenidos de la consulta a base de datos escribiéndolos en las celdas correspondientes
+        $row = 3;
+        foreach ($em as $item) {
+            $phpExcelObject->setActiveSheetIndex(0)
+                ->setCellValue('B' . $row, $item->getSrvrsServers()->getName())
+                ->setCellValue('C' . $row, $item->getDateCreated())
+                ->setCellValue('D' . $row, $item->getSuccess())
+                ->setCellValue('E' . $row, $item->getBackupsize())
+                ->setCellValue('F' . $row, $item->getBackupmethod())
+                ->setCellValue('G' . $row, $item->getSrvrsServers()->getStatusActive());
+            $row++;
+        }
+
+        // se crea el writer
+        $writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel5');
+        // se crea el response
+        $response = $this->get('phpexcel')->createStreamedResponse($writer);
+        // y por último se añaden las cabeceras
+        $dispositionHeader = $response->headers->makeDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            'ListRecords.xls'
+        );
+        $response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
+        $response->headers->set('Pragma', 'public');
+        $response->headers->set('Cache-Control', 'maxage=1');
+        $response->headers->set('Content-Disposition', $dispositionHeader);
+
+        return $response;
+    }
+
+    /**
+     * @Route("/pdf/{id}", name="custompdf")
+     */
+    public function pdfAction($id, Request $request)
+    {
+        $em = $this->getDoctrine()->getRepository('NCbrtBundle:NcBackupEvents')->find($id);
+        $snappy = $this->get('knp_snappy.pdf');
+        $html = $this->render('NCbrtBundle:PDF:export.html.twig', [
+            'event' => $em,
+        ]);
+        $filename = 'LogStatus' . $em->getId();
+        return new Response(
+            $snappy->getOutputFromHtml($html), 200, array(
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="' . $filename . '.pdf"',
+            )
+        );
     }
 }

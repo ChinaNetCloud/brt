@@ -7,21 +7,29 @@
         </div>
         <div class="panel-body">
             <ul class="">
-                <li>Server Name:
+                <li>
+                    <strong>Server Name:</strong>
                     {{event.srvrsServers.name}}</li>
-                <li>Details:
+                <li>
+                    <strong>Details:</strong>
                     {{event.backupmethod}}</li>
-                <li>Status:
+                <li>
+                    <strong>Status:</strong>
                     {{event.success == '0' ? "Success" : event.success == '1' ? "Failed" : "Warning"}}</li>
-                <li>Status:
+                <li>
+                    <strong>Status:</strong>
                     {{event.srvrsServers.statusActive == '1' ? "Active" : "Not Active" }}</li>
-                <li>Date created:
+                <li>
+                    <strong>Date created:</strong>
                     {{ event.dateCreated is empty ? "" : event.dateCreated | date("m/d/Y H:i:s")}}</li>
-                <li>Backup size:
+                <li>
+                    <strong>Backup size:</strong>
                     {{event.backupsize}}</li>
-                <li>*(LEGACY to be removed) Error:
+                <li>
+                    <strong>*(LEGACY to be removed) Error:</strong>
                     {{event.error |nl2br}}</li>
-                <li>Log:
+                <li>
+                    <strong>Log:</strong>
                     {{event.log |nl2br}}</li>
             </ul>
         </div>
@@ -31,6 +39,7 @@
             {% else %}
                 <a class="btn btn-primary" href="{{ url('search_home') }}">Go back</a>
             {% endif %}
+            <a class="btn btn-primary pull-right" href="{{ path('custompdf', {'id': event.id}) }}" target="_blank">PDF Export</a>
         </div>
     </div>
 {% endblock %}

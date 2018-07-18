@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Event log by ID {{event.id}}</title>
+    </head>
+    <body>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Detailed report of backup event ID:
+                    {{event.id}}</h3>
+            </div>
+            <div class="panel-body">
+                <ul class="">
+                    <li>
+                        <strong>Server Name:</strong>
+                        {{event.srvrsServers.name}}</li>
+                    <li>
+                        <strong>Details:</strong>
+                        {{event.backupmethod}}</li>
+                    <li>
+                        <strong>Status:</strong>
+                        {{event.success == '0' ? "Success" : event.success == '1' ? "Failed" : "Warning"}}</li>
+                    <li>
+                        <strong>Status:</strong>
+                        {{event.srvrsServers.statusActive == '1' ? "Active" : "Not Active" }}</li>
+                    <li>
+                        <strong>Date created:</strong>
+                        {{ event.dateCreated is empty ? "" : event.dateCreated | date("m/d/Y H:i:s")}}</li>
+                    <li>
+                        <strong>Backup size:</strong>
+                        {{event.backupsize}}</li>
+                    <li>
+                        <strong>*(LEGACY to be removed) Error:</strong>
+                        {{event.error |nl2br}}</li>
+                    <li>
+                        <strong>Log:</strong>
+                        {{event.log |nl2br}}</li>
+                </ul>
+            </div>
+        </div>
+        <footer>
+            <h3 style="width: 33%;" class="align-center">&copy; ChinaNetCloud
+                {{"now"|date("Y") }}</h3>
+        </table>
+    </footer>
+</body>
+</html>
