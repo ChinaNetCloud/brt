@@ -11,7 +11,7 @@
 
 1.4. Symfony dependencies this project was developed with version 3.3. 
 
-1.5 Need to install http://wkhtmltopdf.org/ for export PDF
+1.5. Need to install [wkhtmltopdf](http://wkhtmltopdf.org/) for export PDF.
 
 Before you proceed, please make sure these steps those dependencies are 
 installed and working correctly.
