@@ -2,7 +2,6 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
-    - { resource: knp_snappy.yml }
     - { resource: "@NCbrtBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
@@ -108,3 +107,26 @@ knp_paginator:
         pagination: '@KnpPaginator/Pagination/twitter_bootstrap_v3_pagination.html.twig'     # sliding pagination controls template                                    
         sortable: '@KnpPaginator/Pagination/sortable_link.html.twig' # sort link template                                
         filtration: '@KnpPaginator/Pagination/filtration.html.twig'  # filters template
+
+knp_snappy:
+    pdf:
+        enabled: true
+        # Linux
+        #binary: /usr/local/bin/wkhtmltopdf
+        # Windows
+        binary: "\"C:\\Program Files\\git\\mingw64\\bin\\wkhtmltopdf.exe\""
+        options:
+           page-size: A4
+           dpi: 300
+           image-quality: 80
+           margin-left: 15mm
+           margin-right: 15mm
+           margin-top: 15mm
+           margin-bottom: 15mm
+    image:
+        enabled: true
+        # Linux
+        #binary: /usr/local/bin/wkhtmltoimage
+        # Windows
+        binary: "\"C:\\Program Files\\git\\mingw64\\bin\\wkhtmltoimage.exe\""
+        options: []

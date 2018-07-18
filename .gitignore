@@ -1,5 +1,4 @@
 /app/config/parameters.yml
-/app/config/knp_snappy.yml
 /build/
 .DS_store
 /phpunit.xml
