@@ -1,11 +1,17 @@
-#BRT
-====
-##Install:
+# BRT
+========================
+## Install:
 1. Install prerequisits:
+
 1.1. nginx
-1.2. php-fpm and PHP 7.x
-1.3. MySQL, should work with any version. I have 5.7
-1.4. Symfony dependencies this project was developed with version 3.2.
+
+1.2. php-fpm and PHP 7.x 
+
+1.3. MySQL, should work with any version. I have 5.7 
+
+1.4. Symfony dependencies this project was developed with version 3.3. 
+
+1.5 Need to install http://wkhtmltopdf.org/ for export PDF
 
 Before you proceed, please make sure these steps those dependencies are 
 installed and working correctly.
@@ -22,18 +28,34 @@ parameters:
 ```
 
 3. Create DB:
-to do that first go to code directory using cd.
-3.1. drop DB is exists/wanted:
-php bin/console doctrine:database:drop --force
-3.2. create DB:
-php bin/console doctrine:database:create
 
+to do that first go to code directory using cd.
+
+3.1. drop DB is exists/wanted:
+```
+php bin/console doctrine:database:drop --force
+```
+3.2. create DB:
+```
+php bin/console doctrine:database:create
+```
 
 3.3. Create tables:
+```
 php bin/console doctrine:schema:update --force
-this should create 2 tables.
+```
+this should create 4 tables.
 
 4. Execute composer update unless you already have the vendor components downloaded.
+
+4.1 After install database need to create users for access:
+```
+php bin/console fos:user:create USER
+```
+4.2 Need to promote the user to have full access
+```
+php bin/console fos:user:promote USER ROLE_ADMIN
+```
 
 5. configure nginx my current dev config looks like this:
 ```
@@ -81,11 +103,13 @@ there is no need to do it.
  
 
 6. If you need/want to test on prod env, 
+
 6.1. you need to follow steps similar to this:
 http://www.abelworld.com/symfony-2-deploy-prodution-environment/
 
 6.2. The URL for production is:
 http://you_dev_server_URL/
+
 6.3. The URL for development environment is:
 http://you_dev_server_URL/app_dev.php/
 

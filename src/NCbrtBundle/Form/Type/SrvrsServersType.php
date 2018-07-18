@@ -32,6 +32,8 @@ class SrvrsServersType extends AbstractType
                 'All' => '0',
                 'nc-backup-py' => 'ncscript-py',
                 'ncbackup' => 'ncbackup',
+                'windows' => 'windows',
+                'rancid' => 'rancid',
                 'other' => '-1'),
                 'label' => 'Method: '))
             ->add('status', ChoiceType::class, array('choices' => array(
