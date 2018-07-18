@@ -33,7 +33,17 @@
                         {{ event.dateCreated is empty ? "" : event.dateCreated | date("m/d/Y H:i:s")}}</li>
                     <li>
                         <strong>Backup size:</strong>
-                        {{event.backupsize}}</li>
+                        {% if event.backupsize < 1048576 %}
+                            {{ (event.backupsize / 1024) |number_format(2, '.', '')}}
+                            MB
+                        {% elseif event.backupsize < 1024 %}
+                            {{ event.backupsize  |number_format(2, '.', '')}}
+                            KB
+                        {% else %}
+                            {{ (event.backupsize / 1024 / 1024 )| number_format(2, '.', '')}}
+                            GB
+                        {% endif %}
+                    </li>
                     <li>
                         <strong>*(LEGACY to be removed) Error:</strong>
                         {{event.error |nl2br}}</li>
