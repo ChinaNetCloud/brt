@@ -22,14 +22,18 @@
                 {% endfor %}
             {% endfor %}
         {% endif %}
-
         <div class="container text-center">
-            <img src="{{asset('img/logo.png')}}" alt="" width="500" height="122">
+            <img src="https://www.yunchangcloud.com/wp-content/themes/chinanetcloud-wordpress/images/logo.png" alt="" width="500" height="95">
             <div class="form-signin">
                 {% block fos_user_content %}{% endblock fos_user_content %}
             </div>
         </div>
     </div>
+    <footer>
+        <h4 class="text-center">About our
+            <a href="https://www.yunchangcloud.com" target="_blank">Company</a>
+        </h4>
+    </footer>
     {% block javascripts %}{% endblock %}
     <script src="{{ asset('js/jquery.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>

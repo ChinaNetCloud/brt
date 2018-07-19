@@ -93,10 +93,10 @@ class DefaultController extends Controller
         }
 
         $paginator = $this->get('knp_paginator');
-        $page_actual = $request->query->getInt('page', 1);
+        $current_page = $request->query->getInt('page', 1);
         $pagination = $paginator->paginate(
             $table_results,
-            $page_actual,
+            $current_page,
             $paramaters['count']
         );
 
@@ -334,7 +334,7 @@ class DefaultController extends Controller
         $html = $this->render('NCbrtBundle:PDF:export.html.twig', [
             'event' => $em,
         ]);
-        $filename = 'LogStatus-'. $em->getsrvrsServers()->getName().'-'. $em->getId();
+        $filename = 'LogStatus-' . $em->getsrvrsServers()->getName() . '-' . $em->getId();
         return new Response(
             $snappy->getOutputFromHtml($html), 200, array(
                 'Content-Type' => 'application/pdf',
