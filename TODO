@@ -4,6 +4,8 @@ TODO:
     - Statistics (P1).
     - Add Order rows by other criteria than date. (P5)
     - Add date range to the search.
+    - Field status need to be multichoice.
+    - Change the Name and Logo.
     - Security implementation with roles: (P6-P7)
         - Super Admin (P6)
         - Super Engineer (P6)
@@ -18,6 +20,7 @@ TODO:
 DONE:
     - Show page name on the title.
     - Add paging feature.
+    - Add backup method Windows and Rancid.
     - Limit (Results count).
     - Add links to the top in general template and document pending here.
     - Enable Active in the search.

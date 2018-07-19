@@ -100,7 +100,6 @@ As you might have already noticed my PHP-FPM listens on localhost port 9000.
 You should also keep present that I have two different locations for PROD and 
 DEV. This might not be required in you case. Actually if the are the same then 
 there is no need to do it.
- 
 
 6. If you need/want to test on prod env, 
 
