@@ -230,6 +230,8 @@ class DefaultController extends Controller
             ->setCellValue('G2', 'Backup Method')
             ->setCellValue('H2', 'Production');
 
+        $phpExcelObject->getActiveSheet()->getStyle("B2:H2")->getFont()->setBold(true);
+
         $phpExcelObject->setActiveSheetIndex(0)
             ->getColumnDimension('B')
             ->setWidth(5);
