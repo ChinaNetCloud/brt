@@ -105,6 +105,7 @@ class DefaultController extends Controller
             'pagination' => $pagination,
             'current_page' => $current_page,
             'count' => $paramaters['count'],
+            'paramaters' => $paramaters,
         ));
     }
 
@@ -194,72 +195,28 @@ class DefaultController extends Controller
     /**
      * @Route("/exportExcel", name="export_excel")
      */
-    public function exportarExcelAction(Request $request)
+    public function exportExcelAction(Request $request)
     {
-        $form = $this->createForm(SrvrsServersType::class);
-        $form->handleRequest($request);
-        $paramaters = array('backupmethod' => '');
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $paramaters['server_name'] = $data['name'];
-            $paramaters['backupmethod'] = $data['method'];
-            $paramaters['status'] = $data['status'];
-            $paramaters['size'] = $data['size'];
-            $aSizeConvertion = new SizeConvert();
-            $paramaters['size'] = $aSizeConvertion->SizeConversionToKB($paramaters['size'] . ' MB');
-            $paramaters['comparer'] = $data['comparer'];
-            $paramaters['count'] = $data['count'];
-            if ($data['active'] === true) {
-                $paramaters['active'] = '1';
-            } else {
-                $paramaters['active'] = '0';
-            }
-            if ($paramaters['backupmethod'] == '0') {
-                $paramaters['backupmethod'] = '';
-            }
-            if ($paramaters['status'] == '-1') {
-                $paramaters['status'] = '';
-            }
-        }
-        if (!isset($paramaters['server_name'])) {
-            $paramaters['server_name'] = '';
-        }
-        if (!isset($paramaters['status'])) {
-            $paramaters['status'] = '';
-        }
-        if (!isset($paramaters['size'])) {
-            $paramaters['size'] = '0';
-        }
-        if (!isset($paramaters['comparer'])) {
-            $paramaters['comparer'] = '';
-        }
-        if (!isset($paramaters['count'])) {
-            $paramaters['count'] = 25;
-        }
-        if (!isset($paramaters['active'])) {
-            $paramaters['active'] = '1';
-        }
-        $paramaters['count'] = intval($paramaters['count']);
-        // This selects a collection of complete objects,
-        // this is not good for very big queries as we do not need stuff like
-        // the log at this point. The SOLUTION implicates to modify the
-        // NcBackupEventsRepository.php for it to select only the wanted fields
-        // on the DQL query. The change will also entail the change from Objects
-        // to array in the following code.
+        $data = $request->query->get('paramaters');
+        $paramaters['server_name'] = $data['server_name'];
+        $paramaters['backupmethod'] = $data['backupmethod'];
+        $paramaters['status'] = $data['status'];
+        $paramaters['size'] = $data['size'];
+        $paramaters['comparer'] = $data['comparer'];
+        $paramaters['active'] = $data['active'];
+
         $em = $this->getDoctrine()->getRepository('NCbrtBundle:NcBackupEvents')
             ->findByServerBackup($paramaters);
 
-        // solicitamos el servicio 'phpexcel' y creamos el objeto vacío...
         $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
 
-        // ...y le asignamos una serie de propiedades
         $phpExcelObject->getProperties()
-            ->setCreator("ChinaNetCloud")
-            ->setLastModifiedBy("ChinaNetCloud")
+            ->setCreator("YunChang")
+            ->setLastModifiedBy("YunChang")
             ->setTitle("Servers Records")
             ->setSubject("List of records")
             ->setDescription("List of servers status")
-            ->setKeywords("ChinaNetCloud backup");
+            ->setKeywords("YunChang backup");
 
         // establecemos como hoja activa la primera, y le asignamos un título
         $phpExcelObject->setActiveSheetIndex(0);
@@ -267,20 +224,21 @@ class DefaultController extends Controller
 
         // escribimos en distintas celdas del documento el título de los campos que vamos a exportar
         $phpExcelObject->setActiveSheetIndex(0)
-            ->setCellValue('B2', 'Server Name')
-            ->setCellValue('C2', 'Date Created')
-            ->setCellValue('D2', 'Execution Status')
-            ->setCellValue('E2', 'Size')
-            ->setCellValue('F2', 'Backup Method')
-            ->setCellValue('G2', 'Production');
+            ->setCellValue('B2', '#')
+            ->setCellValue('C2', 'Server Name')
+            ->setCellValue('D2', 'Date Created')
+            ->setCellValue('E2', 'Execution Status')
+            ->setCellValue('F2', 'Size')
+            ->setCellValue('G2', 'Backup Method')
+            ->setCellValue('H2', 'Production');
 
         // fijamos un ancho a las distintas columnas
         $phpExcelObject->setActiveSheetIndex(0)
             ->getColumnDimension('B')
-            ->setWidth(30);
+            ->setWidth(5);
         $phpExcelObject->setActiveSheetIndex(0)
             ->getColumnDimension('C')
-            ->setWidth(25);
+            ->setWidth(30);
         $phpExcelObject->setActiveSheetIndex(0)
             ->getColumnDimension('D')
             ->setWidth(20);
@@ -293,17 +251,22 @@ class DefaultController extends Controller
         $phpExcelObject->setActiveSheetIndex(0)
             ->getColumnDimension('G')
             ->setWidth(20);
+        $phpExcelObject->setActiveSheetIndex(0)
+            ->getColumnDimension('H')
+            ->setWidth(20);
 
         // recorremos los registros obtenidos de la consulta a base de datos escribiéndolos en las celdas correspondientes
         $row = 3;
+        $num = 0;
         foreach ($em as $item) {
             $phpExcelObject->setActiveSheetIndex(0)
-                ->setCellValue('B' . $row, $item->getSrvrsServers()->getName())
-                ->setCellValue('C' . $row, $item->getDateCreated())
-                ->setCellValue('D' . $row, $item->getSuccess())
-                ->setCellValue('E' . $row, $item->getBackupsize())
-                ->setCellValue('F' . $row, $item->getBackupmethod())
-                ->setCellValue('G' . $row, $item->getSrvrsServers()->getStatusActive());
+                ->setCellValue('B' . $row, $num = $row - 2)
+                ->setCellValue('C' . $row, $item->getSrvrsServers()->getName())
+                ->setCellValue('D' . $row, $item->getDateCreated())
+                ->setCellValue('E' . $row, $item->getSuccess())
+                ->setCellValue('F' . $row, $item->getBackupsize())
+                ->setCellValue('G' . $row, $item->getBackupmethod())
+                ->setCellValue('H' . $row, $item->getSrvrsServers()->getStatusActive());
             $row++;
         }
 

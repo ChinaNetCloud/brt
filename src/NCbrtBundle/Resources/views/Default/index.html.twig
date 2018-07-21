@@ -45,11 +45,11 @@
                     {{ form_errors(form.active)}}
                     <br/>
                     {{ form_widget(form.search, {'attr': {'class': 'btn btn-info'}}) }}
+                    {{ form_end(form) }}
                 </div>
                 <div class="panel-footer">
-                    <a class="btn btn-primary" href="{{path('export_excel')}}">Excel Export</a>
+                    <a class="btn btn-primary" href="{{path('export_excel', {'paramaters': paramaters})}}">Excel Export</a>
                 </div>
-                {{ form_end(form) }}
             </div>
         </div>
         <div class="col-lg-10">
