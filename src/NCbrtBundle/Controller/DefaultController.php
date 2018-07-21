@@ -100,12 +100,29 @@ class DefaultController extends Controller
             $paramaters['count']
         );
 
+        $date_start = date_sub(new \DateTime(), date_interval_create_from_date_string('1 days'));
+        $date_end = new \DateTime();
+        $succeful = $this->getDoctrine()
+            ->getRepository('NCbrtBundle:NcBackupEvents')
+            ->findByServerTotalStatus($date_start, $date_end, '0');
+
+        $failed = $this->getDoctrine()
+            ->getRepository('NCbrtBundle:NcBackupEvents')
+            ->findByServerTotalStatus($date_start, $date_end, '1');
+
+        $warning = $this->getDoctrine()
+            ->getRepository('NCbrtBundle:NcBackupEvents')
+            ->findByServerTotalStatus($date_start, $date_end, '3');
+
         return $this->render('NCbrtBundle:Default:index.html.twig', array(
             'form' => $form->createView(),
             'pagination' => $pagination,
             'current_page' => $current_page,
             'count' => $paramaters['count'],
             'paramaters' => $paramaters,
+            'succeful' => $succeful,
+            'failed' => $failed,
+            'warning' => $warning,
         ));
     }
 

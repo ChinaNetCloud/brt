@@ -63,6 +63,7 @@ class NcBackupEventsRepository extends EntityRepository
             return null;
         }
     }
+
     // count all events by status (success, failed, no report, other warning)
     public function findByServerTotalStatus($date_start, $date_end, $status)
     {
