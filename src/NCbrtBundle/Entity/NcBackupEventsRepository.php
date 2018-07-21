@@ -32,22 +32,16 @@ class NcBackupEventsRepository extends EntityRepository
         $query = $this->getEntityManager()->createQuery($dql);
         if (isset($parameters['size']) && $parameters['size'] != null && $parameters['size'] != '' && $parameters['size'] != 0) {
             if ($parameters['size'] >= 0) {
-                $query->setParameter('backupmethod',
-                    '%' . $parameters['backupmethod'] . '%')
-                    ->setParameter('server_name',
-                        '%' . $parameters['server_name'] . '%')
-                    ->setParameter('status',
-                        '%' . $parameters['status'] . '%')
+                $query->setParameter('backupmethod', '%' . $parameters['backupmethod'] . '%')
+                    ->setParameter('server_name', '%' . $parameters['server_name'] . '%')
+                    ->setParameter('status', '%' . $parameters['status'] . '%')
                     ->setParameter('size', $parameters['size'])
                     ->setParameter('active', $parameters['active']);
             }
         } else {
-            $query->setParameter('backupmethod',
-                '%' . $parameters['backupmethod'] . '%')
-                ->setParameter('server_name',
-                    '%' . $parameters['server_name'] . '%')
-                ->setParameter('status',
-                    '%' . $parameters['status'] . '%')
+            $query->setParameter('backupmethod', '%' . $parameters['backupmethod'] . '%')
+                ->setParameter('server_name', '%' . $parameters['server_name'] . '%')
+                ->setParameter('status', '%' . $parameters['status'] . '%')
                 ->setParameter('active', $parameters['active']);
         }
         return $query->getResult();

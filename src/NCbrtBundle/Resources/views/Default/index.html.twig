@@ -5,101 +5,86 @@
     - Home{% endblock %}
 
 {% block dynamic_content %}
-    <div class="row">
-        <div class="col-lg-2">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Search</h3>
-                </div>
-                <div class="panel-body">
-                    {{ form_start(form) }}
-                    {{ form_errors(form) }}
-                    {{ form_label(form.name)}}
-                    {{ form_widget(form.name) }}
-                    {{ form_errors(form.name)}}
-                    <br/>
-                    {{ form_label(form.method)}}
-                    {{ form_widget(form.method) }}
-                    {{ form_errors(form.method)}}
-                    <br/>
-                    {{ form_label(form.status)}}
-                    <br/>
-                    {{ form_widget(form.status) }}
-                    {{ form_errors(form.status)}}
-                    <br/>
-                    {{ form_label(form.comparer)}}
-                    {{ form_widget(form.comparer) }}
-                    {{ form_errors(form.comparer)}}
-                    <br/>
-                    {{ form_label(form.size)}}
-                    {{ form_widget(form.size) }}
-                    {{ form_errors(form.size)}}
-                    <br/>
-                    {{ form_label(form.count)}}
-                    <br/>
-                    {{ form_widget(form.count) }}
-                    {{ form_errors(form.count)}}
-                    <br/>
-                    {{ form_label(form.active)}}
-                    {{ form_widget(form.active) }}
-                    {{ form_errors(form.active)}}
-                    <br/>
-                    {{ form_widget(form.search, {'attr': {'class': 'btn btn-info'}}) }}
-                    {{ form_end(form) }}
-                </div>
-                <div class="panel-footer">
-                    <a class="btn btn-primary" href="{{path('export_excel', {'paramaters': paramaters})}}">Excel Export</a>
-                </div>
-            </div>
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Search</h3>
         </div>
-        <div class="col-lg-10">
-            <div class="panel panel-default">
-                <div class="panel-heading">Total records:
-                    {{pagination.getTotalItemCount}}</div>
-                {% if pagination is defined and pagination is not empty %}
-                    <table class="table">
-                        <tr>
-                            <td>#</td>
-                            <td>Actions</td>
-                            <td>Server Name</td>
-                            <td>Date created</td>
-                            <td>Execution Status</td>
-                            <td>Size</td>
-                            <td>Backup Method</td>
-                            <td>Production</td>
-                        </tr>
-                        {% for key, row in pagination %}
-                            <tr>
-                                <td>{{ (current_page - 1) * count + key + 1 }}</td>
-                                <td>
-                                    <a href="{{ path('event_by_id', {'event_id': row.id_event}) }}">View
-                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></a>
-                                    </td>
-                                    <td>
-                                        <a href="{{ path('edit_server', {'id': row.id_server}) }}">Edit
-                                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                                        |
-                                        {{ row.name }}
-                                    </td>
-                                    <td>{{ row.date_created is empty ? "" : row.date_created | date("m/d/Y H:i:s")}}</td>
-                                    <td>{{ row.status == '0' ? "<span class='badge badge-success btn-group-justified'>Success</span>" 
+        <div class="panel-body">
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+            {{ form_label(form.name)}}
+            {{ form_widget(form.name) }}
+            {{ form_errors(form.name)}}
+            {{ form_label(form.method)}}
+            {{ form_widget(form.method) }}
+            {{ form_errors(form.method)}}
+            {{ form_label(form.status)}}
+            {{ form_widget(form.status) }}
+            {{ form_errors(form.status)}}
+            {{ form_label(form.comparer)}}
+            {{ form_widget(form.comparer) }}
+            {{ form_errors(form.comparer)}}
+            {{ form_label(form.size)}}
+            {{ form_widget(form.size) }}
+            {{ form_errors(form.size)}}
+            {{ form_label(form.count)}}
+            {{ form_widget(form.count) }}
+            {{ form_errors(form.count)}}
+            {{ form_label(form.active)}}
+            {{ form_widget(form.active) }}
+            {{ form_errors(form.active)}}
+        </div>
+        <div class="panel-footer">
+            {{ form_widget(form.search, {'attr': {'class': 'btn btn-info'}}) }}
+            <a class="btn btn-primary pull-right" href="{{path('export_excel', {'paramaters': paramaters})}}">Excel Export</a>
+        </div>
+        {{ form_end(form) }}
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Total records:
+            {{pagination.getTotalItemCount}}</div>
+        {% if pagination is defined and pagination is not empty %}
+            <table class="table">
+                <tr>
+                    <td>#</td>
+                    <td>Actions</td>
+                    <td>Server Name</td>
+                    <td>Date created</td>
+                    <td>Execution Status</td>
+                    <td>Size</td>
+                    <td>Backup Method</td>
+                    <td>Production</td>
+                </tr>
+                {% for key, row in pagination %}
+                    <tr>
+                        <td>{{ (current_page - 1) * count + key + 1 }}</td>
+                        <td>
+                            <a href="{{ path('event_by_id', {'event_id': row.id_event}) }}">View
+                                <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></a>
+                            </td>
+                            <td>
+                                <a href="{{ path('edit_server', {'id': row.id_server}) }}">Edit
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                                |
+                                {{ row.name }}
+                            </td>
+                            <td>{{ row.date_created is empty ? "" : row.date_created | date("m/d/Y H:i:s")}}</td>
+                            <td>{{ row.status == '0' ? "<span class='badge badge-success btn-group-justified'>Success</span>" 
                                     : row.status == '1' ? "<span class='badge badge-error btn-group-justified'>Failed</span>" 
                                     : "<span class='badge badge-warning btn-group-justified'>Warning</span>"}}</td>
-                                    <td>{{ row.size }}</td>
-                                    <td>{{ row.method == "ncscript-py" ? "nc-backup-py" : row.method }}</td>
-                                    <td>{{ row.status_active == '1' ? "Active" : "Not Active" }}</td>
-                                </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                {% else %}
-                    <div class="alert alert-warning" role="alert">
-                        <h4>No search results available for this criteria!</h4>
-                    </div>
-                {% endif %}
-                <div class="pagination">
-                    {{ knp_pagination_render(pagination) }}
-                </div>
+                            <td>{{ row.size }}</td>
+                            <td>{{ row.method == "ncscript-py" ? "nc-backup-py" : row.method }}</td>
+                            <td>{{ row.status_active == '1' ? "Active" : "Not Active" }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
             </div>
+        {% else %}
+            <div class="alert alert-warning" role="alert">
+                <h4>No search results available for this criteria!</h4>
+            </div>
+        {% endif %}
+        <div class="pagination">
+            {{ knp_pagination_render(pagination) }}
         </div>
     {% endblock %}

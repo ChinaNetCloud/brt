@@ -230,7 +230,8 @@ class DefaultController extends Controller
             ->setCellValue('G2', 'Backup Method')
             ->setCellValue('H2', 'Production');
 
-        $phpExcelObject->getActiveSheet()->getStyle("B2:H2")->getFont()->setBold(true);
+        $phpExcelObject->getActiveSheet()->getStyle('B2:H2')->getFont()->setBold(true);
+        $phpExcelObject->getActiveSheet()->getStyle('B2:H2')->getFont()->setSize(13);
 
         $phpExcelObject->setActiveSheetIndex(0)
             ->getColumnDimension('B')
@@ -257,14 +258,28 @@ class DefaultController extends Controller
         $row = 3;
         $num = 0;
         foreach ($em as $item) {
-            $phpExcelObject->setActiveSheetIndex(0)
-                ->setCellValue('B' . $row, $num = $row - 2)
-                ->setCellValue('C' . $row, $item->getSrvrsServers()->getName())
-                ->setCellValue('D' . $row, $item->getDateCreated())
-                ->setCellValue('E' . $row, $item->getSuccess())
-                ->setCellValue('F' . $row, $item->getBackupsize())
-                ->setCellValue('G' . $row, $item->getBackupmethod())
-                ->setCellValue('H' . $row, $item->getSrvrsServers()->getStatusActive());
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('B' . $row, $num = $row - 2);
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('C' . $row, $item->getSrvrsServers()->getName());
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('D' . $row, $item->getDateCreated());
+            if ($item->getSuccess() == 0) {
+                $result = 'Success';
+            } elseif ($item->getSuccess() == 1) {
+                $result = 'Failed';
+            } else {
+                $result = 'Warning';
+            }
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('E' . $row, $result);
+            $size = $item->getBackupsize();
+            $aSize = new SizeConvert();
+            $size = $aSize->SizeCovertionFromKB($size);
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('F' . $row, $size);
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('G' . $row, $item->getBackupmethod());
+            if ($item->getSrvrsServers()->getStatusActive() == 1) {
+                $active = 'Active';
+            } else {
+                $active = 'Not Active';
+            }
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('H' . $row, $active);
             $row++;
         }
 

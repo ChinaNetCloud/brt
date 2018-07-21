@@ -190,33 +190,32 @@
                     <small>Backup Report Tool - 2018</small>
                 </div>
             </div>
-        </div>
-    </footer>
-    <!-- Modal -->
-    <div class="modal fade" id="logout" tabindex="-1" role="dialog" aria-labelledby="logoutLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="logoutLabel">
-                        Ready to Leave?</h4>
-                </div>
-                <div class="modal-body">
-                    <p>Select "Logout" below if you are ready to end your current session.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-danger" href="{{ url('fos_user_security_logout') }}">Logout</a>
+        </footer>
+        <!-- Modal -->
+        <div class="modal fade" id="logout" tabindex="-1" role="dialog" aria-labelledby="logoutLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="logoutLabel">
+                            Ready to Leave?</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Select "Logout" below if you are ready to end your current session.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-danger" href="{{ url('fos_user_security_logout') }}">Logout</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    {% block javascripts %}{% endblock %}
-    <script src="{{ asset('js/jquery.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/morris/raphael.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/morris/morris.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/morris/morris-data.js') }}"></script>
-</body>
+        {% block javascripts %}{% endblock %}
+        <script src="{{ asset('js/jquery.js') }}"></script>
+        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('js/plugins/morris/raphael.min.js') }}"></script>
+        <script src="{{ asset('js/plugins/morris/morris.min.js') }}"></script>
+        <script src="{{ asset('js/plugins/morris/morris-data.js') }}"></script>
+    </body>
 </html>
