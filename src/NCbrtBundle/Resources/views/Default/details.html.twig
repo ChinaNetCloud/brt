@@ -20,7 +20,9 @@
                     {{event.backupmethod}}</li>
                 <li>
                     <strong>Status:</strong>
-                    {{event.success == '0' ? "Success" : event.success == '1' ? "Failed" : "Warning"}}</li>
+                    {{ event.success == '0' ? "<span class='label label-success'>Success</span>" 
+                     : event.success == '1' ? "<span class='label label-danger'>Failed</span>" 
+                     : "<span class='label label-warning'>Warning</span>"}}
                 <li>
                     <strong>Status:</strong>
                     {{event.srvrsServers.statusActive == '1' ? "Active" : "Not Active" }}</li>
@@ -53,7 +55,7 @@
             {% else %}
                 <a class="btn btn-primary" href="{{ url('search_home') }}">Go back</a>
             {% endif %}
-            <a class="btn btn-primary pull-right" href="{{ path('custompdf', {'id': event.id}) }}" target="_blank">PDF Export</a>
+            <a class="btn btn-primary pull-right" href="{{ path('exportpdf', {'id': event.id}) }}" target="_blank">PDF Export</a>
         </div>
     </div>
 {% endblock %}

@@ -218,11 +218,9 @@ class DefaultController extends Controller
             ->setDescription("List of servers status")
             ->setKeywords("YunChang backup");
 
-        // establecemos como hoja activa la primera, y le asignamos un título
         $phpExcelObject->setActiveSheetIndex(0);
         $phpExcelObject->getActiveSheet()->setTitle('Servers Records');
 
-        // escribimos en distintas celdas del documento el título de los campos que vamos a exportar
         $phpExcelObject->setActiveSheetIndex(0)
             ->setCellValue('B2', '#')
             ->setCellValue('C2', 'Server Name')
@@ -232,7 +230,6 @@ class DefaultController extends Controller
             ->setCellValue('G2', 'Backup Method')
             ->setCellValue('H2', 'Production');
 
-        // fijamos un ancho a las distintas columnas
         $phpExcelObject->setActiveSheetIndex(0)
             ->getColumnDimension('B')
             ->setWidth(5);
@@ -255,7 +252,6 @@ class DefaultController extends Controller
             ->getColumnDimension('H')
             ->setWidth(20);
 
-        // recorremos los registros obtenidos de la consulta a base de datos escribiéndolos en las celdas correspondientes
         $row = 3;
         $num = 0;
         foreach ($em as $item) {
@@ -270,15 +266,12 @@ class DefaultController extends Controller
             $row++;
         }
 
-        // se crea el writer
         $writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel5');
-        // se crea el response
         $response = $this->get('phpexcel')->createStreamedResponse($writer);
-        // y por último se añaden las cabeceras
         $dispositionHeader = $response->headers->makeDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            'ListRecords.xls'
-        );
+            'ListRecords.xls');
+
         $response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
         $response->headers->set('Pragma', 'public');
         $response->headers->set('Cache-Control', 'maxage=1');
@@ -288,10 +281,11 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/pdf/{id}", name="custompdf")
+     * @Route("/exportPDF", name="exportpdf")
      */
-    public function pdfAction($id, Request $request)
+    public function exportpdfAction(Request $request)
     {
+        $id = $request->query->get('id');
         $em = $this->getDoctrine()->getRepository('NCbrtBundle:NcBackupEvents')->find($id);
         $snappy = $this->get('knp_snappy.pdf');
         $html = $this->render('NCbrtBundle:PDF:export.html.twig', [
