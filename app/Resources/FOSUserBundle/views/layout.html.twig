@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        {% block title %}
+            <title>BRT | Login</title>
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+        <link href="{{ asset('css/signin.css')}}" rel="stylesheet">
+        <link href="{{ asset('css/bootstrap.min.css')}}" rel="stylesheet">
+        <link href="{{ asset('css/sb-admin.css')}}" rel="stylesheet">
+        <link href="{{ asset('css/plugins/morris.css')}}" rel="stylesheet">
+        <link href="{{ asset('font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        {% if app.request.hasPreviousSession %}
+            {% for type, messages in app.session.flashbag.all() %}
+                {% for message in messages %}
+                    <div class="flash-{{ type }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+        <div class="container text-center">
+            <img src="https://www.yunchangcloud.com/wp-content/themes/chinanetcloud-wordpress/images/logo.png" alt="" width="500" height="95">
+            <div class="form-signin">
+                {% block fos_user_content %}{% endblock fos_user_content %}
+            </div>
+        </div>
+    </div>
+    <footer>
+        <h4 class="text-center">About our
+            <a href="https://www.yunchangcloud.com" target="_blank">Company</a>
+        </h4>
+    </footer>
+    {% block javascripts %}{% endblock %}
+    <script src="{{ asset('js/jquery.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/morris/raphael.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/morris/morris.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/morris/morris-data.js') }}"></script>
+</body>
+</html>

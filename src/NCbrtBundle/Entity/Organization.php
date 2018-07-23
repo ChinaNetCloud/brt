@@ -43,14 +43,14 @@ class Organization {
     private $name;
     
     /**
-     * @OneToMany(targetEntity="Organization", mappedBy="parent")
+     * @OneToMany(targetEntity="Organization", mappedBy="id")
      */
     private $children;
     
     /**
-     * @OneToMany(targetEntity="SrvrsServers", mappedBy="Organization")
+     * @OneToMany(targetEntity="SrvrsServers", mappedBy="organization")
      */
-    private $SrvrsServers;
+    private $srvrsServers;
     
     /**
      * Constructor
@@ -93,30 +93,6 @@ class Organization {
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Add child
-     *
-     * @param \NCbrtBundle\Entity\Category $child
-     *
-     * @return Organization
-     */
-    public function addChild(\NCbrtBundle\Entity\Category $child)
-    {
-        $this->children[] = $child;
-
-        return $this;
-    }
-
-    /**
-     * Remove child
-     *
-     * @param \NCbrtBundle\Entity\Category $child
-     */
-    public function removeChild(\NCbrtBundle\Entity\Category $child)
-    {
-        $this->children->removeElement($child);
     }
 
     /**

@@ -44,9 +44,11 @@ class ServerController extends Controller
                 'server' => $server,
             ));
         }
+        $referer = $request->headers->get('referer');
         return $this->render('NCbrtBundle:Server:server.html.twig', array(
             'form' => $form->createView(),
             'server' => $server,
+            'referer' => $referer
         ));
     }
     

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Event log server
+            {{event.srvrsServers.name}}
+            id</title>
+    </head>
+    <body>
+        <br/>
+        <img style="padding-top: 10px; float: right;" src="https://www.yunchangcloud.com/wp-content/themes/chinanetcloud-wordpress/images/logo.png" alt="" width="200" height="38">
+        <h5>Exported by user:
+            {{app.user.username}}</h5>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Detailed report of backup event ID:
+                    {{event.id}}</h3>
+            </div>
+            <div class="panel-body">
+                <ul class="">
+                    <li>
+                        <strong>Server Name:</strong>
+                        {{event.srvrsServers.name}}</li>
+                    <li>
+                        <strong>Details:</strong>
+                        {{event.backupmethod}}</li>
+                    <li>
+                        <strong>Status:</strong>
+                        {{event.success == '0' ? "Success" : event.success == '1' ? "Failed" : "Warning"}}</li>
+                    <li>
+                        <strong>Status:</strong>
+                        {{event.srvrsServers.statusActive == '1' ? "Active" : "Not Active" }}</li>
+                    <li>
+                        <strong>Date created:</strong>
+                        {{ event.dateCreated is empty ? "" : event.dateCreated | date("m/d/Y H:i:s")}}</li>
+                    <li>
+                        <strong>Backup size:</strong>
+                        {% if event.backupsize < 1048576 and event.backupsize > 1024 %}
+                            {{ (event.backupsize / 1024) |number_format(2, '.', '')}}
+                            MB
+                        {% elseif event.backupsize < 1024 %}
+                            {{ event.backupsize  |number_format(2, '.', '')}}
+                            KB
+                        {% else %}
+                            {{ (event.backupsize / 1024 / 1024 )| number_format(2, '.', '')}}
+                            GB
+                        {% endif %}
+                    </li>
+                    <li>
+                        <strong>*(LEGACY to be removed) Error:</strong>
+                        {{event.error |nl2br}}</li>
+                    <li>
+                        <strong>Log:</strong>
+                        {{event.log |nl2br}}</li>
+                </ul>
+            </div>
+        </div>
+        <hr>
+        <footer>
+            <h3 style="width: 33%;" class="align-center">&copy; YunChang
+                {{"now"|date("Y") }}</h3>
+        </table>
+    </footer>
+</body>
+</html>
