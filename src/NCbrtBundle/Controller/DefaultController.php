@@ -40,8 +40,11 @@ class DefaultController extends Controller
             if ($paramaters['backupmethod'] == '0') {
                 $paramaters['backupmethod'] = '';
             }
-            if ($paramaters['status'][0] == '-1') {
-                $paramaters['status'][0] = '';
+            for ($i=0; $i < count($paramaters['status']); $i++) { 
+                if ($paramaters['status'][$i] == -1){
+                    $paramaters['status'] = array();
+                    $paramaters['status'][0] = '';
+                }
             }
         }
         if (!isset($paramaters['server_name'])) {
