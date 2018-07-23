@@ -48,7 +48,7 @@ class DefaultController extends Controller
             $paramaters['server_name'] = '';
         }
         if (!isset($paramaters['status'])) {
-            $paramaters['status'] = '';
+            $paramaters['status'][0] = '';
         }
         if (!isset($paramaters['size'])) {
             $paramaters['size'] = '0';
@@ -71,7 +71,7 @@ class DefaultController extends Controller
         // to array in the following code.
         $em = $this->getDoctrine()->getRepository('NCbrtBundle:NcBackupEvents')
             ->findByServerBackup($paramaters);
-
+   
         $table_results = array();
         foreach ($em as $value) {
             $aux = array();

@@ -14,6 +14,57 @@ class NcBackupEventsRepository extends EntityRepository
 {
     public function findByServerBackup($parameters)
     {
+        if (count($parameters['status']) == 1) {
+            $dql = $this->ServerBackup($parameters);
+            $query = $this->getEntityManager()->createQuery($dql);
+            if (isset($parameters['size']) && $parameters['size'] != null && $parameters['size'] != '' && $parameters['size'] != 0) {
+                if ($parameters['size'] >= 0) {
+                    $query->setParameter('backupmethod', '%' . $parameters['backupmethod'] . '%')
+                        ->setParameter('server_name', '%' . $parameters['server_name'] . '%')
+                        ->setParameter('status', '%' . $parameters['status'][0] . '%')
+                        ->setParameter('size', $parameters['size'])
+                        ->setParameter('active', $parameters['active']);
+                }
+            } else {
+                $query->setParameter('backupmethod', '%' . $parameters['backupmethod'] . '%')
+                    ->setParameter('server_name', '%' . $parameters['server_name'] . '%')
+                    ->setParameter('status', '%' . $parameters['status'][0] . '%')
+                    ->setParameter('active', $parameters['active']);
+            }
+            return $query->getResult();
+        } else {
+            $result = array();
+            for ($i = 0; $i < count($parameters['status']); $i++) {
+                $dql = $this->ServerBackup($parameters);
+                $query = $this->getEntityManager()->createQuery($dql);
+                if (isset($parameters['size']) && $parameters['size'] != null && $parameters['size'] != '' && $parameters['size'] != 0) {
+                    if ($parameters['size'] >= 0) {
+                        $query->setParameter('backupmethod', '%' . $parameters['backupmethod'] . '%')
+                            ->setParameter('server_name', '%' . $parameters['server_name'] . '%')
+                            ->setParameter('status', '%' . $parameters['status'][$i] . '%')
+                            ->setParameter('size', $parameters['size'])
+                            ->setParameter('active', $parameters['active']);
+                    }
+                } else {
+                    $query->setParameter('backupmethod', '%' . $parameters['backupmethod'] . '%')
+                        ->setParameter('server_name', '%' . $parameters['server_name'] . '%')
+                        ->setParameter('status', '%' . $parameters['status'][$i] . '%')
+                        ->setParameter('active', $parameters['active']);
+                }
+                $result[] = $query;
+            }
+
+            if (count($result) == 2) {
+                $query = array_merge($result[0]->getResult(), $result[1]->getResult());
+            } else {
+                $query = array_merge($result[0]->getResult(), $result[1]->getResult(), $result[2]->getResult());
+            }
+            return $query;
+        }
+    }
+
+    public function ServerBackup($parameters)
+    {
         $dql = 'SELECT n FROM NCbrtBundle:NcBackupEvents n
             JOIN n.srvrsServers s
             WHERE n.backupmethod LIKE :backupmethod
@@ -29,22 +80,7 @@ class NcBackupEventsRepository extends EntityRepository
         } else {
             $dql .= ' ORDER BY n.dateCreated DESC';
         }
-        $query = $this->getEntityManager()->createQuery($dql);
-        if (isset($parameters['size']) && $parameters['size'] != null && $parameters['size'] != '' && $parameters['size'] != 0) {
-            if ($parameters['size'] >= 0) {
-                $query->setParameter('backupmethod', '%' . $parameters['backupmethod'] . '%')
-                    ->setParameter('server_name', '%' . $parameters['server_name'] . '%')
-                    ->setParameter('status', '%' . $parameters['status'] . '%')
-                    ->setParameter('size', $parameters['size'])
-                    ->setParameter('active', $parameters['active']);
-            }
-        } else {
-            $query->setParameter('backupmethod', '%' . $parameters['backupmethod'] . '%')
-                ->setParameter('server_name', '%' . $parameters['server_name'] . '%')
-                ->setParameter('status', '%' . $parameters['status'] . '%')
-                ->setParameter('active', $parameters['active']);
-        }
-        return $query->getResult();
+        return $dql;
     }
 
     public function findByServerTotalBackups($date_start, $date_end)
