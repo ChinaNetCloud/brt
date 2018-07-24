@@ -40,16 +40,16 @@ class NcBackupEventsRepository extends EntityRepository
                         ->setParameter('status', '%' . $parameters['status'][$i] . '%')
                         ->setParameter('size', $parameters['size'])
                         ->setParameter('active', $parameters['active'])
-                        ->setParameter('date_start', $date_start->format('Y-m-d H:i:s'))
-                        ->setParameter('date_end', $date_end->format('Y-m-d H:i:s'));
+                        ->setParameter('date_start', $parameters['date_start'])
+                        ->setParameter('date_end', $parameters['date_end']);
                 }
             } else {
                 $query->setParameter('backupmethod', '%' . $parameters['backupmethod'] . '%')
                     ->setParameter('server_name', '%' . $parameters['server_name'] . '%')
                     ->setParameter('status', '%' . $parameters['status'][$i] . '%')
                     ->setParameter('active', $parameters['active'])
-                    ->setParameter('date_start', $parameters['date_start']->format('Y-m-d H:i:s'))
-                    ->setParameter('date_end', $parameters['date_end']->format('Y-m-d H:i:s'));
+                    ->setParameter('date_start', $parameters['date_start'])
+                    ->setParameter('date_end', $parameters['date_end']);
             }
             $result[] = $query;
         }

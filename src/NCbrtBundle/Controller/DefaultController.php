@@ -232,6 +232,8 @@ class DefaultController extends Controller
         $paramaters['size'] = $data['size'];
         $paramaters['comparer'] = $data['comparer'];
         $paramaters['active'] = $data['active'];
+        $paramaters['date_start'] = $data['date_start']['date'];
+        $paramaters['date_end'] = $data['date_end']['date'];
 
         $em = $this->getDoctrine()->getRepository('NCbrtBundle:NcBackupEvents')
             ->findByServerBackup($paramaters);
