@@ -40,16 +40,16 @@ class NcBackupEventsRepository extends EntityRepository
                         ->setParameter('status', '%' . $parameters['status'][$i] . '%')
                         ->setParameter('size', $parameters['size'])
                         ->setParameter('active', $parameters['active'])
-                        ->setParameter('date_start', $date_start->format('Y-m-d h:i:s'))
-                        ->setParameter('date_end', $date_end->format('Y-m-d h:i:s'));
+                        ->setParameter('date_start', $date_start->format('Y-m-d H:i:s'))
+                        ->setParameter('date_end', $date_end->format('Y-m-d H:i:s'));
                 }
             } else {
                 $query->setParameter('backupmethod', '%' . $parameters['backupmethod'] . '%')
                     ->setParameter('server_name', '%' . $parameters['server_name'] . '%')
                     ->setParameter('status', '%' . $parameters['status'][$i] . '%')
                     ->setParameter('active', $parameters['active'])
-                    ->setParameter('date_start', $parameters['date_start']->format('Y-m-d h:i:s'))
-                    ->setParameter('date_end', $parameters['date_end']->format('Y-m-d h:i:s'));
+                    ->setParameter('date_start', $parameters['date_start']->format('Y-m-d H:i:s'))
+                    ->setParameter('date_end', $parameters['date_end']->format('Y-m-d H:i:s'));
             }
             $result[] = $query;
         }
@@ -72,8 +72,8 @@ class NcBackupEventsRepository extends EntityRepository
             . " AND s.statusActive = '1'";
 
         $query = $this->getEntityManager()->createQuery($dql);
-        $query->setParameter('date_start', $date_start->format('Y-m-d h:i:s'))
-            ->setParameter('date_end', $date_end->format('Y-m-d h:i:s'));
+        $query->setParameter('date_start', $date_start->format('Y-m-d H:i:s'))
+            ->setParameter('date_end', $date_end->format('Y-m-d H:i:s'));
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
@@ -91,8 +91,8 @@ class NcBackupEventsRepository extends EntityRepository
             . " AND s.statusActive = '1'";
 
         $query = $this->getEntityManager()->createQuery($dql);
-        $query->setParameter('date_start', $date_start->format('Y-m-d h:i:s'))
-            ->setParameter('date_end', $date_end->format('Y-m-d h:i:s'))
+        $query->setParameter('date_start', $date_start->format('Y-m-d H:i:s'))
+            ->setParameter('date_end', $date_end->format('Y-m-d H:i:s'))
             ->setParameter('status', $status);
         try {
             return $query->getResult();
@@ -111,8 +111,8 @@ class NcBackupEventsRepository extends EntityRepository
             . " AND n.success <> '3'"
             . " AND s.statusActive = '1'";
         $query = $this->getEntityManager()->createQuery($dql);
-        $query->setParameter('date_start', $date_start->format('Y-m-d h:i:s'))
-            ->setParameter('date_end', $date_end->format('Y-m-d h:i:s'));
+        $query->setParameter('date_start', $date_start->format('Y-m-d H:i:s'))
+            ->setParameter('date_end', $date_end->format('Y-m-d H:i:s'));
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
@@ -128,8 +128,8 @@ class NcBackupEventsRepository extends EntityRepository
             . " AND s.statusActive = '1'"
             . ' AND n.backupmethod = :method';
         $query = $this->getEntityManager()->createQuery($dql);
-        $query->setParameter('date_start', $date_start->format('Y-m-d h:i:s'))
-            ->setParameter('date_end', $date_end->format('Y-m-d h:i:s'))
+        $query->setParameter('date_start', $date_start->format('Y-m-d H:i:s'))
+            ->setParameter('date_end', $date_end->format('Y-m-d H:i:s'))
             ->setParameter('method', $method);
 
         try {
@@ -148,8 +148,8 @@ class NcBackupEventsRepository extends EntityRepository
             . " AND n.backupmethod <> 'ncscript-py'"
             . " AND n.backupmethod <> 'ncscript'";
         $query = $this->getEntityManager()->createQuery($dql);
-        $query->setParameter('date_start', $date_start->format('Y-m-d h:i:s'))
-            ->setParameter('date_end', $date_end->format('Y-m-d h:i:s'));
+        $query->setParameter('date_start', $date_start->format('Y-m-d H:i:s'))
+            ->setParameter('date_end', $date_end->format('Y-m-d H:i:s'));
 
         try {
             return $query->getResult();
