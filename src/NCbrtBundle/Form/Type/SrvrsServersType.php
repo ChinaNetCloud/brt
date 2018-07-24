@@ -53,9 +53,11 @@ class SrvrsServersType extends AbstractType
                 'label' => ' than (MB): '))
             ->add('date_start', DateTimeType::class, array(
                 'data' => $date_start,
+                'label' => 'FROM:'
             ))
             ->add('date_end', DateTimeType::class, array(
                 'data' => new \DateTime(),
+                'label' => 'TO:'
             ))
             ->add('count', ChoiceType::class, array('choices' => array(
                 '25' => '25',

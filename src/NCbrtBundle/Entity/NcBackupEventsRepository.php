@@ -53,13 +53,9 @@ class NcBackupEventsRepository extends EntityRepository
             }
             $result[] = $query;
         }
-
-        if (count($result) == 2) {
-            $query = array_merge($result[0]->getResult(), $result[1]->getResult());
-        } elseif (count($result) == 3) {
-            $query = array_merge($result[0]->getResult(), $result[1]->getResult(), $result[2]->getResult());
-        } else {
-            $query = $result[0]->getResult();
+        $query = array();
+        for ($i=0; $i < count($result); $i++) { 
+            $query = array_merge($query, $result[$i]->getResult());
         }
         return $query;
     }
