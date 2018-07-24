@@ -32,6 +32,8 @@ class DefaultController extends Controller
             $paramaters['size'] = $aSizeConvertion->SizeConversionToKB($paramaters['size'] . ' MB');
             $paramaters['comparer'] = $data['comparer'];
             $paramaters['count'] = $data['count'];
+            $paramaters['date_start'] = $data['date_start'];
+            $paramaters['date_end'] = $data['date_end'];
             if ($data['active'] === true) {
                 $paramaters['active'] = '1';
             } else {
@@ -64,6 +66,12 @@ class DefaultController extends Controller
         }
         if (!isset($paramaters['active'])) {
             $paramaters['active'] = '1';
+        }
+        if (!isset($paramaters['date_start'])){
+            $paramaters['date_start'] = date_sub(new \DateTime(), date_interval_create_from_date_string('30 days'));
+        }
+        if (!isset($paramaters['date_end'])) {
+            $paramaters['date_end'] = new \DateTime();
         }
         $paramaters['count'] = intval($paramaters['count']);
         // This selects a collection of complete objects,

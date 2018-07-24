@@ -14,12 +14,13 @@ class NcBackupEventsRepository extends EntityRepository
 {
     public function findByServerBackup($parameters)
     {
-        $dql = 'SELECT n FROM NCbrtBundle:NcBackupEvents n
-            JOIN n.srvrsServers s
-            WHERE n.backupmethod LIKE :backupmethod
-            AND s.name LIKE :server_name
-            AND n.success LIKE :status
-            AND s.statusActive = :active';
+        $dql = 'SELECT n FROM NCbrtBundle:NcBackupEvents n '
+            . 'JOIN n.srvrsServers s '
+            . 'WHERE n.backupmethod LIKE :backupmethod '
+            . 'AND s.name LIKE :server_name '
+            . 'AND n.success LIKE :status '
+            . 'AND n.dateCreated BETWEEN :date_start AND :date_end '
+            . 'AND s.statusActive = :active';
 
         if (isset($parameters['size']) && $parameters['size'] != null && $parameters['size'] != '' && $parameters['size'] != 0) {
             if ($parameters['size'] >= 0) {
@@ -38,20 +39,24 @@ class NcBackupEventsRepository extends EntityRepository
                         ->setParameter('server_name', '%' . $parameters['server_name'] . '%')
                         ->setParameter('status', '%' . $parameters['status'][$i] . '%')
                         ->setParameter('size', $parameters['size'])
-                        ->setParameter('active', $parameters['active']);
+                        ->setParameter('active', $parameters['active'])
+                        ->setParameter('date_start', $date_start->format('Y-m-d h:i:s'))
+                        ->setParameter('date_end', $date_end->format('Y-m-d h:i:s'));
                 }
             } else {
                 $query->setParameter('backupmethod', '%' . $parameters['backupmethod'] . '%')
                     ->setParameter('server_name', '%' . $parameters['server_name'] . '%')
                     ->setParameter('status', '%' . $parameters['status'][$i] . '%')
-                    ->setParameter('active', $parameters['active']);
+                    ->setParameter('active', $parameters['active'])
+                    ->setParameter('date_start', $parameters['date_start']->format('Y-m-d h:i:s'))
+                    ->setParameter('date_end', $parameters['date_end']->format('Y-m-d h:i:s'));
             }
             $result[] = $query;
         }
 
         if (count($result) == 2) {
             $query = array_merge($result[0]->getResult(), $result[1]->getResult());
-        } elseif (count($result) == 3 ){
+        } elseif (count($result) == 3) {
             $query = array_merge($result[0]->getResult(), $result[1]->getResult(), $result[2]->getResult());
         } else {
             $query = $result[0]->getResult();

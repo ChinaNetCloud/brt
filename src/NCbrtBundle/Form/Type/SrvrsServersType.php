@@ -15,6 +15,7 @@ namespace NCbrtBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -23,6 +24,7 @@ class SrvrsServersType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $date_start = date_sub(new \DateTime(), date_interval_create_from_date_string('30 days'));
         $builder
             ->add('name', TextType::class, array(
                 'required' => false,
@@ -32,7 +34,7 @@ class SrvrsServersType extends AbstractType
                 'All' => '0',
                 'nc-backup-py' => 'ncscript-py',
                 'ncbackup' => 'ncbackup',
-                'windows' => 'windows',
+                'windows' => 'nc-win-backup',
                 'rancid' => 'rancid',
                 'other' => '-1'),
                 'label' => 'Method: '))
@@ -49,6 +51,12 @@ class SrvrsServersType extends AbstractType
             ->add('size', TextType::class, array(
                 'required' => false,
                 'label' => ' than (MB): '))
+            ->add('date_start', DateTimeType::class, array(
+                'data' => $date_start,
+            ))
+            ->add('date_end', DateTimeType::class, array(
+                'data' => new \DateTime(),
+            ))
             ->add('count', ChoiceType::class, array('choices' => array(
                 '25' => '25',
                 '10' => '10',
