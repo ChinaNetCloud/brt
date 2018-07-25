@@ -57,6 +57,7 @@ class NcBackupEventsRepository extends EntityRepository
         for ($i=0; $i < count($result); $i++) { 
             $query = array_merge($query, $result[$i]->getResult());
         }
+        arsort($query);
         return $query;
     }
 
