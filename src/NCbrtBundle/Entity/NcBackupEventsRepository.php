@@ -46,7 +46,7 @@ class NcBackupEventsRepository extends EntityRepository
             ;
         }
 
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery();
     }
 
     public function findByServerTotalBackups($date_start, $date_end)

@@ -42,8 +42,8 @@ class DefaultController extends Controller
             if ($paramaters['backupmethod'] == '0') {
                 $paramaters['backupmethod'] = '';
             }
-            for ($i=0; $i < count($paramaters['status']); $i++) { 
-                if ($paramaters['status'][$i] == -1){
+            for ($i = 0; $i < count($paramaters['status']); $i++) {
+                if ($paramaters['status'][$i] == -1) {
                     $paramaters['status'] = array();
                 }
             }
@@ -66,7 +66,7 @@ class DefaultController extends Controller
         if (!isset($paramaters['active'])) {
             $paramaters['active'] = '1';
         }
-        if (!isset($paramaters['date_start'])){
+        if (!isset($paramaters['date_start'])) {
             $paramaters['date_start'] = date_sub(new \DateTime(), date_interval_create_from_date_string('30 days'));
         }
         if (!isset($paramaters['date_end'])) {
@@ -81,31 +81,11 @@ class DefaultController extends Controller
         // to array in the following code.
         $em = $this->getDoctrine()->getRepository('NCbrtBundle:NcBackupEvents')
             ->findByServerBackup($paramaters);
-   
-        $table_results = array();
-        foreach ($em as $value) {
-            $aux = array();
-            $aux['name'] = $value->getSrvrsServers()->getName();
-            $aux['date_created'] = $value->getDateCreated(); //Convert to string like Old HR system.
-            $aux['status'] = $value->getSuccess();
-            $aux['size'] = $value->getBackupsize();
-            $aux['status_active'] = $value->getSrvrsServers()->getStatusActive();
-            $aSize = new SizeConvert();
-            $aux['size'] = $aSize->SizeCovertionFromKB($aux['size']);
-            $aux['method'] = $value->getBackupmethod();
-            $aux['id_event'] = $value->getId();
-            $aux['id_server'] = $value->getSrvrsServers()->getId();
-            $aux['description'] = $value->getSrvrsServers()->getDescription();
-            $aux['log'] = $value->getLog();
-            $aux['error'] = $value->getError();
-            $aux['type'] = $value->getBackupType();
-            $table_results[] = $aux;
-        }
 
         $paginator = $this->get('knp_paginator');
         $current_page = $request->query->getInt('page', 1);
         $pagination = $paginator->paginate(
-            $table_results,
+            $em,
             $current_page,
             $paramaters['count']
         );
@@ -227,7 +207,11 @@ class DefaultController extends Controller
         $data = $request->query->get('paramaters');
         $paramaters['server_name'] = $data['server_name'];
         $paramaters['backupmethod'] = $data['backupmethod'];
-        $paramaters['status'] = $data['status'];
+        if (!empty($data['status'])) {
+            $paramaters['status'] = $data['status'];
+        } else {
+            $paramaters['status'] = array();
+        }
         $paramaters['size'] = $data['size'];
         $paramaters['comparer'] = $data['comparer'];
         $paramaters['active'] = $data['active'];
@@ -235,7 +219,7 @@ class DefaultController extends Controller
         $paramaters['date_end'] = $data['date_end']['date'];
 
         $em = $this->getDoctrine()->getRepository('NCbrtBundle:NcBackupEvents')
-            ->findByServerBackup($paramaters);
+            ->findByServerBackup($paramaters)->getResult();
 
         $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
 

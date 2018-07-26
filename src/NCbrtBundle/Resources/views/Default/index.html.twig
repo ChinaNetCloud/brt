@@ -58,7 +58,8 @@
                         </div>
                         <div class="col-xs-9 text-right">
                             <div class="huge">Last 24 hours</div>
-                            <div>Total backup executed: {{ succeful[0][1] + warning[0][1] + failed[0][1]}}</div>
+                            <div>Total backup executed:
+                                {{ succeful[0][1] + warning[0][1] + failed[0][1]}}</div>
                         </div>
                     </div>
                 </div>
@@ -118,33 +119,44 @@
                         <tr>
                             <td>#</td>
                             <td>Actions</td>
-                            <td>Server Name</td>
-                            <td>Date created</td>
-                            <td>Execution Status</td>
-                            <td>Size</td>
-                            <td>Backup Method</td>
+                            <td>{{ knp_pagination_sortable(pagination, 'Server Name', 's.name') }}</td>
+                            <td>{{ knp_pagination_sortable(pagination, 'Date created', 'n.dateCreated') }}</td>
+                            <td>{{ knp_pagination_sortable(pagination, 'Execution Status', 'n.success') }}</td>
+                            <td>{{ knp_pagination_sortable(pagination, 'Size', 'n.backupsize') }}</td>
+                            <td>{{ knp_pagination_sortable(pagination, 'Backup Method', 'n.backupmethod') }}</td>
                             <td>Production</td>
                         </tr>
                         {% for key, row in pagination %}
                             <tr>
                                 <td>{{ (current_page - 1) * count + key + 1 }}</td>
                                 <td>
-                                    <a href="{{ path('event_by_id', {'event_id': row.id_event}) }}">View
+                                    <a href="{{ path('event_by_id', {'event_id': row.id}) }}">View
                                         <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></a>
                                     </td>
                                     <td>
-                                        <a href="{{ path('edit_server', {'id': row.id_server}) }}">Edit
+                                        <a href="{{ path('edit_server', {'id': row.srvrsservers.id}) }}">Edit
                                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                                         |
-                                        {{ row.name }}
+                                        {{ row.srvrsservers.name }}
                                     </td>
-                                    <td>{{ row.date_created is empty ? "" : row.date_created | date("m/d/Y H:i:s")}}</td>
-                                    <td>{{ row.status == '0' ? "<span class='badge badge-success btn-group-justified'>Success</span>" 
-                                    : row.status == '1' ? "<span class='badge badge-error btn-group-justified'>Failed</span>" 
+                                    <td>{{ row.dateCreated is empty ? "" : row.dateCreated | date("m/d/Y H:i:s")}}</td>
+                                    <td>{{ row.success == '0' ? "<span class='badge badge-success btn-group-justified'>Success</span>" 
+                                    : row.success == '1' ? "<span class='badge badge-error btn-group-justified'>Failed</span>" 
                                     : "<span class='badge badge-warning btn-group-justified'>Warning</span>"}}</td>
-                                    <td>{{ row.size }}</td>
-                                    <td>{{ row.method == "ncscript-py" ? "nc-backup-py" : row.method }}</td>
-                                    <td>{{ row.status_active == '1' ? "Active" : "Not Active" }}</td>
+                                    <td>
+                                        {% if row.backupsize < 1048576 and row.backupsize > 1024 %}
+                                            {{ (row.backupsize / 1024) |number_format(2, '.', '')}}
+                                            MB
+                                        {% elseif row.backupsize < 1024 %}
+                                            {{ row.backupsize  |number_format(2, '.', '')}}
+                                            KB
+                                        {% else %}
+                                            {{ (row.backupsize / 1024 / 1024 )| number_format(2, '.', '')}}
+                                            GB
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ row.backupmethod == "ncscript-py" ? "nc-backup-py" : row.backupmethod }}</td>
+                                    <td>{{ row.srvrsservers.statusactive == '1' ? "Active" : "Not Active" }}</td>
                                 </tr>
                             {% endfor %}
                         </table>
