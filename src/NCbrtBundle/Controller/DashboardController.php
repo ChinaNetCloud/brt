@@ -60,7 +60,7 @@ class DashboardController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-
+           
             $totalBackups = $this->getDoctrine()
                 ->getRepository('NCbrtBundle:NcBackupEvents')
                 ->findByServerTotalBackups($data['date_start'], $data['date_end']);

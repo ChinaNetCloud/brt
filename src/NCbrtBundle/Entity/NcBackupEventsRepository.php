@@ -51,96 +51,72 @@ class NcBackupEventsRepository extends EntityRepository
 
     public function findByServerTotalBackups($date_start, $date_end)
     {
-        $dql = 'SELECT COUNT(n) FROM NCbrtBundle:NcBackupEvents n'
-            . ' JOIN n.srvrsServers s'
-            . ' WHERE n.dateCreated BETWEEN :date_start AND :date_end'
-            . " AND s.statusActive = '1'";
-
-        $query = $this->getEntityManager()->createQuery($dql);
-        $query->setParameter('date_start', $date_start->format('Y-m-d H:i:s'))
-            ->setParameter('date_end', $date_end->format('Y-m-d H:i:s'));
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
+        $qb = $this->createQueryBuilder('n')
+            ->join('n.srvrsServers', 's')
+            ->select('count(n)')
+            ->where('n.dateCreated BETWEEN :date_start AND :date_end')
+            ->setParameter('date_start', $date_start)
+            ->setParameter('date_end', $date_end)
+            ->andWhere('s.statusActive = 1');
+        return $qb->getQuery()->getResult();
     }
 
     // count all events by status (success, failed, no report, other warning)
     public function findByServerTotalStatus($date_start, $date_end, $status)
     {
-        $dql = 'SELECT COUNT(n) FROM NCbrtBundle:NcBackupEvents n'
-            . ' JOIN n.srvrsServers s'
-            . ' WHERE (n.dateCreated BETWEEN :date_start AND :date_end)'
-            . ' AND n.success = :status'
-            . " AND s.statusActive = '1'";
-
-        $query = $this->getEntityManager()->createQuery($dql);
-        $query->setParameter('date_start', $date_start->format('Y-m-d H:i:s'))
-            ->setParameter('date_end', $date_end->format('Y-m-d H:i:s'))
-            ->setParameter('status', $status);
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
+        $qb = $this->createQueryBuilder('n')
+            ->join('n.srvrsServers', 's')
+            ->select('count(n)')
+            ->where('n.dateCreated BETWEEN :date_start AND :date_end')
+            ->setParameter('date_start', $date_start)
+            ->setParameter('date_end', $date_end)
+            ->andWhere('n.success = :status')
+            ->setparameter('status', $status)
+            ->andWhere('s.statusActive = 1');
+        return $qb->getQuery()->getResult();
     }
     // count warnings not incliding no report received.
     public function findByOtherStatus($date_start, $date_end)
     {
-        $dql = 'SELECT COUNT(n) FROM NCbrtBundle:NcBackupEvents n'
-            . ' JOIN n.srvrsServers s'
-            . ' WHERE (n.dateCreated BETWEEN :date_start AND :date_end)'
-            . " AND n.success <> '0'"
-            . " AND n.success <> '1'"
-            . " AND n.success <> '3'"
-            . " AND s.statusActive = '1'";
-        $query = $this->getEntityManager()->createQuery($dql);
-        $query->setParameter('date_start', $date_start->format('Y-m-d H:i:s'))
-            ->setParameter('date_end', $date_end->format('Y-m-d H:i:s'));
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
+        $qb = $this->createQueryBuilder('n')
+            ->join('n.srvrsServers', 's')
+            ->select('count(n)')
+            ->where('n.dateCreated BETWEEN :date_start AND :date_end')
+            ->setParameter('date_start', $date_start)
+            ->setParameter('date_end', $date_end)
+            ->andWhere('n.success <> 0')
+            ->andWhere('n.success <> 1')
+            ->andWhere('n.success <> 3')
+            ->andWhere('s.statusActive = 1');
+        return $qb->getQuery()->getResult();
     }
     // find backup events by method of backing up used.
     public function findbyBackupMethod($date_start, $date_end, $method)
     {
-        $dql = 'SELECT COUNT(n) FROM NCbrtBundle:NcBackupEvents n'
-            . ' JOIN n.srvrsServers s'
-            . ' WHERE n.dateCreated BETWEEN :date_start AND :date_end'
-            . " AND s.statusActive = '1'"
-            . ' AND n.backupmethod = :method';
-        $query = $this->getEntityManager()->createQuery($dql);
-        $query->setParameter('date_start', $date_start->format('Y-m-d H:i:s'))
-            ->setParameter('date_end', $date_end->format('Y-m-d H:i:s'))
-            ->setParameter('method', $method);
-
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
+        $qb = $this->createQueryBuilder('n')
+            ->join('n.srvrsServers', 's')
+            ->select('count(n)')
+            ->where('n.dateCreated BETWEEN :date_start AND :date_end')
+            ->setParameter('date_start', $date_start)
+            ->setParameter('date_end', $date_end)
+            ->andWhere('n.backupmethod = :method')
+            ->setparameter('method', $method)
+            ->andWhere('s.statusActive = 1');
+        return $qb->getQuery()->getResult();
     }
     // find backup events by method of backing up used.
     public function findbyBackupMethodNotStandard($date_start, $date_end)
     {
-        $dql = 'SELECT COUNT(n) FROM NCbrtBundle:NcBackupEvents n'
-            . ' JOIN n.srvrsServers s'
-            . ' WHERE n.dateCreated BETWEEN :date_start AND :date_end'
-            . " AND s.statusActive = '1'"
-            . " AND n.backupmethod <> 'ncscript-py'"
-            . " AND n.backupmethod <> 'ncscript'";
-        $query = $this->getEntityManager()->createQuery($dql);
-        $query->setParameter('date_start', $date_start->format('Y-m-d H:i:s'))
-            ->setParameter('date_end', $date_end->format('Y-m-d H:i:s'));
-
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
+        $qb = $this->createQueryBuilder('n')
+            ->join('n.srvrsServers', 's')
+            ->select('count(n)')
+            ->where('n.dateCreated BETWEEN :date_start AND :date_end')
+            ->setParameter('date_start', $date_start)
+            ->setParameter('date_end', $date_end)
+            ->andWhere("n.backupmethod <> 'ncscript-py'")
+            ->andWhere("n.backupmethod <> 'ncscript'")
+            ->andWhere('s.statusActive = 1');
+        return $qb->getQuery()->getResult();
     }
 
     public function findServerByBackupReport()
