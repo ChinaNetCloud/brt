@@ -14,51 +14,39 @@ class NcBackupEventsRepository extends EntityRepository
 {
     public function findByServerBackup($parameters)
     {
-        $dql = 'SELECT n FROM NCbrtBundle:NcBackupEvents n '
-            . 'JOIN n.srvrsServers s '
-            . 'WHERE n.backupmethod LIKE :backupmethod '
-            . 'AND s.name LIKE :server_name '
-            . 'AND n.success LIKE :status '
-            . 'AND n.dateCreated BETWEEN :date_start AND :date_end '
-            . 'AND s.statusActive = :active';
+        $qb = $this->createQueryBuilder('n')
+            ->join('n.srvrsServers', 's')
+            ->where('n.backupmethod LIKE :backupmethod')
+            ->setParameter('backupmethod', '%' . $parameters['backupmethod'] . '%')
+            ->andWhere('s.name LIKE :server_name')
+            ->setParameter('server_name', '%' . $parameters['server_name'] . '%')
+            ->andWhere('n.dateCreated BETWEEN :date_start AND :date_end')
+            ->setParameter('date_start', $parameters['date_start'])
+            ->setParameter('date_end', $parameters['date_end'])
+            ->andWhere('s.statusActive = :active')
+            ->setParameter('active', $parameters['active'])
+            ->orderBy('n.dateCreated', 'DESC')
+        ;
 
-        if (isset($parameters['size']) && $parameters['size'] != null && $parameters['size'] != '' && $parameters['size'] != 0) {
-            if ($parameters['size'] >= 0) {
-                $dql .= ' AND n.backupsize ' . $parameters['comparer'] . ' :size';
-                $dql .= ' ORDER BY n.dateCreated DESC';
-            }
-        } else {
-            $dql .= ' ORDER BY n.dateCreated DESC';
+        $statuses = array_filter($parameters['status'], function ($status) {
+            return !empty($status) || '0' === $status;
+        });
+
+        if (!empty($parameters['status'])) {
+            $qb
+                ->andWhere('n.success IN (:statuses)')
+                ->setParameter('statuses', $statuses)
+            ;
         }
-        $result = array();
-        for ($i = 0; $i < count($parameters['status']); $i++) {
-            $query = $this->getEntityManager()->createQuery($dql);
-            if (isset($parameters['size']) && $parameters['size'] != null && $parameters['size'] != '' && $parameters['size'] != 0) {
-                if ($parameters['size'] >= 0) {
-                    $query->setParameter('backupmethod', '%' . $parameters['backupmethod'] . '%')
-                        ->setParameter('server_name', '%' . $parameters['server_name'] . '%')
-                        ->setParameter('status', '%' . $parameters['status'][$i] . '%')
-                        ->setParameter('size', $parameters['size'])
-                        ->setParameter('active', $parameters['active'])
-                        ->setParameter('date_start', $parameters['date_start'])
-                        ->setParameter('date_end', $parameters['date_end']);
-                }
-            } else {
-                $query->setParameter('backupmethod', '%' . $parameters['backupmethod'] . '%')
-                    ->setParameter('server_name', '%' . $parameters['server_name'] . '%')
-                    ->setParameter('status', '%' . $parameters['status'][$i] . '%')
-                    ->setParameter('active', $parameters['active'])
-                    ->setParameter('date_start', $parameters['date_start'])
-                    ->setParameter('date_end', $parameters['date_end']);
-            }
-            $result[] = $query;
+
+        if (!empty($parameters['size'])) {
+            $qb
+                ->andWhere(sprintf('n.backupsize %s :size', $parameters['comparer']))
+                ->setParameter('size', $parameters['size'])
+            ;
         }
-        $query = array();
-        for ($i=0; $i < count($result); $i++) { 
-            $query = array_merge($query, $result[$i]->getResult());
-        }
-        arsort($query);
-        return $query;
+
+        return $qb->getQuery()->getResult();
     }
 
     public function findByServerTotalBackups($date_start, $date_end)

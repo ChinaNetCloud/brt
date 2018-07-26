@@ -45,7 +45,6 @@ class DefaultController extends Controller
             for ($i=0; $i < count($paramaters['status']); $i++) { 
                 if ($paramaters['status'][$i] == -1){
                     $paramaters['status'] = array();
-                    $paramaters['status'][0] = '';
                 }
             }
         }
@@ -53,7 +52,7 @@ class DefaultController extends Controller
             $paramaters['server_name'] = '';
         }
         if (!isset($paramaters['status'])) {
-            $paramaters['status'][0] = '';
+            $paramaters['status'] = array();
         }
         if (!isset($paramaters['size'])) {
             $paramaters['size'] = '0';
