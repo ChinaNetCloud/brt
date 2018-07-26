@@ -2,10 +2,6 @@ BRT development road map.
 TODO:
     - Machines not reporting (P0).
     - Statistics (P1).
-    - Add Order rows by other criteria than date. (P5)
-    - Add date range to the search.
-    - Field status need to be multichoice.
-    - Change the Name and Logo.
     - Security implementation with roles: (P6-P7)
         - Super Admin (P6)
         - Super Engineer (P6)
@@ -18,12 +14,14 @@ TODO:
     - Change Configs. (P10)
     - BRT: no report should say for how long. If more than 3 days show Yellow, if more than a week should show RED. so at the and should read something like: No report (3 days)
 DONE:
+    - Field status need to be multichoice.
+    - Add Order rows by other criteria than date.
+    - Add date range to the search.
+    - Change the Name and Logo.
     - Show page name on the title.
     - Add paging feature.
     - Add backup method Windows and Rancid.
     - Limit (Results count).
     - Add links to the top in general template and document pending here.
     - Enable Active in the search.
-
-Nc-backup-py:
     - The report does not have ends of line therefore reading the log is hard.
