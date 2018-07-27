@@ -25,8 +25,7 @@ class NcBackupEventsRepository extends EntityRepository
             ->setParameter('date_end', $parameters['date_end'])
             ->andWhere('s.statusActive = :active')
             ->setParameter('active', $parameters['active'])
-            ->orderBy('n.dateCreated', 'DESC')
-        ;
+            ->orderBy('n.dateCreated', 'DESC');
 
         $statuses = array_filter($parameters['status'], function ($status) {
             return !empty($status) || '0' === $status;
@@ -35,15 +34,13 @@ class NcBackupEventsRepository extends EntityRepository
         if (!empty($parameters['status'])) {
             $qb
                 ->andWhere('n.success IN (:statuses)')
-                ->setParameter('statuses', $statuses)
-            ;
+                ->setParameter('statuses', $statuses);
         }
 
         if (!empty($parameters['size'])) {
             $qb
                 ->andWhere(sprintf('n.backupsize %s :size', $parameters['comparer']))
-                ->setParameter('size', $parameters['size'])
-            ;
+                ->setParameter('size', $parameters['size']);
         }
 
         return $qb->getQuery();
@@ -58,7 +55,7 @@ class NcBackupEventsRepository extends EntityRepository
             ->setParameter('date_start', $date_start)
             ->setParameter('date_end', $date_end)
             ->andWhere('s.statusActive = 1');
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery()->getSingleScalarResult();
     }
 
     // count all events by status (success, failed, no report, other warning)
@@ -73,8 +70,9 @@ class NcBackupEventsRepository extends EntityRepository
             ->andWhere('n.success = :status')
             ->setparameter('status', $status)
             ->andWhere('s.statusActive = 1');
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery()->getSingleScalarResult();
     }
+
     // count warnings not incliding no report received.
     public function findByOtherStatus($date_start, $date_end)
     {
@@ -88,8 +86,9 @@ class NcBackupEventsRepository extends EntityRepository
             ->andWhere('n.success <> 1')
             ->andWhere('n.success <> 3')
             ->andWhere('s.statusActive = 1');
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery()->getSingleScalarResult();
     }
+
     // find backup events by method of backing up used.
     public function findbyBackupMethod($date_start, $date_end, $method)
     {
@@ -102,8 +101,9 @@ class NcBackupEventsRepository extends EntityRepository
             ->andWhere('n.backupmethod = :method')
             ->setparameter('method', $method)
             ->andWhere('s.statusActive = 1');
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery()->getSingleScalarResult();
     }
+
     // find backup events by method of backing up used.
     public function findbyBackupMethodNotStandard($date_start, $date_end)
     {
@@ -116,7 +116,7 @@ class NcBackupEventsRepository extends EntityRepository
             ->andWhere("n.backupmethod <> 'ncscript-py'")
             ->andWhere("n.backupmethod <> 'ncscript'")
             ->andWhere('s.statusActive = 1');
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery()->getSingleScalarResult();
     }
 
     public function findServerByBackupReport()

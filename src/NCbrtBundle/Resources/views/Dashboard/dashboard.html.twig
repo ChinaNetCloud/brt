@@ -92,27 +92,27 @@
                     <tr>
                         <td>Total backups:
                         </td>
-                        <td>{{ total_backups is empty ? 'N/A' : total_backups[0][1] }}</td>
+                        <td>{{ total_backups is empty ? 'N/A' : total_backups }}</td>
                     </tr>
                     <tr>
                         <td>Total successful backups:
                         </td>
-                        <td>{{ total_successful_backups is empty ? 'N/A' : total_successful_backups[0][1] }}</td>
+                        <td>{{ total_successful_backups is empty ? 'N/A' : total_successful_backups }}</td>
                     </tr>
                     <tr>
                         <td>Total failed backups:
                         </td>
-                        <td>{{ total_fail_backups is empty ? 'N/A' : total_fail_backups[0][1] }}</td>
+                        <td>{{ total_fail_backups is empty ? 'N/A' : total_fail_backups }}</td>
                     </tr>
                     <tr>
                         <td>Total no reported backups:
                         </td>
-                        <td>{{ total_no_report_backups is empty ? 'N/A' : total_no_report_backups[0][1] }}</td>
+                        <td>{{ total_no_report_backups is empty ? 'N/A' : total_no_report_backups }}</td>
                     </tr>
                     <tr>
                         <td>Total with other warnings:
                         </td>
-                        <td>{{ total_other_status is empty ? 'N/A' : total_other_status[0][1] }}</td>
+                        <td>{{ total_other_status is empty ? 'N/A' : total_other_status }}</td>
                     </tr>
                 </table>
             </div>
@@ -124,22 +124,22 @@
                     <tr>
                         <td>Total backups:
                         </td>
-                        <td>{{ total_backups is empty ? 'N/A' : total_backups[0][1] }}</td>
+                        <td>{{ total_backups is empty ? 'N/A' : total_backups }}</td>
                     </tr>
                     <tr>
                         <td>Total nc-backup-py:
                         </td>
-                        <td>{{ total_backups_nc_backup_py is empty ? 'N/A' : total_backups_nc_backup_py[0][1] }}</td>
+                        <td>{{ total_backups_nc_backup_py is empty ? 'N/A' : total_backups_nc_backup_py }}</td>
                     </tr>
                     <tr>
                         <td>Total ncbackup (bash):
                         </td>
-                        <td>{{ total_backups_nc_script is empty ? 'N/A' : total_backups_nc_script[0][1] }}</td>
+                        <td>{{ total_backups_nc_script is empty ? 'N/A' : total_backups_nc_script }}</td>
                     </tr>
                     <tr>
                         <td>Other backup method:
                         </td>
-                        <td>{{ total_backups_method_other is empty ? 'N/A' : total_backups_method_other[0][1] }}</td>
+                        <td>{{ total_backups_method_other is empty ? 'N/A' : total_backups_method_other }}</td>
                     </tr>
                 </table>
             </div>

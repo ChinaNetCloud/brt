@@ -59,7 +59,7 @@
                         <div class="col-xs-9 text-right">
                             <div class="huge">Last 24 hours</div>
                             <div>Total backup executed:
-                                {{ succeful[0][1] + warning[0][1] + failed[0][1]}}</div>
+                                {{ succeful + warning + failed}}</div>
                         </div>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                             <i class="fa fa-check-circle-o fa-5x"></i>
                         </div>
                         <div class="col-xs-10 text-right">
-                            <div class="huge">{{ succeful[0][1] }}</div>
+                            <div class="huge">{{ succeful }}</div>
                             <div>Success!</div>
                         </div>
                     </div>
@@ -88,7 +88,7 @@
                             <i class="fa fa-warning fa-5x"></i>
                         </div>
                         <div class="col-xs-10 text-right">
-                            <div class="huge">{{ warning[0][1] }}</div>
+                            <div class="huge">{{ warning }}</div>
                             <div>Warning!</div>
                         </div>
                     </div>
@@ -103,7 +103,7 @@
                             <i class="fa fa-close fa-5x"></i>
                         </div>
                         <div class="col-xs-10 text-right">
-                            <div class="huge">{{ failed[0][1] }}</div>
+                            <div class="huge">{{ failed }}</div>
                             <div>Failed!</div>
                         </div>
                     </div>
