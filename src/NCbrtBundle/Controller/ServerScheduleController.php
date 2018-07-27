@@ -29,12 +29,10 @@ class ServerScheduleController extends Controller {
         $em = $this->getDoctrine()
                 ->getRepository('NCbrtBundle:NcBackupEvents')
                 ->findServerByBackupReport();
-//        var_dump($em);
+        dump($em); die;
         $length = count($em);
-        $i = 0;
-        $TimeDifferenceAux = array();
         echo 'size: ' . $length . '<br>';
-        for($i; $i < $length; $i++){
+        for($i=0; $i < $length; $i++){
             $format = 'Y-m-d H:i:s';
             $latest = date_create_from_format($format, $em[$i]['latest']);
             $date = date_create_from_format($format, date($format));

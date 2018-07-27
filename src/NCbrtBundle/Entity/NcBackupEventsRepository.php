@@ -2,7 +2,8 @@
 
 namespace NCbrtBundle\Entity;
 
-use \Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 
 /**
  * NcBackupEventsRepository
@@ -55,7 +56,11 @@ class NcBackupEventsRepository extends EntityRepository
             ->setParameter('date_start', $date_start)
             ->setParameter('date_end', $date_end)
             ->andWhere('s.statusActive = 1');
-        return $qb->getQuery()->getSingleScalarResult();
+        try {
+            return $qb->getQuery()->getSingleScalarResult();
+        } catch (NonUniqueResultException $e) {
+            return null;
+        }
     }
 
     // count all events by status (success, failed, no report, other warning)
@@ -70,7 +75,11 @@ class NcBackupEventsRepository extends EntityRepository
             ->andWhere('n.success = :status')
             ->setparameter('status', $status)
             ->andWhere('s.statusActive = 1');
-        return $qb->getQuery()->getSingleScalarResult();
+        try {
+            return $qb->getQuery()->getSingleScalarResult();
+        } catch (NonUniqueResultException $e) {
+            return null;
+        }
     }
 
     // count warnings not incliding no report received.
@@ -86,7 +95,11 @@ class NcBackupEventsRepository extends EntityRepository
             ->andWhere('n.success <> 1')
             ->andWhere('n.success <> 3')
             ->andWhere('s.statusActive = 1');
-        return $qb->getQuery()->getSingleScalarResult();
+        try {
+            return $qb->getQuery()->getSingleScalarResult();
+        } catch (NonUniqueResultException $e) {
+            return null;
+        }
     }
 
     // find backup events by method of backing up used.
@@ -101,7 +114,11 @@ class NcBackupEventsRepository extends EntityRepository
             ->andWhere('n.backupmethod = :method')
             ->setparameter('method', $method)
             ->andWhere('s.statusActive = 1');
-        return $qb->getQuery()->getSingleScalarResult();
+        try {
+            return $qb->getQuery()->getSingleScalarResult();
+        } catch (NonUniqueResultException $e) {
+            return null;
+        }
     }
 
     // find backup events by method of backing up used.
@@ -116,20 +133,20 @@ class NcBackupEventsRepository extends EntityRepository
             ->andWhere("n.backupmethod <> 'ncscript-py'")
             ->andWhere("n.backupmethod <> 'ncscript'")
             ->andWhere('s.statusActive = 1');
-        return $qb->getQuery()->getSingleScalarResult();
+        try {
+            return $qb->getQuery()->getSingleScalarResult();
+        } catch (NonUniqueResultException $e) {
+            return null;
+        }
     }
 
     public function findServerByBackupReport()
     {
-        $dql = 'SELECT s.name, s.id, MAX(n.dateCreated) latest, s.frequency
-            FROM NCbrtBundle:NcBackupEvents n
-            JOIN n.srvrsServers s
-            WHERE s.statusActive = 1 GROUP BY s.name';
-        $query = $this->getEntityManager()->createQuery($dql);
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
+        $qb = $this->createQueryBuilder('n')
+            ->join('n.srvrsServers', 's')
+            ->addSelect('s.name', 's.id', 'max(n.dateCreated) latest', 's.frequency')
+            ->where('s.statusActive = 1')
+            ->groupBy('s.name');
+        return $qb->getQuery()->getResult();
     }
 }
