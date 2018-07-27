@@ -16,8 +16,6 @@ namespace NCbrtBundle\Controller;
 use NCbrtBundle\Form\Type\DateSearchType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-//use \Symfony\Component\HttpFoundation\Response;
-
 use \Symfony\Component\HttpFoundation\Request;
 
 class DashboardController extends Controller
@@ -60,7 +58,7 @@ class DashboardController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-           
+
             $totalBackups = $this->getDoctrine()
                 ->getRepository('NCbrtBundle:NcBackupEvents')
                 ->findByServerTotalBackups($data['date_start'], $data['date_end']);

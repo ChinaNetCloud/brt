@@ -34,6 +34,7 @@ class DateSearchType extends AbstractType
                 'label' => 'Generate Report',
             ));
     }
+
     public function getName()
     {
         return 'datetime_limit';
