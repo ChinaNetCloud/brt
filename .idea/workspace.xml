@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="34476560-8051-4cb9-9182-8e90dd7db7fb" name="Default" comment="Modify details and PDF export for more clarity">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/config/security.yml" beforeDir="false" afterPath="$PROJECT_DIR$/app/config/security.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/NCbrtBundle/Controller/ServerScheduleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/NCbrtBundle/Controller/ServerScheduleController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/NCbrtBundle/Entity/NcBackupEventsRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/NCbrtBundle/Entity/NcBackupEventsRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/NCbrtBundle/Resources/views/Default/details.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/src/NCbrtBundle/Resources/views/Default/details.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/NCbrtBundle/Resources/views/PDF/export.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/src/NCbrtBundle/Resources/views/PDF/export.html.twig" afterDir="false" />
     </list>
     <ignored path=".idea/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -36,14 +32,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="NcBackupEventsRepository.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="NcBackupEventsRepository.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/NCbrtBundle/Entity/NcBackupEventsRepository.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="445">
-              <caret line="150" column="5" lean-forward="true" selection-start-line="150" selection-start-column="5" selection-end-line="150" selection-end-column="5" />
+              <caret line="150" column="5" selection-start-line="150" selection-start-column="5" selection-end-line="150" selection-end-column="5" />
               <folding>
                 <element signature="e#38#72#0#PHP" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -126,6 +131,7 @@
         <option value="$PROJECT_DIR$/app/config/security.yml" />
         <option value="$PROJECT_DIR$/src/NCbrtBundle/Controller/ServerScheduleController.php" />
         <option value="$PROJECT_DIR$/src/NCbrtBundle/Entity/NcBackupEventsRepository.php" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -378,12 +384,12 @@
       <workItem from="1532652785819" duration="1690000" />
       <workItem from="1532658106190" duration="281000" />
       <workItem from="1532671868561" duration="3966000" />
-      <workItem from="1532679812794" duration="1636000" />
+      <workItem from="1532679812794" duration="1799000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7573000" />
+    <option name="totallyTimeSpent" value="7736000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -613,10 +619,17 @@
     <entry file="file://$PROJECT_DIR$/src/NCbrtBundle/Entity/NcBackupEventsRepository.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="445">
-          <caret line="150" column="5" lean-forward="true" selection-start-line="150" selection-start-column="5" selection-end-line="150" selection-end-column="5" />
+          <caret line="150" column="5" selection-start-line="150" selection-start-column="5" selection-end-line="150" selection-end-column="5" />
           <folding>
             <element signature="e#38#72#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
         </state>
       </provider>
     </entry>

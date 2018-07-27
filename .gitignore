@@ -1,4 +1,5 @@
 /app/config/parameters.yml
+.idea/
 /build/
 .DS_store
 /phpunit.xml
