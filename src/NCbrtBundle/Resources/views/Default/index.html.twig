@@ -162,8 +162,8 @@
                                     {% for state, lastsuccess in result %}
                                         {% if result[state].id == row.srvrsservers.id %}
                                             BRT: No report {{ lastsuccess.difference }}
-                                        {% elseif not result[state].id == row.srvrsservers.id %}
-                                            BRT: Never report
+                                        {% elseif not result[state].id in row.srvrsservers.id %}
+                                            BRT: Never reported
                                         {% endif %}
                                     {% endfor %}
                                 {% else %}
