@@ -159,13 +159,16 @@
                             <td>{% if row.backupmethod == "ncscript-py" %}
                                     nc-backup-py
                                 {% elseif row.backupmethod == "BRT: No report" %}
+                                    {% set found = 0 %}
                                     {% for state, lastsuccess in result %}
                                         {% if result[state].id == row.srvrsservers.id %}
                                             BRT: No report {{ lastsuccess.difference }}
-                                        {% elseif not (result[state].id == row.srvrsservers.id) %}
-                                            BRT: Never reported
+                                            {% set found = 1 %}
                                         {% endif %}
                                     {% endfor %}
+                                    {% if found == 0 %}
+                                        BRT: Never Reported
+                                    {% endif %}
                                 {% else %}
                                     {{ row.backupmethod }}
                                 {% endif %}
