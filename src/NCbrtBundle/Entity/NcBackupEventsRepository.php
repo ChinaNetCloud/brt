@@ -63,6 +63,16 @@ class NcBackupEventsRepository extends EntityRepository
         }
     }
 
+    public function lastSuccess(){
+        $qb = $this->createQueryBuilder('n')
+            ->join('n.srvrsServers', 's')
+            ->addSelect('n.dateCreated latest', 's.name', 's.id')
+            ->andWhere('n.success = 0')
+            ->andWhere('s.statusActive = 1')
+            ->groupBy('s.name');
+        return $qb->getQuery()->getResult();
+    }
+
     // count all events by status (success, failed, no report, other warning)
     public function findByServerTotalStatus($date_start, $date_end, $status)
     {
@@ -82,7 +92,7 @@ class NcBackupEventsRepository extends EntityRepository
         }
     }
 
-    // count warnings not incliding no report received.
+    // count warnings not including no report received.
     public function findByOtherStatus($date_start, $date_end)
     {
         $qb = $this->createQueryBuilder('n')

@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use NCbrtBundle\Tools\TimeConverter;
 
 class DefaultController extends Controller
 {
@@ -93,17 +94,20 @@ class DefaultController extends Controller
 
         $date_start = date_sub(new \DateTime(), date_interval_create_from_date_string('1 days'));
         $date_end = new \DateTime();
-        $succeful = $this->getDoctrine()
-            ->getRepository('NCbrtBundle:NcBackupEvents')
-            ->findByServerTotalStatus($date_start, $date_end, '0');
+        $succeful = $this->getDoctrine()->getRepository('NCbrtBundle:NcBackupEvents')->findByServerTotalStatus($date_start, $date_end, '0');
+        $failed = $this->getDoctrine()->getRepository('NCbrtBundle:NcBackupEvents')->findByServerTotalStatus($date_start, $date_end, '1');
+        $warning = $this->getDoctrine()->getRepository('NCbrtBundle:NcBackupEvents')->findByServerTotalStatus($date_start, $date_end, '3');
+        $query = $this->getDoctrine()->getRepository('NCbrtBundle:NcBackupEvents')->lastSuccess();
 
-        $failed = $this->getDoctrine()
-            ->getRepository('NCbrtBundle:NcBackupEvents')
-            ->findByServerTotalStatus($date_start, $date_end, '1');
-
-        $warning = $this->getDoctrine()
-            ->getRepository('NCbrtBundle:NcBackupEvents')
-            ->findByServerTotalStatus($date_start, $date_end, '3');
+        $result = array();
+        for ($i = 0; $i < count($query); $i++) {
+            $format = 'Y-m-d H:i:s';
+            $latest = date_create_from_format($format, $query[$i]['latest']->format($format));
+            $date = date_create_from_format($format, date($format));
+            $TimeDifferenceAux = abs($date->getTimestamp() - $latest->getTimestamp());
+            $result[$i]['id'] = $query[$i]['id'];
+            $result[$i]['difference'] = TimeConverter::ConvertFromSeconds($TimeDifferenceAux);
+        }
 
         return $this->render('NCbrtBundle:Default:index.html.twig', array(
             'form' => $form->createView(),
@@ -114,13 +118,15 @@ class DefaultController extends Controller
             'succeful' => $succeful,
             'failed' => $failed,
             'warning' => $warning,
+            'result' => $result,
         ));
     }
 
     /**
      * @Route("/backup")
      */
-    public function insertAction(Request $request)
+    public
+    function insertAction(Request $request)
     {
 
         /* Get data from post request */
@@ -184,7 +190,8 @@ class DefaultController extends Controller
     /**
      * @Route("/event/{event_id}/", name="event_by_id")
      */
-    public function viewAction($event_id, Request $request)
+    public
+    function viewAction($event_id, Request $request)
     {
         $em = $this->getDoctrine()->getRepository('NCbrtBundle:NcBackupEvents')->find($event_id);
         $referer = $request->headers->get('referer');
@@ -195,7 +202,8 @@ class DefaultController extends Controller
     /**
      * @Route("/about", name="about_main")
      */
-    public function aboutAction()
+    public
+    function aboutAction()
     {
         return $this->render('NCbrtBundle:About:about.html.twig');
     }
@@ -203,7 +211,8 @@ class DefaultController extends Controller
     /**
      * @Route("/exportExcel", name="export_excel")
      */
-    public function exportExcelAction(Request $request)
+    public
+    function exportExcelAction(Request $request)
     {
         $data = $request->query->get('paramaters');
         $paramaters['server_name'] = $data['server_name'];
@@ -314,7 +323,8 @@ class DefaultController extends Controller
     /**
      * @Route("/exportPDF", name="exportpdf")
      */
-    public function exportpdfAction(Request $request)
+    public
+    function exportpdfAction(Request $request)
     {
         $id = $request->query->get('id');
         $em = $this->getDoctrine()->getRepository('NCbrtBundle:NcBackupEvents')->find($id);

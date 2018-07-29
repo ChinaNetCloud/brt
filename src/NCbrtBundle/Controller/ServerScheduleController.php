@@ -10,11 +10,7 @@ namespace NCbrtBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\Response;
-
-
 use NCbrtBundle\Entity\NcBackupEvents;
-use NCbrtBundle\Entity\SrvrsServers;
 use NCbrtBundle\Tools\TimeConverter;
 
 /**
@@ -29,20 +25,19 @@ class ServerScheduleController extends Controller
      */
     public function checkLastReportAction()
     {
-        $em = $this->getDoctrine()->getRepository('NCbrtBundle:NcBackupEvents')->findServerByBackupReport();
-        $length = count($em);
+        $query = $this->getDoctrine()->getRepository('NCbrtBundle:NcBackupEvents')->findServerByBackupReport();
+        $length = count($query);
         echo 'size: ' . $length . '<br>';
         for ($i = 0; $i < $length; $i++) {
             $format = 'Y-m-d H:i:s';
-            $latest = date_create_from_format($format, $em[$i]['latest']);
+            $latest = date_create_from_format($format, $query[$i]['latest']);
             $date = date_create_from_format($format, date($format));
             $TimeDifferenceAux = abs($date->getTimestamp() - $latest->getTimestamp());
-            echo $TimeDifferenceAux . ' <-> ' . $em[$i]['frequency'];
-            if ($TimeDifferenceAux > $em[$i]['frequency'] && $em[$i]['frequency'] > 0 && $em[$i]['frequency'] != '') {
-                echo ' Report ' . $em[$i]['name'] . '<br>';
+            echo $TimeDifferenceAux . ' <-> ' . $query[$i]['frequency'];
+            if ($TimeDifferenceAux > $query[$i]['frequency'] && $query[$i]['frequency'] > 0 && $query[$i]['frequency'] != '') {
+                echo ' Report ' . $query[$i]['name'] . '<br>';
 
                 $event = new NcBackupEvents();
-
                 $event->setBackupmethod('BRT: No report');
                 $event->setBackupsize('0');
                 $event->setDateCreated($date);
@@ -50,17 +45,17 @@ class ServerScheduleController extends Controller
                 $event->setSuccess('3');
 
                 // Create the LOG
-                $log = 'This server has a backup frequency of ' . TimeConverter::ConvertFromSeconds($em[$i]['frequency']) . '. ';
-                $log .= 'The last backup event was on: ' . $em[$i]['latest'] . '. ';
+                $log = 'This server has a backup frequency of ' . TimeConverter::ConvertFromSeconds($query[$i]['frequency']) . '. ';
+                $log .= 'The last backup event was on: ' . $query[$i]['latest'] . '. ';
                 $log .= 'The time elapsed without backup is of about ' . TimeConverter::ConvertFromSeconds($TimeDifferenceAux) . '. ';
                 $event->setLog($log);
 
-                $server = $this->getDoctrine()->getRepository('NCbrtBundle:SrvrsServers')->find($em[$i]['id']);
+                $server = $this->getDoctrine()->getRepository('NCbrtBundle:SrvrsServers')->find($query[$i]['id']);
                 $event->setSrvrsServers($server);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($event);
                 $em->flush();
-                return new Response('Saved new event with id ' . $event->getId());
+                echo 'Saved new event with id ' . $event->getId() . '<br>';
             } else {
                 echo ' No need to report<br>';
             }
