@@ -45,9 +45,9 @@ class TimeConverter {
     public static function ConvertFromSeconds($seconds){
         $time = '';
         if ($seconds >= 60 && $seconds < 3600){
-            $time = round($seconds/60) . ' minutes';
+            $time = ($seconds/60) . ' minutes';
         } elseif ($seconds >= 3600 && $seconds < 86400) {
-            $time = round($seconds/3600) . ' hours';
+            $time = ($seconds/3600) . ' hours';
         } elseif ($seconds >= 86400) {
             $time = round($seconds/86400) . ' days';
         }

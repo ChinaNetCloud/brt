@@ -1,6 +1,6 @@
 {% extends 'general.html.twig' %}
 {% block title %}
-    {{parent()}}
+    {{ parent() }}
     - Report{% endblock %}
 {% block header %}
     <div>
@@ -18,7 +18,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-user"></i>
-                        {{app.user.username}}
+                        {{ app.user.username }}
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
@@ -67,14 +67,14 @@
             {{ form_errors(form) }}
             <div class="form-inline">
                 <div class="form-group">
-                    {{ form_label(form.date_start)}}
-                    {{ form_widget(form.date_start)}}
-                    {{ form_errors(form.date_start)}}
+                    {{ form_label(form.date_start) }}
+                    {{ form_widget(form.date_start) }}
+                    {{ form_errors(form.date_start) }}
                 </div>
                 <div class="form-group">
-                    {{ form_label(form.date_end)}}
-                    {{ form_widget(form.date_end)}}
-                    {{ form_errors(form.date_end)}}
+                    {{ form_label(form.date_end) }}
+                    {{ form_widget(form.date_end) }}
+                    {{ form_errors(form.date_end) }}
                 </div>
             </div>
         </div>
@@ -145,5 +145,65 @@
             </div>
         </div>
     </div>
-</div>
+    <div class="row">
+        <div class="col-xs-6">
+            <canvas id="backupStatus" width="400" height="200"></canvas>
+        </div>
+        <div class="col-xs-6">
+            <canvas id="backupMethod" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        ctx = document.getElementById("backupStatus").getContext('2d');
+        backupStatus = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["Total Backups", "Successful", "Failed", "No reported", "Other Status"],
+                datasets: [{
+                    label: '# Backups',
+                    data: [{{ total_backups }}, {{ total_successful_backups }}, {{ total_fail_backups }}, {{ total_no_report_backups }}, {{ total_other_status }}],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+        ctx = document.getElementById("backupMethod"),
+        backupMethod = new Chart(ctx,
+                {
+                    type: "pie",
+                    data: {
+                        labels: ["NC Backup-Py", "NC Backup (Bash)", "Other Method"],
+                        datasets: [{
+                            data: [{{ total_backups_nc_backup_py }}, {{ total_backups_nc_script }}, {{ total_backups_method_other }}],
+                            backgroundColor: ["#007bff", "#dc3545", "#ffc107"]
+                        }]
+                    }
+                });
+
+
+    </script>
 {% endblock %}

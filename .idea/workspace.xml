@@ -2,7 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="34476560-8051-4cb9-9182-8e90dd7db7fb" name="Default" comment="Add some items in view, and how many days one server don't report">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TODO" beforeDir="false" afterPath="$PROJECT_DIR$/TODO" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Resources/views/general.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/general.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NCbrtBundle/Resources/views/Dashboard/dashboard.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/src/NCbrtBundle/Resources/views/Dashboard/dashboard.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/NCbrtBundle/Resources/views/Default/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/src/NCbrtBundle/Resources/views/Default/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NCbrtBundle/Tools/TimeConverter.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/NCbrtBundle/Tools/TimeConverter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/js/plugins/flot/excanvas.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/js/plugins/flot/flot-data.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/js/plugins/flot/jquery.flot.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/js/plugins/flot/jquery.flot.pie.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/js/plugins/flot/jquery.flot.resize.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/js/plugins/flot/jquery.flot.tooltip.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/js/plugins/morris/morris-data.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/js/plugins/morris/morris.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/js/plugins/morris/morris.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/js/plugins/morris/raphael.min.js" beforeDir="false" />
     </list>
     <ignored path=".idea/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -34,11 +49,30 @@
       <file leaf-file-name="index.html.twig" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/NCbrtBundle/Resources/views/Default/index.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="170" column="47" selection-start-line="170" selection-start-column="47" selection-end-line="170" selection-end-column="47" />
+            <state relative-caret-position="326">
+              <caret line="174" column="44" selection-start-line="174" selection-start-column="44" selection-end-line="174" selection-end-column="44" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dashboard.html.twig" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/NCbrtBundle/Resources/views/Dashboard/dashboard.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2550">
+              <caret line="198" column="82" selection-start-line="198" selection-start-column="82" selection-end-line="198" selection-end-column="82" />
               <folding>
                 <element signature="e#12#29#0#Twig" expanded="true" />
+                <element signature="e#6383#6435#0#HTML" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="general.html.twig" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Resources/views/general.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="428">
+              <caret line="110" column="71" selection-start-line="110" selection-start-column="71" selection-end-line="110" selection-end-column="71" />
             </state>
           </provider>
         </entry>
@@ -46,7 +80,7 @@
       <file leaf-file-name="export.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/NCbrtBundle/Resources/views/PDF/export.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="581">
+            <state relative-caret-position="326">
               <caret line="56" column="13" selection-start-line="56" selection-start-column="13" selection-end-line="56" selection-end-column="13" />
             </state>
           </provider>
@@ -55,7 +89,7 @@
       <file leaf-file-name="ServerScheduleController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/NCbrtBundle/Controller/ServerScheduleController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
+            <state relative-caret-position="1428">
               <caret line="91" column="112" selection-start-line="91" selection-start-column="112" selection-end-line="91" selection-end-column="112" />
               <folding>
                 <element signature="e#110#167#0#PHP" expanded="true" />
@@ -76,8 +110,8 @@
       <file leaf-file-name="TimeConverter.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/NCbrtBundle/Tools/TimeConverter.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="45" column="19" selection-start-line="45" selection-start-column="19" selection-end-line="45" selection-end-column="19" />
+            <state relative-caret-position="765">
+              <caret line="49" column="20" selection-start-line="49" selection-start-column="20" selection-end-line="49" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -85,27 +119,10 @@
       <file leaf-file-name="DefaultController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/NCbrtBundle/Controller/DefaultController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="124">
+            <state relative-caret-position="4165">
               <caret line="255" column="8" selection-start-line="255" selection-start-column="8" selection-end-line="255" selection-end-column="8" />
               <folding>
                 <element signature="e#42#80#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NcBackupEventsRepository.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/NCbrtBundle/Entity/NcBackupEventsRepository.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="969">
-              <caret line="71" column="32" selection-start-line="71" selection-start-column="32" selection-end-line="71" selection-end-column="32" />
-              <folding>
-                <element signature="e#38#72#0#PHP" expanded="true" />
-                <element signature="e#1684#2259#0#PHP" />
-                <element signature="e#2699#3374#0#PHP" />
-                <element signature="e#3436#4127#0#PHP" />
-                <element signature="e#4189#4864#0#PHP" />
-                <element signature="e#4926#5619#0#PHP" />
               </folding>
             </state>
           </provider>
@@ -126,7 +143,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/Resources/views/general.html.twig" />
         <option value="$PROJECT_DIR$/src/NCbrtBundle/Resources/views/PDF/export.html.twig" />
         <option value="$PROJECT_DIR$/src/NCbrtBundle/Resources/views/Default/details.html.twig" />
         <option value="$PROJECT_DIR$/app/config/security.yml" />
@@ -135,8 +151,11 @@
         <option value="$PROJECT_DIR$/src/NCbrtBundle/Form/Type/DateSearchType.php" />
         <option value="$PROJECT_DIR$/src/NCbrtBundle/Entity/NcBackupEventsRepository.php" />
         <option value="$PROJECT_DIR$/src/NCbrtBundle/Controller/DefaultController.php" />
-        <option value="$PROJECT_DIR$/src/NCbrtBundle/Tools/TimeConverter.php" />
         <option value="$PROJECT_DIR$/src/NCbrtBundle/Controller/ServerScheduleController.php" />
+        <option value="$PROJECT_DIR$/TODO" />
+        <option value="$PROJECT_DIR$/src/NCbrtBundle/Tools/TimeConverter.php" />
+        <option value="$PROJECT_DIR$/src/NCbrtBundle/Resources/views/Dashboard/dashboard.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/general.html.twig" />
         <option value="$PROJECT_DIR$/src/NCbrtBundle/Resources/views/Default/index.html.twig" />
       </list>
     </option>
@@ -309,6 +328,15 @@
               <item name="NCbrtBundle" type="462c0819:PsiDirectoryNode" />
               <item name="Resources" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="Dashboard" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="brt" type="b2602c69:ProjectViewProjectNode" />
+              <item name="brt" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="NCbrtBundle" type="462c0819:PsiDirectoryNode" />
+              <item name="Resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
               <item name="Default" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -414,34 +442,36 @@
       <workItem from="1532671868561" duration="3966000" />
       <workItem from="1532679812794" duration="10519000" />
       <workItem from="1532776720625" duration="36000" />
-      <workItem from="1532830729703" duration="26168000" />
+      <workItem from="1532830729703" duration="27240000" />
+      <workItem from="1532909213121" duration="1938000" />
+      <workItem from="1532938351970" duration="4769000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="42660000" />
+    <option name="totallyTimeSpent" value="50439000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16032211" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" order="7" weight="0.3290938" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.3290938" />
+      <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.3290938" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16032211" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="right" id="Database" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.3290938" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3290938" />
@@ -490,13 +520,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/config/security.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="33" column="31" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/NCbrtBundle/Resources/views/Server/server.html.twig">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -528,14 +551,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2516">
           <caret line="148" column="32" selection-start-line="148" selection-start-column="32" selection-end-line="148" selection-end-column="32" />
-          <folding>
-            <element signature="e#38#72#0#PHP" expanded="true" />
-            <element signature="e#1684#2259#0#PHP" />
-            <element signature="e#2699#3374#0#PHP" />
-            <element signature="e#3436#4127#0#PHP" />
-            <element signature="e#4189#4864#0#PHP" />
-            <element signature="e#4926#5619#0#PHP" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -567,14 +582,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2499">
           <caret line="148" column="32" selection-start-line="148" selection-start-column="32" selection-end-line="148" selection-end-column="32" />
-          <folding>
-            <element signature="e#38#72#0#PHP" expanded="true" />
-            <element signature="e#1684#2259#0#PHP" />
-            <element signature="e#2699#3374#0#PHP" />
-            <element signature="e#3436#4127#0#PHP" />
-            <element signature="e#4189#4864#0#PHP" />
-            <element signature="e#4926#5619#0#PHP" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -589,14 +596,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2584">
           <caret line="152" lean-forward="true" selection-start-line="152" selection-end-line="152" />
-          <folding>
-            <element signature="e#38#72#0#PHP" expanded="true" />
-            <element signature="e#1684#2259#0#PHP" />
-            <element signature="e#2699#3374#0#PHP" />
-            <element signature="e#3436#4127#0#PHP" />
-            <element signature="e#4189#4864#0#PHP" />
-            <element signature="e#4926#5619#0#PHP" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -645,14 +644,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="986">
           <caret line="58" column="5" lean-forward="true" selection-start-line="48" selection-start-column="4" selection-end-line="58" selection-end-column="5" />
-          <folding>
-            <element signature="e#38#72#0#PHP" expanded="true" />
-            <element signature="e#1684#2259#0#PHP" />
-            <element signature="e#2699#3374#0#PHP" />
-            <element signature="e#3436#4127#0#PHP" />
-            <element signature="e#4189#4864#0#PHP" />
-            <element signature="e#4926#5619#0#PHP" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -695,13 +686,6 @@
     <entry file="file://$PROJECT_DIR$/app/Resources/views/default/index.html.twig" />
     <entry file="file://$PROJECT_DIR$/app/Resources/views/base.html.twig">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/general.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="43" column="35" selection-start-line="43" selection-start-column="35" selection-end-line="43" selection-end-column="35" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/vendor/doctrine/orm/lib/Doctrine/ORM/NonUniqueResultException.php">
       <provider selected="true" editor-type-id="text-editor">
@@ -748,13 +732,6 @@
     <entry file="file://$PROJECT_DIR$/src/NCbrtBundle/Resources/views/Server/server.html.twig">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/NCbrtBundle/Controller/DashboardController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="21" column="1" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/symfony/symfony/src/Symfony/Component/Validator/Constraints/DateTime.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
@@ -778,14 +755,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="969">
           <caret line="71" column="32" selection-start-line="71" selection-start-column="32" selection-end-line="71" selection-end-column="32" />
-          <folding>
-            <element signature="e#38#72#0#PHP" expanded="true" />
-            <element signature="e#1684#2259#0#PHP" />
-            <element signature="e#2699#3374#0#PHP" />
-            <element signature="e#3436#4127#0#PHP" />
-            <element signature="e#4189#4864#0#PHP" />
-            <element signature="e#4926#5619#0#PHP" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -796,16 +765,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/NCbrtBundle/Resources/views/PDF/export.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="581">
-          <caret line="56" column="13" selection-start-line="56" selection-start-column="13" selection-end-line="56" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/NCbrtBundle/Controller/DefaultController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
+        <state relative-caret-position="4165">
           <caret line="255" column="8" selection-start-line="255" selection-start-column="8" selection-end-line="255" selection-end-column="8" />
           <folding>
             <element signature="e#42#80#0#PHP" expanded="true" />
@@ -813,10 +775,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/NCbrtBundle/Tools/TimeConverter.php">
+    <entry file="file://$PROJECT_DIR$/src/NCbrtBundle/Controller/ServerScheduleController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="45" column="19" selection-start-line="45" selection-start-column="19" selection-end-line="45" selection-end-column="19" />
+        <state relative-caret-position="1428">
+          <caret line="91" column="112" selection-start-line="91" selection-start-column="112" selection-end-line="91" selection-end-column="112" />
+          <folding>
+            <element signature="e#110#167#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NCbrtBundle/Controller/DashboardController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-17">
+          <caret line="44" column="20" selection-start-line="44" selection-start-column="20" selection-end-line="44" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -827,23 +799,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/NCbrtBundle/Controller/ServerScheduleController.php">
+    <entry file="file://$PROJECT_DIR$/src/NCbrtBundle/Tools/TimeConverter.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="91" column="112" selection-start-line="91" selection-start-column="112" selection-end-line="91" selection-end-column="112" />
+        <state relative-caret-position="765">
+          <caret line="49" column="20" selection-start-line="49" selection-start-column="20" selection-end-line="49" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/js/plugins/morris/morris-data.js" />
+    <entry file="file://$PROJECT_DIR$/TODO">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="29" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NCbrtBundle/Resources/views/PDF/export.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="326">
+          <caret line="56" column="13" selection-start-line="56" selection-start-column="13" selection-end-line="56" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/general.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="428">
+          <caret line="110" column="71" selection-start-line="110" selection-start-column="71" selection-end-line="110" selection-end-column="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NCbrtBundle/Resources/views/Dashboard/dashboard.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2550">
+          <caret line="198" column="82" selection-start-line="198" selection-start-column="82" selection-end-line="198" selection-end-column="82" />
           <folding>
-            <element signature="e#110#167#0#PHP" expanded="true" />
+            <element signature="e#12#29#0#Twig" expanded="true" />
+            <element signature="e#6383#6435#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/NCbrtBundle/Resources/views/Default/index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="170" column="47" selection-start-line="170" selection-start-column="47" selection-end-line="170" selection-end-column="47" />
-          <folding>
-            <element signature="e#12#29#0#Twig" expanded="true" />
-          </folding>
+        <state relative-caret-position="326">
+          <caret line="174" column="44" selection-start-line="174" selection-start-column="44" selection-end-line="174" selection-end-column="44" />
         </state>
       </provider>
     </entry>
