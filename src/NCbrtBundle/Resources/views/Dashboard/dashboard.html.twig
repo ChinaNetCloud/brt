@@ -23,14 +23,9 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="#">
+                            <a href="{{ url('fos_user_profile_show') }}">
                                 <i class="fa fa-fw fa-user"></i>
                                 Profile</a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-fw fa-gear"></i>
-                                Settings</a>
                         </li>
                         <li class="divider"></li>
                         <li>
@@ -160,19 +155,17 @@
         backupStatus = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ["Total Backups", "Successful", "Failed", "No reported", "Other Status"],
+                labels: ["Successful", "Failed", "No reported", "Other Status"],
                 datasets: [{
                     label: '# Backups',
-                    data: [{{ total_backups }}, {{ total_successful_backups }}, {{ total_fail_backups }}, {{ total_no_report_backups }}, {{ total_other_status }}],
+                    data: [ {{ total_successful_backups }}, {{ total_fail_backups }}, {{ total_no_report_backups }}, {{ total_other_status }}],
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
                         'rgba(255, 206, 86, 0.2)',
                         'rgba(75, 192, 192, 0.2)',
                         'rgba(153, 102, 255, 0.2)'
                     ],
                     borderColor: [
-                        'rgba(255,99,132,1)',
                         'rgba(54, 162, 235, 1)',
                         'rgba(255, 206, 86, 1)',
                         'rgba(75, 192, 192, 1)',

@@ -27,23 +27,19 @@ class NcBackupEventsRepository extends EntityRepository
             ->andWhere('s.statusActive = :active')
             ->setParameter('active', $parameters['active'])
             ->orderBy('n.dateCreated', 'DESC');
-
         $statuses = array_filter($parameters['status'], function ($status) {
             return !empty($status) || '0' === $status;
         });
-
         if (!empty($parameters['status'])) {
             $qb
                 ->andWhere('n.success IN (:statuses)')
                 ->setParameter('statuses', $statuses);
         }
-
         if (!empty($parameters['size'])) {
             $qb
                 ->andWhere(sprintf('n.backupsize %s :size', $parameters['comparer']))
                 ->setParameter('size', $parameters['size']);
         }
-
         return $qb->getQuery();
     }
 
@@ -63,7 +59,8 @@ class NcBackupEventsRepository extends EntityRepository
         }
     }
 
-    public function lastSuccess(){
+    public function lastSuccess()
+    {
         $qb = $this->createQueryBuilder('n')
             ->join('n.srvrsServers', 's')
             ->addSelect('n.dateCreated latest', 's.name', 's.id')

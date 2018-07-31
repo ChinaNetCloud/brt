@@ -23,7 +23,7 @@
             {% endfor %}
         {% endif %}
         <div class="container text-center">
-            <img src="https://www.yunchangcloud.com/wp-content/themes/chinanetcloud-wordpress/images/logo.png" alt="" width="500" height="95">
+            <img src="{{ asset('img/logo.png') }}" alt="" width="500" height="95">
             <div class="form-signin">
                 {% block fos_user_content %}{% endblock fos_user_content %}
             </div>

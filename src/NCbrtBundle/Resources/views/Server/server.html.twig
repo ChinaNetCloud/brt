@@ -7,32 +7,22 @@
         </div>
         <div class="panel-body">
             <div class="inline-list">
-                <h5>Server Name:
-                    {{ server.name }}
-                </h5>
-                <h5>{{ server.description is not empty ?
-                        "Description: " + server.description  
-                        : "Description: Empty"}}
-                </h5>
-                <h5>Status:
-                    {{ server.statusActive == '1' ? "Active" : "Not Active" }}
-                </h5>
+                <h5>Server Name: {{ server.name }}</h5>
+                <h5>{{ server.description is not empty ? "Description: " + server.description : "Description: Empty" }}</h5>
+                <h5>Status: {{ server.statusActive == '1' ? "Active" : "Not Active" }}</h5>
             </div>
             {{ form_start(form) }}
             {{ form_errors(form) }}
             <div class="inline-list">
-                {{ form_label(form.frequency)}}
+                {{ form_label(form.frequency) }}
                 {{ form_widget(form.frequency) }}
-                {{ form_errors(form.frequency)}}
-                {#                {{ form_label(form.measure_unit)}}
-                {{ form_widget(form.measure_unit) }}
-                {{ form_errors(form.measure_unit)}}#}
+                {{ form_errors(form.frequency) }}
                 {{ form_widget(form.save_submit, {'attr': {'class': 'btn btn-info'}}) }}
             </div>
         </div>
         <div class="panel-footer">
             {% if referer != null %}
-                <a class="btn btn-primary" href="{{referer}}">Go back</a>
+                <a class="btn btn-primary" href="{{ referer }}">Go back</a>
             {% else %}
                 <a class="btn btn-primary" href="{{ url('search_home') }}">Go back</a>
             {% endif %}

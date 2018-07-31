@@ -1,8 +1,11 @@
 {% trans_default_domain 'FOSUserBundle' %}
-
-{{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
-    {{ form_widget(form) }}
+<div class="form-label-group">
+    {{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
+    {{ form_row(form.username) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.current_password) }}
     <div>
-        <input type="submit" value="{{ 'profile.edit.submit'|trans }}" />
+        <input type="submit" class="btn btn-primary" value="{{ 'profile.edit.submit'|trans }}"/>
     </div>
-{{ form_end(form) }}
+    {{ form_end(form) }}
+</div>

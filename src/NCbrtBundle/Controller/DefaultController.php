@@ -23,58 +23,58 @@ class DefaultController extends Controller
     {
         $form = $this->createForm(SrvrsServersType::class);
         $form->handleRequest($request);
-        $paramaters = array('backupmethod' => '');
+        $parameters = array('backupmethod' => '');
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $paramaters['server_name'] = $data['name'];
-            $paramaters['backupmethod'] = $data['method'];
-            $paramaters['status'] = $data['status'];
-            $paramaters['size'] = $data['size'];
+            $parameters['server_name'] = $data['name'];
+            $parameters['backupmethod'] = $data['method'];
+            $parameters['status'] = $data['status'];
+            $parameters['size'] = $data['size'];
             $aSizeConvertion = new SizeConvert();
-            $paramaters['size'] = $aSizeConvertion->SizeConversionToKB($paramaters['size'] . ' MB');
-            $paramaters['comparer'] = $data['comparer'];
-            $paramaters['count'] = $data['count'];
-            $paramaters['date_start'] = $data['date_start'];
-            $paramaters['date_end'] = $data['date_end'];
+            $parameters['size'] = $aSizeConvertion->SizeConversionToKB($parameters['size'] . ' MB');
+            $parameters['comparer'] = $data['comparer'];
+            $parameters['count'] = $data['count'];
+            $parameters['date_start'] = $data['date_start'];
+            $parameters['date_end'] = $data['date_end'];
             if ($data['active'] === true) {
-                $paramaters['active'] = '1';
+                $parameters['active'] = '1';
             } else {
-                $paramaters['active'] = '0';
+                $parameters['active'] = '0';
             }
-            if ($paramaters['backupmethod'] == '0') {
-                $paramaters['backupmethod'] = '';
+            if ($parameters['backupmethod'] == '0') {
+                $parameters['backupmethod'] = '';
             }
-            for ($i = 0; $i < count($paramaters['status']); $i++) {
-                if ($paramaters['status'][$i] == -1) {
-                    $paramaters['status'] = array();
+            for ($i = 0; $i < count($parameters['status']); $i++) {
+                if ($parameters['status'][$i] == -1) {
+                    $parameters['status'] = array();
                 }
             }
         }
-        if (!isset($paramaters['server_name'])) {
-            $paramaters['server_name'] = '';
+        if (!isset($parameters['server_name'])) {
+            $parameters['server_name'] = '';
         }
-        if (!isset($paramaters['status'])) {
-            $paramaters['status'] = array();
+        if (!isset($parameters['status'])) {
+            $parameters['status'] = array();
         }
-        if (!isset($paramaters['size'])) {
-            $paramaters['size'] = '0';
+        if (!isset($parameters['size'])) {
+            $parameters['size'] = '0';
         }
-        if (!isset($paramaters['comparer'])) {
-            $paramaters['comparer'] = '';
+        if (!isset($parameters['comparer'])) {
+            $parameters['comparer'] = '';
         }
-        if (!isset($paramaters['count'])) {
-            $paramaters['count'] = 25;
+        if (!isset($parameters['count'])) {
+            $parameters['count'] = 25;
         }
-        if (!isset($paramaters['active'])) {
-            $paramaters['active'] = '1';
+        if (!isset($parameters['active'])) {
+            $parameters['active'] = '1';
         }
-        if (!isset($paramaters['date_start'])) {
-            $paramaters['date_start'] = date_sub(new \DateTime(), date_interval_create_from_date_string('30 days'));
+        if (!isset($parameters['date_start'])) {
+            $parameters['date_start'] = date_sub(new \DateTime(), date_interval_create_from_date_string('30 days'));
         }
-        if (!isset($paramaters['date_end'])) {
-            $paramaters['date_end'] = new \DateTime();
+        if (!isset($parameters['date_end'])) {
+            $parameters['date_end'] = new \DateTime();
         }
-        $paramaters['count'] = intval($paramaters['count']);
+        $parameters['count'] = intval($parameters['count']);
         // This selects a collection of complete objects,
         // this is not good for very big queries as we do not need stuff like
         // the log at this point. The SOLUTION implicates to modify the
@@ -82,14 +82,14 @@ class DefaultController extends Controller
         // on the DQL query. The change will also entail the change from Objects
         // to array in the following code.
         $em = $this->getDoctrine()->getRepository('NCbrtBundle:NcBackupEvents')
-            ->findByServerBackup($paramaters);
+            ->findByServerBackup($parameters);
 
         $paginator = $this->get('knp_paginator');
         $current_page = $request->query->getInt('page', 1);
         $pagination = $paginator->paginate(
             $em,
             $current_page,
-            $paramaters['count']
+            $parameters['count']
         );
 
         $date_start = date_sub(new \DateTime(), date_interval_create_from_date_string('1 days'));
@@ -113,8 +113,8 @@ class DefaultController extends Controller
             'form' => $form->createView(),
             'pagination' => $pagination,
             'current_page' => $current_page,
-            'count' => $paramaters['count'],
-            'paramaters' => $paramaters,
+            'count' => $parameters['count'],
+            'parameters' => $parameters,
             'succeful' => $succeful,
             'failed' => $failed,
             'warning' => $warning,
@@ -215,21 +215,21 @@ class DefaultController extends Controller
     function exportExcelAction(Request $request)
     {
         $data = $request->query->get('paramaters');
-        $paramaters['server_name'] = $data['server_name'];
-        $paramaters['backupmethod'] = $data['backupmethod'];
+        $parameters['server_name'] = $data['server_name'];
+        $parameters['backupmethod'] = $data['backupmethod'];
         if (!empty($data['status'])) {
-            $paramaters['status'] = $data['status'];
+            $parameters['status'] = $data['status'];
         } else {
-            $paramaters['status'] = array();
+            $parameters['status'] = array();
         }
-        $paramaters['size'] = $data['size'];
-        $paramaters['comparer'] = $data['comparer'];
-        $paramaters['active'] = $data['active'];
-        $paramaters['date_start'] = $data['date_start']['date'];
-        $paramaters['date_end'] = $data['date_end']['date'];
+        $parameters['size'] = $data['size'];
+        $parameters['comparer'] = $data['comparer'];
+        $parameters['active'] = $data['active'];
+        $parameters['date_start'] = $data['date_start']['date'];
+        $parameters['date_end'] = $data['date_end']['date'];
 
         $em = $this->getDoctrine()->getRepository('NCbrtBundle:NcBackupEvents')
-            ->findByServerBackup($paramaters)->getResult();
+            ->findByServerBackup($parameters)->getResult();
 
         $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
 
