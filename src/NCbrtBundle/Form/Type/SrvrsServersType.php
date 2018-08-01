@@ -1,4 +1,5 @@
 <?php
+
 namespace NCbrtBundle\Form\Type;
 
 /*
@@ -50,31 +51,33 @@ class SrvrsServersType extends AbstractType
                 'Smaller or equal' => '<=')))
             ->add('size', TextType::class, array(
                 'required' => false,
-                'label' => ' than (MB): '))
+                'label' => 'than (MB): '))
             ->add('date_start', DateTimeType::class, array(
+                'widget' => 'single_text',
+                'html5' => false,
+                'format' => 'MM/dd/y H:mm:ss',
                 'data' => $date_start,
-                'label' => 'FROM:'
-            ))
+                'label' => 'From:'))
             ->add('date_end', DateTimeType::class, array(
+                'widget' => 'single_text',
+                'html5' => false,
+                'format' => 'MM/dd/y H:mm:ss',
                 'data' => new \DateTime(),
-                'label' => 'TO:'
-            ))
+                'label' => 'To:'))
             ->add('count', ChoiceType::class, array('choices' => array(
                 '25' => '25',
                 '10' => '10',
                 '50' => '50',
                 '100' => '100',
-                '250' => '250',
-                '500' => '500',
-                '1000' => '1000',
-                '2500' => '2500'),
-                'label' => 'Results count: '))
+                '250' => '250'),
+                'label' => 'Results count:'))
             ->add('active', CheckboxType::class, array(
-                'label' => 'Production:',
+                'label' => 'Production',
                 'data' => true, 'required' => false))
             ->add('search', SubmitType::class, array('label' => 'Search'))
             ->setMethod('GET');
     }
+
     public function getName()
     {
         return 'server_search';

@@ -25,9 +25,15 @@ class DateSearchType extends AbstractType
         $date_start = date_sub(new \DateTime(), date_interval_create_from_date_string('7 days'));
         $builder
             ->add('date_start', DateTimeType::class, array(
+                'widget' => 'single_text',
+                'html5' => false,
+                'format' => 'MM/dd/y H:mm:ss',
                 'data' => $date_start,
             ))
             ->add('date_end', DateTimeType::class, array(
+                'widget' => 'single_text',
+                'html5' => false,
+                'format' => 'MM/dd/y H:mm:ss',
                 'data' => new \DateTime(),
             ))
             ->add('report', SubmitType::class, array(

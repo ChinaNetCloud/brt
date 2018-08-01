@@ -11,12 +11,15 @@
     <h2 class="form-signin-heading">Please sign in</h2>
 
     <div class="form-label-group">
-        <input type="text" id="username" class="form-control" name="_username" placeholder="{{ 'security.login.username'|trans }}" required="required" autofocus="autofocus" autocomplete="username">
+        <input type="text" id="username" class="form-control" name="_username"
+               placeholder="{{ 'security.login.username'|trans }}" required="required" autofocus="autofocus"
+               autocomplete="username">
         <label for="username" class="sr-only">{{ 'security.login.username'|trans }}</label>
     </div>
 
     <div class="form-label-group">
-        <input type="password" id="password" name="_password" class="form-control" placeholder="{{ 'security.login.password'|trans }}" required="required" autocomplete="current-password">
+        <input type="password" id="password" name="_password" class="form-control"
+               placeholder="{{ 'security.login.password'|trans }}" required="required" autocomplete="current-password">
         <label for="password" class="sr-only">{{ 'security.login.password'|trans }}</label>
     </div>
 
@@ -26,7 +29,8 @@
             {{ 'security.login.remember_me'|trans }}
         </label>
     </div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit" id="_submit" name="_submit">{{ 'security.login.submit'|trans }}</button>
-</br>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" id="_submit"
+            name="_submit">{{ 'security.login.submit'|trans }}</button>
+    </br>
     <a href="{{ url('fos_user_resetting_request') }}" class="btn btn-link">Forgot Password?</a>
 </form>

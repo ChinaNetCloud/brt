@@ -1,7 +1,8 @@
 {% trans_default_domain 'FOSUserBundle' %}
 <div class="form-label-group">
     {{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
-    {{ form_row(form.username) }}
+    {{ form_label(form.username) }}
+    {{ form_widget(form.username, {'attr':{'disabled':'true'}}) }}
     {{ form_row(form.email) }}
     {{ form_row(form.current_password) }}
     <div>

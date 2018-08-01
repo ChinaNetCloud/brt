@@ -13,9 +13,10 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/sb-admin.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/plugins/morris.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     <link href="{{ asset('font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/jquery.datetimepicker.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap-select.min.css') }}" rel="stylesheet">
 </head>
 <body>
 {% block body %}
@@ -104,6 +105,10 @@
 <script src="{{ asset('js/jquery.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/plugins/chart.js/Chart.min.js') }}"></script>
+<script src="{{ asset('js/jquery.datetimepicker.full.js') }}"></script>
+<script src="{{ asset('js/jquery.datetimepicker.full.min.js') }}"></script>
+<script src="{{ asset('js/jquery.datetimepicker.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
 {% block javascripts %}{% endblock %}
 </body>
 </html>
