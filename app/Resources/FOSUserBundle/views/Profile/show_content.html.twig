@@ -7,8 +7,8 @@
                 <div class="panel-title">Profile</div>
             </div>
             <div class="panel-body">
-                <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
-                <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
+                <p><strong>{{ 'profile.show.username'|trans }}:</strong> {{ user.username }}</p>
+                <p><strong>{{ 'profile.show.email'|trans }}:</strong> {{ user.email }}</p>
             </div>
             <div class="panel-footer"><a href="{{ url('fos_user_profile_edit') }}" class="btn btn-primary">Edit</a>
                 <a href="{{ url('fos_user_change_password') }}" class="btn btn-info">Change Password</a>
