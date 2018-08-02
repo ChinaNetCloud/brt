@@ -18,6 +18,8 @@ class DefaultController extends Controller
 {
     /**
      * @Route("/", name="search_home")
+     * @param Request $request
+     * @return Response
      */
     public function indexAction(Request $request)
     {
@@ -94,7 +96,7 @@ class DefaultController extends Controller
 
         $date_start = date_sub(new \DateTime(), date_interval_create_from_date_string('1 days'));
         $date_end = new \DateTime();
-        $succeful = $this->getDoctrine()->getRepository('NCbrtBundle:NcBackupEvents')->findByServerTotalStatus($date_start, $date_end, '0');
+        $success = $this->getDoctrine()->getRepository('NCbrtBundle:NcBackupEvents')->findByServerTotalStatus($date_start, $date_end, '0');
         $failed = $this->getDoctrine()->getRepository('NCbrtBundle:NcBackupEvents')->findByServerTotalStatus($date_start, $date_end, '1');
         $warning = $this->getDoctrine()->getRepository('NCbrtBundle:NcBackupEvents')->findByServerTotalStatus($date_start, $date_end, '3');
         $query = $this->getDoctrine()->getRepository('NCbrtBundle:NcBackupEvents')->lastSuccess();
@@ -115,7 +117,7 @@ class DefaultController extends Controller
             'current_page' => $current_page,
             'count' => $parameters['count'],
             'parameters' => $parameters,
-            'succeful' => $succeful,
+            'success' => $success,
             'failed' => $failed,
             'warning' => $warning,
             'result' => $result,
@@ -124,6 +126,8 @@ class DefaultController extends Controller
 
     /**
      * @Route("/backup")
+     * @param Request $request
+     * @return Response
      */
     public
     function insertAction(Request $request)
@@ -189,6 +193,9 @@ class DefaultController extends Controller
 
     /**
      * @Route("/event/{event_id}/", name="event_by_id")
+     * @param $event_id
+     * @param Request $request
+     * @return Response
      */
     public
     function viewAction($event_id, Request $request)
@@ -210,6 +217,9 @@ class DefaultController extends Controller
 
     /**
      * @Route("/exportExcel", name="export_excel")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     * @throws \PHPExcel_Exception
      */
     public
     function exportExcelAction(Request $request)
@@ -322,6 +332,8 @@ class DefaultController extends Controller
 
     /**
      * @Route("/exportPDF", name="exportpdf")
+     * @param Request $request
+     * @return Response
      */
     public
     function exportpdfAction(Request $request)

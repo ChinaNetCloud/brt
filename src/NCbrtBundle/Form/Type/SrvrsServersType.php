@@ -44,6 +44,7 @@ class SrvrsServersType extends AbstractType
                 'Success' => '0',
                 'Fail' => '1',
                 'Warning' => '3'),
+                'required' => false,
                 'multiple' => true,
                 'label' => 'Status: '))
             ->add('comparer', ChoiceType::class, array('choices' => array(
