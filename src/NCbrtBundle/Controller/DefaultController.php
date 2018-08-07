@@ -77,12 +77,7 @@ class DefaultController extends Controller
             $parameters['date_end'] = new \DateTime();
         }
         $parameters['count'] = intval($parameters['count']);
-        // This selects a collection of complete objects,
-        // this is not good for very big queries as we do not need stuff like
-        // the log at this point. The SOLUTION implicates to modify the
-        // NcBackupEventsRepository.php for it to select only the wanted fields
-        // on the DQL query. The change will also entail the change from Objects
-        // to array in the following code.
+
         $em = $this->getDoctrine()->getRepository('NCbrtBundle:NcBackupEvents')
             ->findByServerBackup($parameters);
 
@@ -186,9 +181,7 @@ class DefaultController extends Controller
         }
 
         /* Response with result 200 plus message*/
-        return new Response('New Backup result added for server: '
-            . $serverEntity->getName() . '. This backup ID is: '
-            . $backupEvent->getId() . '.');
+        return new Response('New Backup result added for server: ' . $serverEntity->getName() . '. This backup ID is: ' . $backupEvent->getId() . '.');
     }
 
     /**
@@ -217,14 +210,10 @@ class DefaultController extends Controller
 
     /**
      * @Route("/exportExcel", name="export_excel")
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\StreamedResponse
-     * @throws \PHPExcel_Exception
      */
-    public
-    function exportExcelAction(Request $request)
+    public function exportExcelAction(Request $request)
     {
-        $data = $request->query->get('paramaters');
+        $data = $request->query->get('parameters');
         $parameters['server_name'] = $data['server_name'];
         $parameters['backupmethod'] = $data['backupmethod'];
         if (!empty($data['status'])) {
@@ -241,7 +230,7 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getRepository('NCbrtBundle:NcBackupEvents')
             ->findByServerBackup($parameters)->getResult();
 
-        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
+        $phpExcelObject = $this->get('phpspreadsheet')->createSpreadsheet();
 
         $phpExcelObject->getProperties()
             ->setCreator("YunChang")
@@ -289,7 +278,6 @@ class DefaultController extends Controller
             ->setWidth(20);
 
         $row = 3;
-        $num = 0;
         foreach ($em as $item) {
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('B' . $row, $num = $row - 2);
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('C' . $row, $item->getSrvrsServers()->getName());
@@ -315,12 +303,11 @@ class DefaultController extends Controller
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('H' . $row, $active);
             $row++;
         }
-
-        $writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel5');
-        $response = $this->get('phpexcel')->createStreamedResponse($writer);
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($phpExcelObject);
+        $response = $this->get('phpspreadsheet')->createStreamedResponse($writer);
         $dispositionHeader = $response->headers->makeDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            'ListRecords.xls');
+            'ListRecords.xlsx');
 
         $response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
         $response->headers->set('Pragma', 'public');
@@ -335,8 +322,7 @@ class DefaultController extends Controller
      * @param Request $request
      * @return Response
      */
-    public
-    function exportpdfAction(Request $request)
+    public function exportpdfAction(Request $request)
     {
         $id = $request->query->get('id');
         $em = $this->getDoctrine()->getRepository('NCbrtBundle:NcBackupEvents')->find($id);
