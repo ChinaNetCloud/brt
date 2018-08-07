@@ -124,8 +124,7 @@ class DefaultController extends Controller
      * @param Request $request
      * @return Response
      */
-    public
-    function insertAction(Request $request)
+    public function insertAction(Request $request)
     {
 
         /* Get data from post request */
@@ -190,8 +189,7 @@ class DefaultController extends Controller
      * @param Request $request
      * @return Response
      */
-    public
-    function viewAction($event_id, Request $request)
+    public function viewAction($event_id, Request $request)
     {
         $em = $this->getDoctrine()->getRepository('NCbrtBundle:NcBackupEvents')->find($event_id);
         $referer = $request->headers->get('referer');
@@ -202,14 +200,14 @@ class DefaultController extends Controller
     /**
      * @Route("/about", name="about_main")
      */
-    public
-    function aboutAction()
+    public function aboutAction()
     {
         return $this->render('NCbrtBundle:About:about.html.twig');
     }
 
     /**
      * @Route("/exportExcel", name="export_excel")
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
     public function exportExcelAction(Request $request)
     {
@@ -284,10 +282,19 @@ class DefaultController extends Controller
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('D' . $row, $item->getDateCreated());
             if ($item->getSuccess() == 0) {
                 $result = 'Success';
+                $phpExcelObject->getActiveSheet()->getStyle('E' . $row)
+                    ->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_DARKGREEN);
+                $phpExcelObject->getActiveSheet()->getStyle('E' . $row)->getFont()->setBold(true);
             } elseif ($item->getSuccess() == 1) {
                 $result = 'Failed';
+                $phpExcelObject->getActiveSheet()->getStyle('E' . $row)
+                    ->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_RED);
+                $phpExcelObject->getActiveSheet()->getStyle('E' . $row)->getFont()->setBold(true);
             } else {
                 $result = 'Warning';
+                $phpExcelObject->getActiveSheet()->getStyle('E' . $row)
+                    ->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_DARKYELLOW);
+                $phpExcelObject->getActiveSheet()->getStyle('E' . $row)->getFont()->setBold(true);
             }
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('E' . $row, $result);
             $size = $item->getBackupsize();

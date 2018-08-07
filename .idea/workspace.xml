@@ -2,12 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="34476560-8051-4cb9-9182-8e90dd7db7fb" name="Default" comment="Add some items in view, and how many days one server don't report">
-      <change beforePath="$PROJECT_DIR$/.idea/brt.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/brt.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/AppKernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/AppKernel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/NCbrtBundle/Controller/DefaultController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/NCbrtBundle/Controller/DefaultController.php" afterDir="false" />
     </list>
     <ignored path=".idea/" />
@@ -49,11 +43,8 @@
       <file leaf-file-name="DefaultController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/NCbrtBundle/Controller/DefaultController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="320" column="40" lean-forward="true" selection-start-line="320" selection-start-column="40" selection-end-line="320" selection-end-column="40" />
-              <folding>
-                <element signature="e#42#80#0#PHP" expanded="true" />
-              </folding>
+            <state relative-caret-position="187">
+              <caret line="30" column="55" lean-forward="true" selection-start-line="30" selection-start-column="55" selection-end-line="30" selection-end-column="55" />
             </state>
           </provider>
         </entry>
@@ -460,12 +451,12 @@
       <workItem from="1533296466663" duration="2142000" />
       <workItem from="1533536002557" duration="1407000" />
       <workItem from="1533537949085" duration="4331000" />
-      <workItem from="1533599260565" duration="416000" />
+      <workItem from="1533599260565" duration="2554000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="118510000" />
+    <option name="totallyTimeSpent" value="120648000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -835,11 +826,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/NCbrtBundle/Controller/DefaultController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="320" column="40" lean-forward="true" selection-start-line="320" selection-start-column="40" selection-end-line="320" selection-end-column="40" />
-          <folding>
-            <element signature="e#42#80#0#PHP" expanded="true" />
-          </folding>
+        <state relative-caret-position="187">
+          <caret line="30" column="55" lean-forward="true" selection-start-line="30" selection-start-column="55" selection-end-line="30" selection-end-column="55" />
         </state>
       </provider>
     </entry>
