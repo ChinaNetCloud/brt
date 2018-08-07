@@ -43,8 +43,8 @@
       <file leaf-file-name="DefaultController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/NCbrtBundle/Controller/DefaultController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="30" column="55" lean-forward="true" selection-start-line="30" selection-start-column="55" selection-end-line="30" selection-end-column="55" />
+            <state relative-caret-position="-136">
+              <caret line="262" column="87" lean-forward="true" selection-start-line="262" selection-start-column="87" selection-end-line="262" selection-end-column="87" />
             </state>
           </provider>
         </entry>
@@ -451,12 +451,12 @@
       <workItem from="1533296466663" duration="2142000" />
       <workItem from="1533536002557" duration="1407000" />
       <workItem from="1533537949085" duration="4331000" />
-      <workItem from="1533599260565" duration="2554000" />
+      <workItem from="1533599260565" duration="4935000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="120648000" />
+    <option name="totallyTimeSpent" value="123029000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -826,8 +826,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/NCbrtBundle/Controller/DefaultController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="30" column="55" lean-forward="true" selection-start-line="30" selection-start-column="55" selection-end-line="30" selection-end-column="55" />
+        <state relative-caret-position="-136">
+          <caret line="262" column="87" lean-forward="true" selection-start-line="262" selection-start-column="87" selection-end-line="262" selection-end-column="87" />
         </state>
       </provider>
     </entry>

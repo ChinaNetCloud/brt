@@ -250,30 +250,18 @@ class DefaultController extends Controller
             ->setCellValue('G2', 'Backup Method')
             ->setCellValue('H2', 'Production');
 
-        $phpExcelObject->getActiveSheet()->getStyle('B2:H2')->getFont()->setBold(true);
-        $phpExcelObject->getActiveSheet()->getStyle('B2:H2')->getFont()->setSize(13);
+        $phpExcelObject
+            ->getActiveSheet()->getStyle('B2:H2')->getFont()->setBold(true)
+            ->getActiveSheet()->getStyle('B2:H2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER)
+            ->getActiveSheet()->getStyle('B2:H2')->getFont()->setSize(13);
 
-        $phpExcelObject->setActiveSheetIndex(0)
-            ->getColumnDimension('B')
-            ->setWidth(5);
-        $phpExcelObject->setActiveSheetIndex(0)
-            ->getColumnDimension('C')
-            ->setWidth(30);
-        $phpExcelObject->setActiveSheetIndex(0)
-            ->getColumnDimension('D')
-            ->setWidth(20);
-        $phpExcelObject->setActiveSheetIndex(0)
-            ->getColumnDimension('E')
-            ->setWidth(20);
-        $phpExcelObject->setActiveSheetIndex(0)
-            ->getColumnDimension('F')
-            ->setWidth(20);
-        $phpExcelObject->setActiveSheetIndex(0)
-            ->getColumnDimension('G')
-            ->setWidth(20);
-        $phpExcelObject->setActiveSheetIndex(0)
-            ->getColumnDimension('H')
-            ->setWidth(20);
+        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('B')->setWidth(5);
+        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('C')->setWidth(30);
+        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('D')->setWidth(20);
+        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('E')->setWidth(20);
+        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('F')->setWidth(20);
+        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('G')->setWidth(20);
+        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('H')->setWidth(20);
 
         $row = 3;
         foreach ($em as $item) {
@@ -284,23 +272,23 @@ class DefaultController extends Controller
                 $result = 'Success';
                 $phpExcelObject->getActiveSheet()->getStyle('E' . $row)
                     ->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_DARKGREEN);
-                $phpExcelObject->getActiveSheet()->getStyle('E' . $row)->getFont()->setBold(true);
             } elseif ($item->getSuccess() == 1) {
                 $result = 'Failed';
                 $phpExcelObject->getActiveSheet()->getStyle('E' . $row)
                     ->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_RED);
-                $phpExcelObject->getActiveSheet()->getStyle('E' . $row)->getFont()->setBold(true);
             } else {
                 $result = 'Warning';
                 $phpExcelObject->getActiveSheet()->getStyle('E' . $row)
                     ->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_DARKYELLOW);
-                $phpExcelObject->getActiveSheet()->getStyle('E' . $row)->getFont()->setBold(true);
             }
+            $phpExcelObject->getActiveSheet()->getStyle('E' . $row)->getFont()->setBold(true)
+                ->getActiveSheet()->getStyle('E' . $row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('E' . $row, $result);
             $size = $item->getBackupsize();
             $aSize = new SizeConvert();
             $size = $aSize->SizeCovertionFromKB($size);
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('F' . $row, $size);
+            $phpExcelObject->getActiveSheet()->getStyle('F' . $row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('G' . $row, $item->getBackupmethod());
             if ($item->getSrvrsServers()->getStatusActive() == 1) {
                 $active = 'Active';
@@ -308,6 +296,7 @@ class DefaultController extends Controller
                 $active = 'Not Active';
             }
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('H' . $row, $active);
+            $phpExcelObject->getActiveSheet()->getStyle('H' . $row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
             $row++;
         }
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($phpExcelObject);
