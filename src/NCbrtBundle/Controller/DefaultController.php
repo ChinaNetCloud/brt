@@ -7,6 +7,7 @@ use NCbrtBundle\Entity\SrvrsServers;
 use NCbrtBundle\Form\Type\SrvrsServersType;
 use NCbrtBundle\Tools\SizeConvert;
 use NCbrtBundle\Tools\Tools;
+use PhpOffice\PhpSpreadsheet\Shared\OLE\PPS\Root;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -233,39 +234,56 @@ class DefaultController extends Controller
         $phpExcelObject->getProperties()
             ->setCreator("YunChang")
             ->setLastModifiedBy("YunChang")
-            ->setTitle("Servers Records")
+            ->setTitle("Backup Report Tool")
             ->setSubject("List of records")
             ->setDescription("List of servers status")
             ->setKeywords("YunChang backup");
 
+        $phpExcelObject->getActiveSheet()->getPageSetup()
+            ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+        $phpExcelObject->getActiveSheet()->getPageSetup()
+            ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);
+        $phpExcelObject->getActiveSheet()->getHeaderFooter()
+            ->setOddHeader('&C&HPlease treat this document as confidential!');
+        $phpExcelObject->getActiveSheet()->getHeaderFooter()
+            ->setOddFooter('&L&B' . $phpExcelObject->getProperties()->getTitle() . '&RPage &P of &N');
+
         $phpExcelObject->setActiveSheetIndex(0);
         $phpExcelObject->getActiveSheet()->setTitle('Servers Records');
+        $phpExcelObject->getActiveSheet()->mergeCells('B2:D3');
 
         $phpExcelObject->setActiveSheetIndex(0)
-            ->setCellValue('B2', '#')
-            ->setCellValue('C2', 'Server Name')
-            ->setCellValue('D2', 'Date Created')
-            ->setCellValue('E2', 'Execution Status')
-            ->setCellValue('F2', 'Size')
-            ->setCellValue('G2', 'Backup Method')
-            ->setCellValue('H2', 'Production');
+            ->setCellValue('B2', 'List of Report Status')
+            ->setCellValue('E3', 'Quantity: ' . count($em))
+            ->setCellValue('B5', '#')
+            ->setCellValue('C5', 'Server Name')
+            ->setCellValue('D5', 'Date Created')
+            ->setCellValue('E5', 'Execution Status')
+            ->setCellValue('F5', 'Size')
+            ->setCellValue('G5', 'Backup Method')
+            ->setCellValue('H5', 'Production');
 
         $phpExcelObject
-            ->getActiveSheet()->getStyle('B2:H2')->getFont()->setBold(true)
-            ->getActiveSheet()->getStyle('B2:H2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER)
-            ->getActiveSheet()->getStyle('B2:H2')->getFont()->setSize(13);
+            ->getActiveSheet()->getStyle('B3:E3')->getFont()->setBold(true)
+            ->getActiveSheet()->getStyle('B2')->getFont()->setSize(20)
+            ->getActiveSheet()->getStyle('B5:H5')->getFont()->setBold(true)
+            ->getActiveSheet()->getStyle('B5:H5')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER)
+            ->getActiveSheet()->getStyle('B5:H5')->getFont()->setSize(13)
+            ->getActiveSheet()->setAutoFilter('B5:H5');
+        $phpExcelObject->getActiveSheet()->getPageSetup()->setRowsToRepeatAtTopByStartAndEnd(5,5);
 
+        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('A')->setWidth(5);
         $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('B')->setWidth(5);
         $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('C')->setWidth(30);
         $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('D')->setWidth(20);
         $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('E')->setWidth(20);
-        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('F')->setWidth(20);
+        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('F')->setWidth(10);
         $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('G')->setWidth(20);
-        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('H')->setWidth(20);
+        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('H')->setWidth(15);
 
-        $row = 3;
+        $row = 6;
         foreach ($em as $item) {
-            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('B' . $row, $num = $row - 2);
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('B' . $row, $num = $row - 5);
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('C' . $row, $item->getSrvrsServers()->getName());
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('D' . $row, $item->getDateCreated());
             if ($item->getSuccess() == 0) {
@@ -300,6 +318,18 @@ class DefaultController extends Controller
             $row++;
         }
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($phpExcelObject);
+
+        $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+        $drawing->setName('Logo');
+        $drawing->setDescription('Logo');
+        $drawing->setPath('./img/logo.png');
+        $drawing->setHeight(45);
+        $drawing->setCoordinates('G2');
+        $drawing->setOffsetX(0);
+        $drawing->getShadow()->setVisible(true);
+        $drawing->getShadow()->setDirection(45);
+        $drawing->setWorksheet($phpExcelObject->getActiveSheet());
+
         $response = $this->get('phpspreadsheet')->createStreamedResponse($writer);
         $dispositionHeader = $response->headers->makeDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
