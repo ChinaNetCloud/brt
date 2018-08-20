@@ -10,6 +10,7 @@ use NCbrtBundle\Tools\Tools;
 use PhpOffice\PhpSpreadsheet\Shared\OLE\PPS\Root;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -127,9 +128,11 @@ class DefaultController extends Controller
      */
     public function insertAction(Request $request)
     {
-
         /* Get data from post request */
         $content = $request->request->all();
+        $fs = new Filesystem();
+        $fs->touch('backup_request.txt');
+        $fs->appendToFile('backup_request.txt', json_decode($content));
         /* Check if server is already in DB */
         $em = $this->getDoctrine()->getManager();
 

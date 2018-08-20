@@ -139,7 +139,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Total records: {{ pagination.getTotalItemCount }}</div>
                 {% if pagination is defined and pagination is not empty %}
-                <table class="table">
+                <table class="table table-responsive">
                     <tr>
                         <td>#</td>
                         <td>Actions</td>
@@ -181,7 +181,7 @@
                             </td>
                             <td>{% if row.backupmethod == "ncscript-py" %}
                                     nc-backup-py
-                                {% elseif row.backupmethod == "BRT: No report" %}
+                                {% elseif row.success == '3' and row.backupmethod == "BRT: No report" %}
                                     {% set foundw = 0 %}
                                     {% for state, lastsuccess in result %}
                                         {% if result[state].id == row.srvrsservers.id %}
@@ -197,6 +197,17 @@
                                     {% for state, lastsuccess in result %}
                                         {% if result[state].id == row.srvrsservers.id %}
                                             Failed {{ row.backupmethod }} {{ lastsuccess.difference }}
+                                            {% set foundf = 1 %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if foundf == 0 %}
+                                        {{ row.backupmethod }} Never Reported
+                                    {% endif %}
+                                {% elseif row.success == '3' %}
+                                    {% set foundf = 0 %}
+                                    {% for state, lastsuccess in result %}
+                                        {% if result[state].id == row.srvrsservers.id %}
+                                            BRT: {{ row.backupmethod }} {{ lastsuccess.difference }}
                                             {% set foundf = 1 %}
                                         {% endif %}
                                     {% endfor %}
