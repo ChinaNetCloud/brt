@@ -1,6 +1,6 @@
 <?php
 
-namespace NCbrtBundle\Entity;
+namespace NCbrtBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
