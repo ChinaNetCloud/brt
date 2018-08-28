@@ -24,6 +24,10 @@
         is redirected to on success (more details below)
         <input type="hidden" name="_target_path" value="/account" />
     #}
+
+    <input type="checkbox" id="remember_me" name="_remember_me" checked />
+    <label for="remember_me">Keep me logged in</label>
+
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
     <button type="submit">login</button>

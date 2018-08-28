@@ -7,11 +7,8 @@
  */
 
 namespace NCbrtBundle\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-
-use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\OneToMany;
 
 /**
  * Description of Organization
@@ -31,8 +28,6 @@ class Organization {
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ManyToOne(targetEntity="Organization", inversedBy="children")
-     * @JoinColumn(name="parent_id", referencedColumnName="id")
      */
     private $id;
     
@@ -43,12 +38,12 @@ class Organization {
     private $name;
     
     /**
-     * @OneToMany(targetEntity="Organization", mappedBy="id")
+     * @ORM\ManyToMany(targetEntity="NCbrtBundle\Entity\User", mappedBy="organization")
      */
-    private $children;
+    private $users;
     
     /**
-     * @OneToMany(targetEntity="SrvrsServers", mappedBy="organization")
+     * @ORM\OneToMany(targetEntity="SrvrsServers", mappedBy="organization")
      */
     private $srvrsServers;
     
@@ -57,8 +52,8 @@ class Organization {
      */
     public function __construct()
     {
-        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->SrvrsServers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->users = new ArrayCollection();
+        $this->SrvrsServers = new ArrayCollection();
     }
 
     /**
@@ -96,16 +91,6 @@ class Organization {
     }
 
     /**
-     * Get children
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getChildren()
-    {
-        return $this->children;
-    }
-
-    /**
      * Add srvrsServer
      *
      * @param \NCbrtBundle\Entity\SrvrsServers $srvrsServer
@@ -138,4 +123,22 @@ class Organization {
     {
         return $this->SrvrsServers;
     }
+
+	/**
+	 * @return mixed
+	 */
+	public function getUsers()
+	{
+		return $this->users;
+	}
+
+	/**
+	 * @param mixed $users
+	 * @return Organization
+	 */
+	public function setUsers($users)
+	{
+		$this->users = $users;
+		return $this;
+	}
 }

@@ -2,6 +2,7 @@
 
 namespace NCbrtBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
@@ -60,10 +61,40 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="organization", type="string", length=255)
+     * @ORM\ManyToMany(targetEntity="NCbrtBundle\Entity\Organization", inversedBy="users")
      */
     private $organization;
 
+	/**
+	 * @var string
+	 *
+	 * @ORM\ManyToMany(targetEntity="NCbrtBundle\Entity\Roles", inversedBy="users")
+	 */
+	private $roles;
+
+	/**
+	 * @return string
+	 */
+	public function getRoles(): string
+	{
+		return $this->roles;
+	}
+
+	/**
+	 * @param string $roles
+	 * @return User
+	 */
+	public function setRoles(string $roles): User
+	{
+		$this->roles = $roles;
+		return $this;
+	}
+
+	public function __construct()
+	{
+		$this->organization = new ArrayCollection();
+		$this->roles = new ArrayCollection();
+	}
 
     /**
      * Get id.
@@ -271,27 +302,6 @@ class User implements AdvancedUserInterface, \Serializable
     public function isEnabled()
     {
         return true;
-    }
-
-    /**
-     * Returns the roles granted to the user.
-     *
-     * <code>
-     * public function getRoles()
-     * {
-     *     return array('ROLE_USER');
-     * }
-     * </code>
-     *
-     * Alternatively, the roles might be stored on a ``roles`` property,
-     * and populated in any number of different ways when the user object
-     * is created.
-     *
-     * @return (Role|string)[] The user roles
-     */
-    public function getRoles()
-    {
-        return array('ROLE_USER');
     }
 
     /**
